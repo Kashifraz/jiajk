@@ -252,7 +252,7 @@
 
             $("#constituency").change(function() {
                 var id = $(this).val();
-                var url = 'getunioncouncil/' + id;
+                var url = '/getunioncouncil/' + id;
                 $.get(url, function(data) {
                     if (data.length === 0) {
                         $("#union_council").find('option')
@@ -281,7 +281,7 @@
 
             $("#union_council").change(function() {
                 var id = $(this).val();
-                var url = 'getward/' + id;
+                var url = '/getward/' + id;
                 $.get(url, function(data) {
                     if (data.length === 0) {
                         $("#ward").find('option')

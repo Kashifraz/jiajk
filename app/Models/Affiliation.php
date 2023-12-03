@@ -15,6 +15,6 @@ class Affiliation extends Model
 
     public function constituency()
     {
-        return $this->hasMany(constituency::class);
+        return $this->hasMany(Constituency::class);
     }
 }

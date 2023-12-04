@@ -5,23 +5,37 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    @if (Auth::user()->type == 2)
+                    <a href="{{ route('admin.dashboard') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
+                    @else
+                    <a href="{{ route('member.dashboard') }}">
+                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                    </a>
+                    @endif
+
                 </div>
                 @if (!Auth::guest())
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    @if (Auth::user()->type == 2)
+                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @else
+                    <x-nav-link :href="route('member.dashboard')" :active="request()->routeIs('member.dashboard')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+                    @endif
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('members.add')" :active="request()->routeIs('members.add')">
                         {{ __('Register Member') }}
                     </x-nav-link>
                 </div>
+                @if (Auth::user()->type == 2)
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('members.show')" :active="request()->routeIs('members.show')">
                         {{ __('Members List') }}
@@ -32,6 +46,9 @@
                         {{ __('Add Region') }}
                     </x-nav-link>
                 </div>
+                @endif
+
+
                 @endif
             </div>
 
@@ -87,9 +104,16 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         @if (!Auth::guest())
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            @if (Auth::user()->type == 1)
+            <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            @else
+            <x-responsive-nav-link :href="route('member.dashboard')" :active="request()->routeIs('member.dashboard')">
+                {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            @endif
+
             <x-responsive-nav-link :href="route('members.add')" :active="request()->routeIs('members.add')">
                 {{ __('Register Member') }}
             </x-responsive-nav-link>

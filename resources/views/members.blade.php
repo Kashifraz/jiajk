@@ -190,7 +190,7 @@
                     </div>
                 </div>
 
-                <div class="col-span-2 p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                <div class="md:col-span-2 p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                     <div class="max-w-2xl">
                         @csrf
                         <h2 class="text-lg text-center font-medium text-gray-900 mb-4">
@@ -223,7 +223,6 @@
             $("#affiliations").change(function() {
                 var id = $(this).val();
                 var url = '/getconstituency/' + id;
-                alert(url);
                 $.get(url, function(data) {
                     if (data.length === 0) {
                         $("#constituency").find('option')

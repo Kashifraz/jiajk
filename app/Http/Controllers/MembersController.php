@@ -87,9 +87,20 @@ class MembersController extends Controller
       ]);
    }
 
-   public function showAllMembers($search = null)
+   public function showAllMembers()
    {
-      $members = User::latest()->get();
+      $members = null;
+      if (request('search')) {
+         $search = request('search');
+         $members = User::query()
+            ->where('name', 'LIKE', "%{$search}%")
+            ->orWhere('father_name', 'LIKE', "%{$search}%")
+            ->orWhere('city', 'LIKE', "%{$search}%")
+            ->get();
+      } else {
+         $members = User::latest()->get();
+      }
+
       return view('memberslist', [
          'members' => $members
       ]);

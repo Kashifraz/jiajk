@@ -29,11 +29,13 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
+Route::get('/admin/dashboard', function () {
+    return view('admindashboard');
+})->middleware(['auth', 'verified'])->name('admin.dashboard');
 
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/member/dashboard', function () {
+    return view('memberdashboard');
+})->middleware(['auth', 'verified'])->name('member.dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])

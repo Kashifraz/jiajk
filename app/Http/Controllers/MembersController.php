@@ -45,7 +45,7 @@ class MembersController extends Controller
          'education' => ['nullable','string', 'max:255'],
          'home_phone' => ['nullable',"digits_between:10,11","numeric"],
          'office_phone' => ['nullable', "digits_between:10,11","numeric"],
-         'mobile_phone' => ['nullable',"digits_between:10,11","numeric"],
+         'mobile_phone' => ['required',"digits_between:10,11","numeric"],
       ]);
 
       $user = User::create([

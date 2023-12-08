@@ -30,7 +30,11 @@ Route::get('/welcome', function () {
 });
 
 Route::get('/admin/dashboard', function () {
-    return view('admindashboard');
+    $affiliations = Affiliation::latest()->get();
+    
+    return view('admindashboard', [
+        "affiliations" => $affiliations,
+    ]);
 })->middleware(['auth', 'verified'])->name('admin.dashboard');
 
 Route::get('/member/dashboard', function () {
@@ -52,6 +56,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('show/member/{id}', [MembersController::class, "show"])
         ->name('member.show');
+
+    Route::get('verify/member/{id}', [MembersController::class, "verify"])
+        ->name('member.verify');
 
     Route::get('show/members/{search?}', [MembersController::class, "showAllMembers"])
         ->name('members.show');

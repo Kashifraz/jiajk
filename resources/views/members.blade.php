@@ -29,39 +29,39 @@
                             {{ __('Who are you ?') }}
                         </h2>
                         <div class="mb-5">
-                            <label for="username" class="block mb-2 text-sm font-medium text-gray-900 ">Username</label>
+                            <label for="username" class="block mb-2 text-sm font-medium text-gray-900 ">Username <span class="text-red-500">*</span></label>
                             <input type="text" id="username" name="username" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="UserName">
                             <x-input-error class="mt-2" :messages="$errors->get('username')" />
 
                         </div>
                         <div class="mb-5">
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 "> Email</label>
+                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 "> Email <span class="text-red-500">*</span></label>
                             <input type="email" id="email" name="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Email">
                             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
                         </div>
                         <div class="mb-5">
-                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
+                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Password <span class="text-red-500">*</span></label>
                             <input type="password" id="password" name="password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Password">
                             <x-input-error class="mt-2" :messages="$errors->get('password')" />
 
                         </div>
                         <div class="mb-5">
-                            <label for="password_confirmation" class="block mb-2 text-sm font-medium text-gray-900 ">Confirm Password</label>
+                            <label for="password_confirmation" class="block mb-2 text-sm font-medium text-gray-900 ">Confirm Password <span class="text-red-500">*</span></label>
                             <input type="password" id="password_confirmation" name="password_confirmation" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Confirm Password">
                             <x-input-error class="mt-2" :messages="$errors->get('password_confirmation')" />
 
                         </div>
 
                         <div class="mb-5">
-                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Name</label>
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Name <span class="text-red-500">*</span></label>
                             <input type="text" id="name" name="name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Name">
                             <x-input-error class="mt-2" :messages="$errors->get('name')" />
 
                         </div>
 
                         <div class="mb-5">
-                            <label for="father_name" class="block mb-2 text-sm font-medium text-gray-900 ">Father/Husband Name</label>
+                            <label for="father_name" class="block mb-2 text-sm font-medium text-gray-900 ">Father/Husband Name <span class="text-red-500">*</span></label>
                             <input type="text" id="father_name" name="father_name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Father/ Husband Name">
                             <x-input-error class="mt-2" :messages="$errors->get('father_name')" />
 
@@ -88,14 +88,13 @@
                         </div>
 
                         <div class="mb-5">
-                            <label for="membership_date" class="block mb-2 text-sm font-medium text-gray-900 ">Select Membership Date</label>
+                            <label for="membership_date" class="block mb-2 text-sm font-medium text-gray-900 ">Select Membership Date <span class="text-red-500">*</span></label>
                             <input type="date" id="membership_date" name="membership_date" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Select Date of Birth">
                             <x-input-error class="mt-2" :messages="$errors->get('membership_date')" />
                         </div>
 
                     </div>
                 </div>
-
 
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                     <div class="max-w-2xl">
@@ -104,60 +103,65 @@
                             What's your GEO Location?
                         </h2>
                         <div class="mb-5">
-                            <label for="affiliations" class="block mb-2 text-sm font-medium text-gray-900 ">Select Organizational Affiliations</label>
+                            <label for="affiliations" class="block mb-2 text-sm font-medium text-gray-900 ">Select Organizational Affiliations <span class="text-red-500">*</span></label>
                             <select id="affiliations" name="affiliations" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                                <option>Select Affiliation</option>
+                                <option value="0">Select Affiliation</option>
 
                                 @foreach ($affiliations as $affiliation)
                                 <option value="{{$affiliation->id}}">{{$affiliation->affiliation_title}}</option>
                                 @endforeach
                             </select>
-                            <x-input-error class="mt-2" :messages="$errors->get('gender')" />
+                            <x-input-error class="mt-2" :messages="$errors->get('affiliations')" />
                         </div>
                         <div class="mb-5">
-                            <label for="constituency" class="block mb-2 text-sm font-medium text-gray-900 ">Select Constituency</label>
+                            <label for="constituency" class="block mb-2 text-sm font-medium text-gray-900 ">Select Constituency <span class="text-red-500">*</span></label>
                             <select id="constituency" name="constituency" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                                <option>Select Constituency</option>
+                                <option value="0">Select Constituency</option>
                             </select>
-                            <x-input-error class="mt-2" :messages="$errors->get('gender')" />
+                            <x-input-error class="mt-2" :messages="$errors->get('constituency')" />
                         </div>
                         <div class="mb-5">
-                            <label for="union_council" class="block mb-2 text-sm font-medium text-gray-900 ">Select union council</label>
+                            <label for="union_council" class="block mb-2 text-sm font-medium text-gray-900 ">Select union council <span class="text-red-500">*</span></label>
                             <select id="union_council" name="union_council" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                                <option>Union Council</option>
+                                <option value="0">Union Council</option>
                             </select>
-                            <x-input-error class="mt-2" :messages="$errors->get('gender')" />
+                            <x-input-error class="mt-2" :messages="$errors->get('union_council')" />
                         </div>
                         <div class="mb-5">
-                            <label for="ward" class="block mb-2 text-sm font-medium text-gray-900 ">Select ward</label>
+                            <label for="ward" class="block mb-2 text-sm font-medium text-gray-900 ">Select ward <span class="text-red-500">*</span></label>
                             <select id="ward" name="ward" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                                <option>Select Ward</option>
+                                <option value="0">Select Ward</option>
                             </select>
-                            <x-input-error class="mt-2" :messages="$errors->get('gender')" />
+                            <x-input-error class="mt-2" :messages="$errors->get('ward')" />
                         </div>
                         <div class="mb-5">
-                            <label for="geographical_address" class="block mb-2 text-sm font-medium text-gray-900 ">Geographical Address</label>
+                            <label for="geographical_address" class="block mb-2 text-sm font-medium text-gray-900 ">Geographical Address </label>
                             <input type="text" id="geographical_address" name="geographical_address" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Geographical Address">
+                            <x-input-error class="mt-2" :messages="$errors->get('geographical_address')" />
                         </div>
 
                         <div class="mb-5">
-                            <label for="local_jamat" class="block mb-2 text-sm font-medium text-gray-900 ">Name of Local Jamat</label>
+                            <label for="local_jamat" class="block mb-2 text-sm font-medium text-gray-900 ">Name of Local Jamat </label>
                             <input type="text" id="local_jamat" name="local_jamat" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Name of Local Jamat">
+                            <x-input-error class="mt-2" :messages="$errors->get('local_jamat')" />
                         </div>
 
                         <div class="mb-5">
                             <label for="city" class="block mb-2 text-sm font-medium text-gray-900 ">City</label>
                             <input type="text" id="city" name="city" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="City">
+                            <x-input-error class="mt-2" :messages="$errors->get('city')" />
                         </div>
 
                         <div class="mb-5">
                             <label for="village" class="block mb-2 text-sm font-medium text-gray-900 ">Village</label>
                             <input type="text" id="village" name="village" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Village">
+                            <x-input-error class="mt-2" :messages="$errors->get('village')" />
                         </div>
 
                         <div class="mb-5">
                             <label for="mailing_address" class="block mb-2 text-sm font-medium text-gray-900 ">Mailing Address</label>
                             <input type="text" id="mailing_address" name="mailing_address" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Mailing Address">
+                            <x-input-error class="mt-2" :messages="$errors->get('mailing_address')" />
                         </div>
 
                     </div>
@@ -172,6 +176,7 @@
                         <div class="mb-5">
                             <label for="occupation" class="block mb-2 text-sm font-medium text-gray-900 ">Occupation</label>
                             <input type="text" id="occupation" name="occupation" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Occupation">
+                            <x-input-error class="mt-2" :messages="$errors->get('occupation')" />
                         </div>
                     </div>
                 </div>
@@ -185,6 +190,7 @@
                         <div class="mb-5">
                             <label for="education" class="block mb-2 text-sm font-medium text-gray-900 ">Education</label>
                             <input type="text" id="education" name="education" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Education">
+                            <x-input-error class="mt-2" :messages="$errors->get('education')" />
                         </div>
 
                     </div>
@@ -197,16 +203,19 @@
                             What's your Phone No's?
                         </h2>
                         <div class="mb-5">
-                            <label for="home" class="block mb-2 text-sm font-medium text-gray-900 ">Home Phone</label>
-                            <input type="text" id="home" name="home" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Home Phone">
+                            <label for="home_phone" class="block mb-2 text-sm font-medium text-gray-900 ">Home Phone</label>
+                            <input type="text" id="home_phone" name="home_phone" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Home Phone">
+                            <x-input-error class="mt-2" :messages="$errors->get('home_phone')" />
                         </div>
                         <div class="mb-5">
-                            <label for="office" class="block mb-2 text-sm font-medium text-gray-900 ">Office Phone</label>
-                            <input type="text" id="office" name="office" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Office Phone">
+                            <label for="office_phone" class="block mb-2 text-sm font-medium text-gray-900 ">Office Phone</label>
+                            <input type="text" id="office_phone" name="office_phone" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Office Phone">
+                            <x-input-error class="mt-2" :messages="$errors->get('office_phone')" />
                         </div>
                         <div class="mb-5">
-                            <label for="mobile" class="block mb-2 text-sm font-medium text-gray-900 ">Mobile</label>
-                            <input type="text" id="mobile" name="mobile" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Mobile">
+                            <label for="mobile_phone" class="block mb-2 text-sm font-medium text-gray-900 ">Mobile  <span class="text-red-500">*</span></label>
+                            <input type="text" id="mobile_phone" name="mobile_phone" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Mobile">
+                            <x-input-error class="mt-2" :messages="$errors->get('mobile_phone')" />
                         </div>
 
                     </div>

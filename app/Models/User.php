@@ -43,7 +43,8 @@ class User extends Authenticatable
         'home_phone',
         'office_phone',
         'mobile_phone',
-        'type'
+        'type', 
+        'verified',
     ];
 
     /**

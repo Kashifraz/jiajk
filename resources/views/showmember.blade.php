@@ -23,18 +23,89 @@ use App\Models\Affiliation;
         </div>
         @endif
 
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-5 space-y-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-5 pb-8 space-y-6">
             <div class=" sm:rounded-lg bg-white shadow">
                 <div class="p-4 relative overflow-x-auto rounded">
-                    <h2 class="mb-2 text-lg font-semibold text-gray-900 ">Member Information:</h2>
-                    <p>{{$member->name}}</p>
-                    <p>{{$member->father_name}}</p>
-                    <p>{{$member->city}}</p>
-                    <p>{{$member->email}}</p>
+                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Personal Information</h2>
+                    <div class="grid grid-cols-4">
+                        <div class="py-2 col-span-1 font-bold">Name</div>
+                        <div class="py-2 col-span-3">
+                            <p>{{$member->name}}</p>
+                        </div>
+                        <div class="py-2 col-span-1 font-bold">Father Name</div>
+                        <div class="py-2 col-span-3">{{$member->father_name}}</div>
+                        <div class="py-2 col-span-1 font-bold">Status</div>
+                        <div class="py-2 col-span-3">{{$member->verified == 1? "Verified": "Not Verified" }}</div>
+                        <div class="py-2 col-span-1 font-bold">Email</div>
+                        <div class="py-2 col-span-3">{{$member->email}}</div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class=" sm:rounded-lg bg-white shadow">
+                <div class="p-4 relative overflow-x-auto rounded">
+                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Location Information</h2>
+                    <div class="grid grid-cols-4">
+                        <div class="py-2 col-span-1 font-bold">Geographical Address</div>
+                        <div class="py-2 col-span-3">
+                            <p>{{$member->geographical_address}}</p>
+                        </div>
+                        <div class="py-2 col-span-1 font-bold">Local Jamat</div>
+                        <div class="py-2 col-span-3">{{$member->local_jamat}}</div>
+                        <div class="py-2 col-span-1 font-bold">City</div>
+                        <div class="py-2 col-span-3">{{$member->city}}</div>
+                        <div class="py-2 col-span-1 font-bold">Village</div>
+                        <div class="py-2 col-span-3">{{$member->village}}</div>
+                        <div class="py-2 col-span-1 font-bold">Mailing Address</div>
+                        <div class="py-2 col-span-3">{{$member->mailing_address}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" sm:rounded-lg bg-white shadow">
+                <div class="p-4 relative overflow-x-auto rounded">
+                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Occupation Information</h2>
+                    <div class="grid grid-cols-4">
+                        <div class="py-2 col-span-1 font-bold">Occupation</div>
+                        <div class="py-2 col-span-3">
+                            <p>{{$member->occupation}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" sm:rounded-lg bg-white shadow">
+                <div class="p-4 relative overflow-x-auto rounded">
+                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Academic Information</h2>
+                    <div class="grid grid-cols-4">
+                        <div class="py-2 col-span-1 font-bold">Education</div>
+                        <div class="py-2 col-span-3">
+                            <p>{{$member->education}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" sm:rounded-lg bg-white shadow">
+                <div class="p-4 relative overflow-x-auto rounded">
+                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Contact Information</h2>
+                    <div class="grid grid-cols-4">
+                        <div class="py-2 col-span-1 font-bold">Office Phone</div>
+                        <div class="py-2 col-span-3">
+                            <p>{{$member->office_phone}}</p>
+                        </div>
+                        <div class="py-2 col-span-1 font-bold">Home Phone</div>
+                        <div class="py-2 col-span-3">
+                            <p>{{$member->home_phone}}</p>
+                        </div>
+                        <div class="py-2 col-span-1 font-bold">Mobile Phone</div>
+                        <div class="py-2 col-span-3">
+                            <p>{{$member->mobile_phone}}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-
     </div>
 </x-app-layout>

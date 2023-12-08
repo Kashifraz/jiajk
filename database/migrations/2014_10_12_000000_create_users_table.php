@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('name');
             $table->string('father_name')->nullable();
-            $table->integer('cnic')->nullable();
+            $table->bigInteger('cnic')->nullable();
             $table->date('dob')->nullable();
             $table->integer('gender')->nullable();
             $table->string('social_media')->nullable();
@@ -35,10 +35,11 @@ return new class extends Migration
             $table->string('mailing_address')->nullable();
             $table->string('occupation')->nullable();
             $table->string('education')->nullable();
-            $table->integer('home_phone')->nullable();
-            $table->integer('office_phone')->nullable();
-            $table->integer('mobile_phone')->nullable();
+            $table->bigInteger('home_phone')->nullable();
+            $table->bigInteger('office_phone')->nullable();
+            $table->bigInteger('mobile_phone')->nullable();
             $table->integer('type');
+            $table->integer('verified')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

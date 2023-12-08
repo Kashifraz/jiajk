@@ -10,7 +10,7 @@ use App\Models\Affiliation;
 
     <div>
         @if(Session::has('message'))
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 mt-5 bg-white">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 mt-5">
             <div class="flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-200" role="alert">
                 <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
@@ -107,10 +107,14 @@ use App\Models\Affiliation;
                                 </td>
                                 <td class="px-6 py-4">
                                     <a href="{{route('member.show',$member->id )}}" class="font-medium text-blue-600 hover:underline">show</a>
+                                   @if ($member->verified === 1)
+                                        <span class="ml-3 text-green-600">Verified </span>
+                                   @else
+                                   <a href="{{route('member.verify',$member->id )}}" class="ml-3 font-medium text-blue-600 hover:underline">verify</a> 
+                                   @endif
                                 </td>
                             </tr>
                             @endforeach
-
                         </tbody>
                     </table>
                 </div>

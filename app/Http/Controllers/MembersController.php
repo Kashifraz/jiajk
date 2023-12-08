@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Affiliation;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class MembersController extends Controller
@@ -25,26 +26,26 @@ class MembersController extends Controller
          'password' => ['required', 'confirmed'],
          'name' => ['required', 'string', 'max:255'],
          'father_name' => ['required', 'string', 'max:255'],
-         'cnic' => ['required', 'integer'],
-         'dob' => ['required', 'string'],
-         'gender' => ['integer'],
-         // 'social_media' => ['string', 'max:255'],
-         // 'referer' => ['string', 'max:255'],
-         // 'membership_date' => ['string'],
-         // 'affiliations' => ['string', 'max:255'],
-         // 'constituency' => ['string', 'max:255'],
-         // 'union_council' => ['string', 'max:255'],
-         // 'ward' => ['string', 'max:255'],
-         // 'geographical_address' => ['string', 'max:255'],
-         // 'local_jamat' => ['string', 'max:255'],
-         // 'city' => ['string', 'max:255'],
-         // 'village' => ['string', 'max:255'],
-         // 'mailing_address' => ['string', 'max:255'],
-         // 'occupation' => ['string', 'max:255'],
-         // 'education' => ['string', 'max:255'],
-         // 'home_phone' => ['integer'],
-         // 'office_phone' => ['integer'],
-         // 'mobile_phone' => ['integer'],
+         'cnic' => ['nullable',"digits:13","numeric"],
+         'dob' => ['nullable', 'string'],
+         'gender' => ['nullable','integer'],
+         'social_media' => ['nullable','string', 'max:255'],
+         'referer' => ['nullable','string', 'max:255'],
+         'membership_date' => ['required','string'],
+         'affiliations' => ['required','not_in:0','string', 'max:255'],
+         'constituency' => ['required','not_in:0','string', 'max:255'],
+         'union_council' => ['required','not_in:0','string', 'max:255'],
+         'ward' => ['required','not_in:0','string', 'max:255'],
+         'geographical_address' => ['nullable','string', 'max:255'],
+         'local_jamat' => ['nullable','string', 'max:255'],
+         'city' => ['nullable','string', 'max:255'],
+         'village' => ['nullable','string', 'max:255'],
+         'mailing_address' => ['nullable','string', 'max:255'],
+         'occupation' => ['nullable','string', 'max:255'],
+         'education' => ['nullable','string', 'max:255'],
+         'home_phone' => ['nullable',"digits_between:10,11","numeric"],
+         'office_phone' => ['nullable', "digits_between:10,11","numeric"],
+         'mobile_phone' => ['nullable',"digits_between:10,11","numeric"],
       ]);
 
       $user = User::create([
@@ -90,19 +91,27 @@ class MembersController extends Controller
    public function showAllMembers()
    {
       $members = null;
+
       if (request('search')) {
          $search = request('search');
          $members = User::query()
+            ->where(["type" => 1])
             ->where('name', 'LIKE', "%{$search}%")
             ->orWhere('father_name', 'LIKE', "%{$search}%")
             ->orWhere('city', 'LIKE', "%{$search}%")
             ->get();
       } else {
-         $members = User::latest()->get();
+         $members = User::where(["type" => 1])
+            ->latest()->get();
       }
 
       return view('memberslist', [
          'members' => $members
       ]);
+   }
+
+   public function verify($id){
+      User::where('id',$id)->update(['verified'=> 1]);
+      return redirect()->back()->with("message", "user verified successfully!");
    }
 }

@@ -20,32 +20,40 @@ class MembersController extends Controller
 
    public function create(Request $request)
    {
+      $affiliation_val = $request->constituency_status != 0 ? ['required', "not_in:0"] : [];
+      $constituency_val = $request->union_status != 0 ? ['required', "not_in:0"] : [];
+      $union_val = $request->ward_status != 0 ? ['required', "not_in:0"] : [];
       $request->validate([
          'username' => ['required', 'string', 'max:255'],
          'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
          'password' => ['required', 'confirmed'],
          'name' => ['required', 'string', 'max:255'],
          'father_name' => ['required', 'string', 'max:255'],
-         'cnic' => ['nullable',"digits:13","numeric"],
+         'cnic' => ['nullable', "digits:13", "numeric"],
          'dob' => ['nullable', 'string'],
-         'gender' => ['nullable','integer'],
-         'social_media' => ['nullable','string', 'max:255'],
-         'referer' => ['nullable','string', 'max:255'],
-         'membership_date' => ['required','string'],
-         'affiliations' => ['required','not_in:0','string', 'max:255'],
-         'constituency' => ['required','not_in:0','string', 'max:255'],
-         'union_council' => ['required','not_in:0','string', 'max:255'],
-         'ward' => ['required','not_in:0','string', 'max:255'],
-         'geographical_address' => ['nullable','string', 'max:255'],
-         'local_jamat' => ['nullable','string', 'max:255'],
-         'city' => ['nullable','string', 'max:255'],
-         'village' => ['nullable','string', 'max:255'],
-         'mailing_address' => ['nullable','string', 'max:255'],
-         'occupation' => ['nullable','string', 'max:255'],
-         'education' => ['nullable','string', 'max:255'],
-         'home_phone' => ['nullable',"digits_between:10,11","numeric"],
-         'office_phone' => ['nullable', "digits_between:10,11","numeric"],
-         'mobile_phone' => ['required',"digits_between:10,11","numeric"],
+         'gender' => ['nullable', 'integer'],
+         'social_media' => ['nullable', 'string', 'max:255'],
+         'referer' => ['nullable', 'string', 'max:255'],
+         'membership_date' => ['required', 'string'],
+         'affiliations' => ['required', "not_in:0"],
+         'constituency' => $affiliation_val,
+         'union_council' => $constituency_val,
+         'ward' => $union_val,
+         'geographical_address' => ['nullable', 'string', 'max:255'],
+         'local_jamat' => ['nullable', 'string', 'max:255'],
+         'city' => ['nullable', 'string', 'max:255'],
+         'village' => ['nullable', 'string', 'max:255'],
+         'mailing_address' => ['nullable', 'string', 'max:255'],
+         'occupation' => ['nullable', 'string', 'max:255'],
+         'education' => ['nullable', 'string', 'max:255'],
+         'home_phone' => ['nullable', "digits_between:10,11", "numeric"],
+         'office_phone' => ['nullable', "digits_between:10,11", "numeric"],
+         'mobile_phone' => ['required', "digits_between:10,11", "numeric"],
+      ], [
+         'affiliations.not_in' => 'The selected value was invalid.',
+         'constituency.not_in' => 'The selected value was invalid.',
+         'union_council.not_in' => 'The selected value was invalid.',
+         'ward.not_in' => 'The selected value was invalid.',
       ]);
 
       $user = User::create([
@@ -110,8 +118,9 @@ class MembersController extends Controller
       ]);
    }
 
-   public function verify($id){
-      User::where('id',$id)->update(['verified'=> 1]);
+   public function verify($id)
+   {
+      User::where('id', $id)->update(['verified' => 1]);
       return redirect()->back()->with("message", "user verified successfully!");
    }
 }

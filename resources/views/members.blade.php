@@ -111,6 +111,7 @@
                                 <option value="{{$affiliation->id}}">{{$affiliation->affiliation_title}}</option>
                                 @endforeach
                             </select>
+                            <input type="hidden" id="constituency_status" name="constituency_status" value="0">
                             <x-input-error class="mt-2" :messages="$errors->get('affiliations')" />
                         </div>
                         <div class="mb-5">
@@ -118,6 +119,7 @@
                             <select id="constituency" name="constituency" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                 <option value="0">Select Constituency</option>
                             </select>
+                            <input type="hidden" id="union_status" name="union_status" value="0">
                             <x-input-error class="mt-2" :messages="$errors->get('constituency')" />
                         </div>
                         <div class="mb-5">
@@ -125,6 +127,7 @@
                             <select id="union_council" name="union_council" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                 <option value="0">Union Council</option>
                             </select>
+                            <input type="hidden" id="ward_status" name="ward_status" value="0">
                             <x-input-error class="mt-2" :messages="$errors->get('union_council')" />
                         </div>
                         <div class="mb-5">
@@ -213,7 +216,7 @@
                             <x-input-error class="mt-2" :messages="$errors->get('office_phone')" />
                         </div>
                         <div class="mb-5">
-                            <label for="mobile_phone" class="block mb-2 text-sm font-medium text-gray-900 ">Mobile  <span class="text-red-500">*</span></label>
+                            <label for="mobile_phone" class="block mb-2 text-sm font-medium text-gray-900 ">Mobile <span class="text-red-500">*</span></label>
                             <input type="text" id="mobile_phone" name="mobile_phone" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Mobile">
                             <x-input-error class="mt-2" :messages="$errors->get('mobile_phone')" />
                         </div>
@@ -234,18 +237,22 @@
                 var url = '/getconstituency/' + id;
                 $.get(url, function(data) {
                     if (data.length === 0) {
+                        $("#constituency_status").attr("value", "0");
                         $("#constituency").find('option')
                             .remove()
                             .end().
                         append($('<option>', {
                             text: "No constituency found",
+                            value: "0"
                         }));
                     } else {
+                        $("#constituency_status").attr("value", "1");
                         $("#constituency").find('option')
                             .remove()
                             .end().
                         append($('<option>', {
                             text: "Select Constituency",
+                            value: "0"
                         }));
                         for (var i = 0; i < data.length; i++) {
                             $("#constituency").
@@ -263,18 +270,22 @@
                 var url = '/getunioncouncil/' + id;
                 $.get(url, function(data) {
                     if (data.length === 0) {
+                        $("#union_status").attr("value", "0");
                         $("#union_council").find('option')
                             .remove()
                             .end().
                         append($('<option>', {
                             text: "No union council found",
+                            value: "0"
                         }));
                     } else {
+                        $("#union_status").attr("value", "1");
                         $("#union_council").find('option')
                             .remove()
                             .end().
                         append($('<option>', {
                             text: "Select union council",
+                            value: "0"
                         }));
                         for (var i = 0; i < data.length; i++) {
                             $("#union_council").
@@ -292,18 +303,22 @@
                 var url = '/getward/' + id;
                 $.get(url, function(data) {
                     if (data.length === 0) {
+                        $("#ward_status").attr("value", "0");
                         $("#ward").find('option')
                             .remove()
                             .end().
                         append($('<option>', {
                             text: "No ward found",
+                            value: "0"
                         }));
                     } else {
+                        $("#ward_status").attr("value", "1");
                         $("#ward").find('option')
                             .remove()
                             .end().
                         append($('<option>', {
                             text: "Select ward",
+                            value: "0"
                         }));
                         for (var i = 0; i < data.length; i++) {
                             $("#ward").

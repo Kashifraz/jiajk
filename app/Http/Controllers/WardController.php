@@ -21,4 +21,18 @@ class WardController extends Controller
 
         return redirect()->back()->with("message", "Ward added successfully!");
     }
+
+    public function destroy(Ward $ward)
+    {
+        $ward->delete();
+        return redirect()->back()->with('message', 'Ward deleted successfully!');
+    }
+
+    public function update(Request $request, Ward $ward)
+    {
+        Ward::whereId($ward->id)->update([
+            "ward_title" => $request->ward_title
+        ]);
+        return redirect()->back()->with("message", "ward updated successfully!");
+    }
 }

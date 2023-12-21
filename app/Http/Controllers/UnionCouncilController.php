@@ -21,4 +21,21 @@ class UnionCouncilController extends Controller
 
         return redirect()->back()->with("message", "Union Council added successfully!");
     }
+
+    public function destroy(UnionCouncil $unionCouncil)
+    {
+        foreach ($unionCouncil->ward as $ward) {
+            $ward->delete();
+        }
+        $unionCouncil->delete();
+        return redirect()->back()->with('message', 'Union Council deleted successfully!');
+    }
+
+    public function update(Request $request, UnionCouncil $unionCouncil)
+    {
+        UnionCouncil::whereId($unionCouncil->id)->update([
+            "union_council_title" => $request->union_council_title
+        ]);
+        return redirect()->back()->with("message", "Union Council updated successfully!");
+    }
 }

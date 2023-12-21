@@ -24,7 +24,7 @@ class MembersController extends Controller
       $constituency_val = $request->union_status != 0 ? ['required', "not_in:0"] : [];
       $union_val = $request->ward_status != 0 ? ['required', "not_in:0"] : [];
       $request->validate([
-         'username' => ['required', 'string', 'max:255'],
+         'username' => ['string', 'max:255'],
          'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
          'password' => ['required', 'confirmed'],
          'name' => ['required', 'string', 'max:255'],
@@ -95,6 +95,82 @@ class MembersController extends Controller
          'member' => $member
       ]);
    }
+
+   public function edit($id)
+   {
+      $member = User::find($id);
+      $affiliations = Affiliation::latest()->get();
+      return view('editmember', [
+         'member' => $member,
+         'affiliations' => $affiliations
+      ]);
+   }
+
+   public function update(Request $request, $id)
+   {
+      $affiliation_val = $request->constituency_status != 0 ? ['required', "not_in:0"] : [];
+      $constituency_val = $request->union_status != 0 ? ['required', "not_in:0"] : [];
+      $union_val = $request->ward_status != 0 ? ['required', "not_in:0"] : [];
+      $request->validate([
+         'name' => ['required', 'string', 'max:255'],
+         'father_name' => ['required', 'string', 'max:255'],
+         'cnic' => ['nullable', "digits:13", "numeric"],
+         'dob' => ['nullable', 'string'],
+         'gender' => ['nullable', 'integer'],
+         'social_media' => ['nullable', 'string', 'max:255'],
+         'referer' => ['nullable', 'string', 'max:255'],
+         'membership_date' => ['required', 'string'],
+         'affiliations' => ['required', "not_in:0"],
+         'constituency' => $affiliation_val,
+         'union_council' => $constituency_val,
+         'ward' => $union_val,
+         'geographical_address' => ['nullable', 'string', 'max:255'],
+         'local_jamat' => ['nullable', 'string', 'max:255'],
+         'city' => ['nullable', 'string', 'max:255'],
+         'village' => ['nullable', 'string', 'max:255'],
+         'mailing_address' => ['nullable', 'string', 'max:255'],
+         'occupation' => ['nullable', 'string', 'max:255'],
+         'education' => ['nullable', 'string', 'max:255'],
+         'home_phone' => ['nullable', "digits_between:10,11", "numeric"],
+         'office_phone' => ['nullable', "digits_between:10,11", "numeric"],
+         'mobile_phone' => ['required', "digits_between:10,11", "numeric"],
+      ], [
+         'affiliations.not_in' => 'The selected value was invalid.',
+         'constituency.not_in' => 'The selected value was invalid.',
+         'union_council.not_in' => 'The selected value was invalid.',
+         'ward.not_in' => 'The selected value was invalid.',
+      ]);
+
+      $user = User::whereId($id)->update([
+         'name' => $request->name,
+         'father_name' => $request->father_name,
+         'cnic' => $request->cnic,
+         'dob' => $request->dob,
+         'gender' => $request->gender,
+         'social_media' => $request->social_media,
+         'referer' => $request->referer,
+         'membership_date' => $request->membership_date,
+         'affiliations' => $request->affiliations,
+         'constituency' => $request->constituency,
+         'union_council' => $request->union_council,
+         'ward' => $request->ward,
+         'geographical_address' => $request->geographical_address,
+         'local_jamat' => $request->local_jamat,
+         'city' => $request->city,
+         'village' => $request->village,
+         'mailing_address' => $request->mailing_address,
+         'occupation' => $request->occupation,
+         'education' => $request->education,
+         'home_phone' => $request->home_phone,
+         'office_phone' => $request->office_phone,
+         'mobile_phone' => $request->mobile_phone,
+         'type' => 1,
+      ]);
+
+      return redirect()->back()->with("message", "Updated added successfully!");
+   }
+
+
 
    public function showAllMembers()
    {

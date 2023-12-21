@@ -31,7 +31,7 @@ Route::get('/welcome', function () {
 
 Route::get('/admin/dashboard', function () {
     $affiliations = Affiliation::latest()->get();
-    
+
     return view('admindashboard', [
         "affiliations" => $affiliations,
     ]);
@@ -60,15 +60,32 @@ Route::middleware('auth')->group(function () {
     Route::get('verify/member/{id}', [MembersController::class, "verify"])
         ->name('member.verify');
 
+    Route::get('edit/member/{id}', [MembersController::class, "edit"])
+        ->name('member.edit');
+
     Route::get('show/members/{search?}', [MembersController::class, "showAllMembers"])
         ->name('members.show');
+
+    Route::get('region/list', [AffiliationController::class, 'index'])
+        ->name('region.list');
+
+    Route::delete('affiliation/destroy/{affiliation}', [AffiliationController::class, 'destroy'])->name('affiliation.destroy');
+    Route::post('affiliation/update/{affiliation}', [AffiliationController::class, 'update'])->name('affiliation.update');
+    Route::delete('constituency/destroy/{constituency}', [ConstituencyController::class, 'destroy'])->name('constituency.destroy');
+    Route::post('constituency/update/{constituency}', [ConstituencyController::class, 'update'])->name('constituency.update');
+    Route::delete('unioncouncil/destroy/{unionCouncil}', [UnionCouncilController::class, 'destroy'])->name('unioncouncil.destroy');
+    Route::post('unioncouncil/update/{unionCouncil}', [UnionCouncilController::class, 'update'])->name('unioncouncil.update');
+    Route::delete('ward/destroy/{ward}', [WardController::class, 'destroy'])->name('ward.destroy');
+    Route::post('ward/update/{ward}', [WardController::class, 'update'])->name('ward.update');
 });
 
 Route::get('/add/members', [MembersController::class, 'addMembers'])
     ->name('members.add');
 
-Route::post('/create/member', [MembersController::class, 'create'])
-    ->name('member.create');
+Route::post('create/member', [MembersController::class, 'create'])->name('member.create');
+
+Route::post('/update/member/{id}', [MembersController::class, 'update'])
+    ->name('member.update');
 
 Route::post('affiliation/store', [AffiliationController::class, "store"])
     ->name('affiliation.store');

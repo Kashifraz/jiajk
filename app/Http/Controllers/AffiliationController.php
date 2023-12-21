@@ -15,7 +15,10 @@ class AffiliationController extends Controller
      */
     public function index()
     {
-        //
+        $affiliations = Affiliation::latest()->get();
+        return view('editregion', [
+            "affiliations" => $affiliations
+        ]);
     }
 
     /**
@@ -71,7 +74,10 @@ class AffiliationController extends Controller
      */
     public function update(Request $request, Affiliation $affiliation)
     {
-        //
+        Affiliation::whereId($affiliation->id)->update([
+            "affiliation_title" => $request->affiliation_title
+        ]);
+        return redirect()->back()->with("message", "Affiliation updated successfully!");
     }
 
     /**
@@ -79,6 +85,16 @@ class AffiliationController extends Controller
      */
     public function destroy(Affiliation $affiliation)
     {
-        //
+        foreach ($affiliation->constituency as $constituency) {
+            foreach ($constituency->unioncouncil as $unionCouncil) {
+                foreach ($unionCouncil->ward as $ward) {
+                    $ward->delete();
+                }
+                $unionCouncil->delete();
+            }
+            $constituency->delete();
+        }
+        $affiliation->delete();
+        return redirect()->back()->with('message', 'Affiliation deleted successfully!');
     }
 }

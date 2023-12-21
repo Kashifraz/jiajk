@@ -5,6 +5,10 @@ use App\Models\Affiliation;
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Member Details') }}
+            <a href="{{route('member.edit', $member->id)}}" class="ml-3 px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <i class="fa-solid fa-user-pen mr-1"></i>
+                Edit
+            </a>
         </h2>
     </x-slot>
 

@@ -46,6 +46,12 @@
                         {{ __('Add Region') }}
                     </x-nav-link>
                 </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('region.list')" :active="request()->routeIs('region.list')">
+                        {{ __('Region List') }}
+                    </x-nav-link>
+                </div>
                 @endif
 
 
@@ -104,7 +110,7 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         @if (!Auth::guest())
         <div class="pt-2 pb-3 space-y-1">
-            @if (Auth::user()->type == 1)
+            @if (Auth::user()->type == 2)
             <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
@@ -117,12 +123,17 @@
             <x-responsive-nav-link :href="route('members.add')" :active="request()->routeIs('members.add')">
                 {{ __('Register Member') }}
             </x-responsive-nav-link>
+            @if (Auth::user()->type == 2)
             <x-responsive-nav-link :href="route('members.show')" :active="request()->routeIs('members.show')">
                 {{ __('Member List') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('affiliation.create')" :active="request()->routeIs('affiliation.create')">
                 {{ __('Add Region') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('region.list')" :active="request()->routeIs('region.list')">
+                {{ __('Region List') }}
+            </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

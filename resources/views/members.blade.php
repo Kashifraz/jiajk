@@ -9,10 +9,6 @@ $old_affiliations = Affiliation::all();
 $old_constituency = Constituency::where('affiliation_id', old('affiliations'))->get();
 $old_union_council = UnionCouncil::where('constituency_id',old('constituency'))->get();
 $old_ward = Ward::where('union_council_id',old('union_council'))->get();
-
-echo "<pre>";
-print_r($old_constituency);
-echo "</pre>";
 }
 @endphp
 

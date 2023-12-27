@@ -192,7 +192,7 @@ class MembersController extends Controller
             ->where('name', 'LIKE', "%{$search}%")
             ->orWhere('father_name', 'LIKE', "%{$search}%")
             ->orWhere('city', 'LIKE', "%{$search}%")
-            ->get();
+            ->paginate(10);
       } else {
          $members = User::where(["type" => 1])
             ->latest()->paginate(10);

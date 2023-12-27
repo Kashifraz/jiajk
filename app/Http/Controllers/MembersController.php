@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Affiliation;
+use App\Models\Constituency;
+use App\Models\UnionCouncil;
 use App\Models\User;
+use App\Models\Ward;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -85,7 +88,7 @@ class MembersController extends Controller
          'type' => 1,
       ]);
 
-      return redirect()->back()->with("message", "Member added successfully!");
+      return redirect()->back()->withInput()->with("message", "Member added successfully!");
    }
 
    public function show($id)
@@ -100,9 +103,15 @@ class MembersController extends Controller
    {
       $member = User::find($id);
       $affiliations = Affiliation::latest()->get();
+      $constituencies = Constituency::where("affiliation_id", $member->affiliations)->get();
+      $unioncouncils = UnionCouncil::where("constituency_id", $member->constituency)->get();
+      $wards = Ward::where("union_council_id", $member->union_council)->get();
       return view('editmember', [
          'member' => $member,
-         'affiliations' => $affiliations
+         'affiliations' => $affiliations,
+         'constituencies' => $constituencies,
+         'unioncouncils' => $unioncouncils,
+         'wards' => $wards
       ]);
    }
 
@@ -186,7 +195,7 @@ class MembersController extends Controller
             ->get();
       } else {
          $members = User::where(["type" => 1])
-            ->latest()->get();
+            ->latest()->paginate(10);
       }
 
       return view('memberslist', [

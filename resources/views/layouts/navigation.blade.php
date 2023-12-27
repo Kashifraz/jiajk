@@ -35,6 +35,15 @@
                         {{ __('Register Member') }}
                     </x-nav-link>
                 </div>
+
+                @if (Auth::user()->type == 1)
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('member.edit',Auth::user()->id)" :active="request()->routeIs('member.edit')">
+                        {{ __('Edit Info') }}
+                    </x-nav-link>
+                </div>
+
+                @endif
                 @if (Auth::user()->type == 2)
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('members.show')" :active="request()->routeIs('members.show')">
@@ -123,6 +132,11 @@
             <x-responsive-nav-link :href="route('members.add')" :active="request()->routeIs('members.add')">
                 {{ __('Register Member') }}
             </x-responsive-nav-link>
+            @if (Auth::user()->type == 1)
+            <x-responsive-nav-link :href="route('member.edit',Auth::user()->id)" :active="request()->routeIs('member.edit')">
+                {{ __('Edit Info') }}
+            </x-responsive-nav-link>
+            @endif
             @if (Auth::user()->type == 2)
             <x-responsive-nav-link :href="route('members.show')" :active="request()->routeIs('members.show')">
                 {{ __('Member List') }}

@@ -1,3 +1,21 @@
+@php
+use App\Models\Affiliation;
+use App\Models\Constituency;
+use App\Models\UnionCouncil;
+use App\Models\Ward;
+
+if(old('affiliations')){
+$old_affiliations = Affiliation::all();
+$old_constituency = Constituency::where('affiliation_id', old('affiliations'))->get();
+$old_union_council = UnionCouncil::where('constituency_id',old('constituency'))->get();
+$old_ward = Ward::where('union_council_id',old('union_council'))->get();
+
+echo "<pre>";
+print_r($old_constituency);
+echo "</pre>";
+}
+@endphp
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -26,12 +44,12 @@
                     <div class="max-w-xl">
                         @csrf
                         <h2 class="text-lg text-center font-medium text-gray-900 mb-4">
-                            Your Personal Information / {{"آپ کی ذاتی معلومات"}} 
+                            Your Personal Information / {{"آپ کی ذاتی معلومات"}}
                         </h2>
                         <div class="mb-5">
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 "> Email / {{"ای میل"}}<span class="text-red-500">*</span></label>
-                            <input type="email" id="email" name="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Email">
-                            <x-input-error class="mt-2" :messages="$errors->get('email')" :value="old('email')" />
+                            <input type="email" id="email" name="email" value="{{old('email')}}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Email">
+                            <x-input-error class="mt-2" :messages="$errors->get('email')" />
                         </div>
                         <div class="mb-5">
                             <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Password / {{"پاس ورڈ"}}<span class="text-red-500">*</span></label>
@@ -48,41 +66,41 @@
 
                         <div class="mb-5">
                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Name / {{"نام"}} <span class="text-red-500">*</span></label>
-                            <input type="text" id="name" name="name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Name">
+                            <input type="text" id="name" name="name" value="{{old('name')}}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Name">
                             <x-input-error class="mt-2" :messages="$errors->get('name')" />
 
                         </div>
 
                         <div class="mb-5">
                             <label for="father_name" class="block mb-2 text-sm font-medium text-gray-900 ">Father/Husband Name / {{"والد/شوہر کا نام"}} <span class="text-red-500">*</span></label>
-                            <input type="text" id="father_name" name="father_name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Father/ Husband Name">
+                            <input type="text" id="father_name" name="father_name" value="{{old('father_name')}}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Father/ Husband Name">
                             <x-input-error class="mt-2" :messages="$errors->get('father_name')" />
 
                         </div>
 
                         <div class="mb-5">
                             <label for="cnic" class="block mb-2 text-sm font-medium text-gray-900 ">CNIC / {{"شناختی کارڈ نمبر "}}</label>
-                            <input type="text" id="cnic" name="cnic" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="CNIC">
+                            <input type="text" id="cnic" name="cnic" value="{{old('cnic')}}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="CNIC">
                             <x-input-error class="mt-2" :messages="$errors->get('cnic')" />
 
                         </div>
                         <div class="mb-5">
                             <label for="dob" class="block mb-2 text-sm font-medium text-gray-900 ">Select Date of Birth / {{"تاریخ پیدائش منتخب کریں"}}</label>
-                            <input type="date" id="dob" name="dob" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Select Date of Birth">
+                            <input type="date" id="dob" name="dob" value="{{old('dob')}}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Select Date of Birth">
                             <x-input-error class="mt-2" :messages="$errors->get('dob')" />
                         </div>
                         <div class="mb-5">
                             <label for="gender" class="block mb-2 text-sm font-medium text-gray-900 ">Select Gender / {{"جنس منتخب کریں"}}</label>
                             <select id="gender" name="gender" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                                <option value="1">Male</option>
-                                <option value="2">Female</option>
+                                <option {{old('gender') == 1 ? "selected": "" }} value="1">Male</option>
+                                <option {{old('gender') == 2 ? "selected": "" }} value="2">Female</option>
                             </select>
                             <x-input-error class="mt-2" :messages="$errors->get('gender')" />
                         </div>
 
                         <div class="mb-5">
                             <label for="membership_date" class="block mb-2 text-sm font-medium text-gray-900 ">Select Membership Date / {{"رکنیت کی تاریخ منتخب کریں"}} <span class="text-red-500">*</span></label>
-                            <input type="date" id="membership_date" name="membership_date" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Select Date of Birth">
+                            <input type="date" id="membership_date" name="membership_date" value="{{old('membership_date')}}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Select Date of Birth">
                             <x-input-error class="mt-2" :messages="$errors->get('membership_date')" />
                         </div>
 
@@ -132,31 +150,31 @@
                         </div>
                         <div class="mb-5">
                             <label for="geographical_address" class="block mb-2 text-sm font-medium text-gray-900 ">Geographical Address / {{"اپکا مستقل پتہ"}} </label>
-                            <input type="text" id="geographical_address" name="geographical_address" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Geographical Address">
+                            <input type="text" id="geographical_address" value="{{old('local_jamat')}}" name="geographical_address" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Geographical Address">
                             <x-input-error class="mt-2" :messages="$errors->get('geographical_address')" />
                         </div>
 
                         <div class="mb-5">
                             <label for="local_jamat" class="block mb-2 text-sm font-medium text-gray-900 ">Name of Local Jamat / {{"مقامی جماعت کا نام"}} </label>
-                            <input type="text" id="local_jamat" name="local_jamat" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Name of Local Jamat">
+                            <input type="text" id="local_jamat" name="local_jamat" value="{{old('local_jamat')}}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Name of Local Jamat">
                             <x-input-error class="mt-2" :messages="$errors->get('local_jamat')" />
                         </div>
 
                         <div class="mb-5">
                             <label for="city" class="block mb-2 text-sm font-medium text-gray-900 ">City / {{"شہر"}}</label>
-                            <input type="text" id="city" name="city" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="City">
+                            <input type="text" id="city" name="city" value="{{old('city')}}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="City">
                             <x-input-error class="mt-2" :messages="$errors->get('city')" />
                         </div>
 
                         <div class="mb-5">
                             <label for="village" class="block mb-2 text-sm font-medium text-gray-900 ">Village / {{"گاؤں"}}</label>
-                            <input type="text" id="village" name="village" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Village">
+                            <input type="text" id="village" name="village" value="{{old('village')}}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Village">
                             <x-input-error class="mt-2" :messages="$errors->get('village')" />
                         </div>
 
                         <div class="mb-5">
                             <label for="mailing_address" class="block mb-2 text-sm font-medium text-gray-900 ">Postal Address / {{"ڈاک کا پتہ"}}</label>
-                            <input type="text" id="mailing_address" name="mailing_address" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Mailing Address">
+                            <input type="text" id="mailing_address" name="mailing_address" value="{{old('mailing_address')}}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Mailing Address">
                             <x-input-error class="mt-2" :messages="$errors->get('mailing_address')" />
                         </div>
 
@@ -171,7 +189,7 @@
                         </h2>
                         <div class="mb-5">
                             <label for="occupation" class="block mb-2 text-sm font-medium text-gray-900 ">Occupation / {{"پیشہ"}}</label>
-                            <input type="text" id="occupation" name="occupation" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Occupation">
+                            <input type="text" id="occupation" name="occupation" value="{{old('occupation')}}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Occupation">
                             <x-input-error class="mt-2" :messages="$errors->get('occupation')" />
                         </div>
                     </div>
@@ -185,7 +203,7 @@
                         </h2>
                         <div class="mb-5">
                             <label for="education" class="block mb-2 text-sm font-medium text-gray-900 ">Education / {{"تعلیم"}}</label>
-                            <input type="text" id="education" name="education" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Education">
+                            <input type="text" id="education" name="education" value="{{old('education')}}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Education">
                             <x-input-error class="mt-2" :messages="$errors->get('education')" />
                         </div>
 
@@ -200,17 +218,17 @@
                         </h2>
                         <div class="mb-5">
                             <label for="home_phone" class="block mb-2 text-sm font-medium text-gray-900 ">Home Phone / {{"گھر کا فون"}}</label>
-                            <input type="text" id="home_phone" name="home_phone" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Home Phone">
+                            <input type="text" id="home_phone" name="home_phone" value="{{old('home_phone')}}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Home Phone">
                             <x-input-error class="mt-2" :messages="$errors->get('home_phone')" />
                         </div>
                         <div class="mb-5">
                             <label for="office_phone" class="block mb-2 text-sm font-medium text-gray-900 ">Office Phone / {{"دفتر فون"}}</label>
-                            <input type="text" id="office_phone" name="office_phone" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Office Phone">
+                            <input type="text" id="office_phone" name="office_phone" value="{{old('office_phone')}}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Office Phone">
                             <x-input-error class="mt-2" :messages="$errors->get('office_phone')" />
                         </div>
                         <div class="mb-5">
                             <label for="mobile_phone" class="block mb-2 text-sm font-medium text-gray-900 ">Mobile / {{"موبائل"}} <span class="text-red-500">*</span></label>
-                            <input type="text" id="mobile_phone" name="mobile_phone" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Mobile">
+                            <input type="text" id="mobile_phone" name="mobile_phone" value="{{old('mobile_phone')}}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Mobile">
                             <x-input-error class="mt-2" :messages="$errors->get('mobile_phone')" />
                         </div>
 

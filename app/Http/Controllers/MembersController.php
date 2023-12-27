@@ -88,7 +88,7 @@ class MembersController extends Controller
          'type' => 1,
       ]);
 
-      return redirect()->back()->withInput()->with("message", "Member added successfully!");
+      return redirect()->back()->with("message", "Member added successfully!");
    }
 
    public function show($id)

@@ -63,7 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::get('edit/member/{id}', [MembersController::class, "edit"])
         ->name('member.edit');
 
-    Route::get('show/members/{search?}', [MembersController::class, "showAllMembers"])
+    Route::get('show/members/{records?}/{search?}', [MembersController::class, "showAllMembers"])
         ->name('members.show');
 
     Route::get('region/list', [AffiliationController::class, 'index'])

@@ -121,6 +121,8 @@ class MembersController extends Controller
       $constituency_val = $request->union_status != 0 ? ['required', "not_in:0"] : [];
       $union_val = $request->ward_status != 0 ? ['required', "not_in:0"] : [];
       $request->validate([
+         'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
+         'password' => ['confirmed'],
          'name' => ['required', 'string', 'max:255'],
          'father_name' => ['required', 'string', 'max:255'],
          'cnic' => ['nullable', "digits:13", "numeric"],
@@ -151,6 +153,8 @@ class MembersController extends Controller
       ]);
 
       $user = User::whereId($id)->update([
+         'email' => $request->email,
+         'password' => Hash::make($request->password),
          'name' => $request->name,
          'father_name' => $request->father_name,
          'cnic' => $request->cnic,
@@ -184,22 +188,24 @@ class MembersController extends Controller
    public function showAllMembers()
    {
       $members = null;
-
+      $search = request('search');
+      $records = request('records');
       if (request('search')) {
-         $search = request('search');
          $members = User::query()
             ->where(["type" => 1])
             ->where('name', 'LIKE', "%{$search}%")
             ->orWhere('father_name', 'LIKE', "%{$search}%")
             ->orWhere('city', 'LIKE', "%{$search}%")
-            ->paginate(10);
+            ->paginate($records);
       } else {
          $members = User::where(["type" => 1])
-            ->latest()->paginate(10);
+            ->latest()->paginate($records != null ? $records : 10);
       }
 
       return view('memberslist', [
-         'members' => $members
+         'members' => $members,
+         'search' => $search,
+         'records' => $records
       ]);
    }
 

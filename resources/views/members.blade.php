@@ -113,9 +113,8 @@ $old_ward = Ward::where('union_council_id',old('union_council'))->get();
                             <label for="affiliations" class="block mb-2 text-sm font-medium text-gray-900 ">Select Destrict / {{"مستقل ضلع منتخب کریں"}} <span class="text-red-500">*</span></label>
                             <select id="affiliations" name="affiliations" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                 <option value="0">Select Destrict</option>
-
                                 @foreach ($affiliations as $affiliation)
-                                <option value="{{$affiliation->id}}">{{$affiliation->affiliation_title}}</option>
+                                <option value="{{$affiliation->id}}" {{old('affiliations')== $affiliation->id ? "selected": ""}}>{{$affiliation->affiliation_title}}</option>
                                 @endforeach
                             </select>
                             <input type="hidden" id="constituency_status" name="constituency_status" value="0">
@@ -125,6 +124,11 @@ $old_ward = Ward::where('union_council_id',old('union_council'))->get();
                             <label for="constituency" class="block mb-2 text-sm font-medium text-gray-900 ">Select Constituency / {{"انتخابی حلقہ منتخب کریں"}} <span class="text-red-500">*</span></label>
                             <select id="constituency" name="constituency" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                 <option value="0">Select Constituency</option>
+                                @if(old('affiliations'))
+                                @foreach ($old_constituency as $constituency )
+                                <option value="{{$constituency->id}}" {{old('constituency')== $constituency->id ? "selected": ""}}>{{$constituency->constituency_title}}</option>
+                                @endforeach
+                                @endif
                             </select>
                             <input type="hidden" id="union_status" name="union_status" value="0">
                             <x-input-error class="mt-2" :messages="$errors->get('constituency')" />
@@ -133,6 +137,11 @@ $old_ward = Ward::where('union_council_id',old('union_council'))->get();
                             <label for="union_council" class="block mb-2 text-sm font-medium text-gray-900 ">Select union council / {{"یونین کونسل منتخب کریں"}} <span class="text-red-500">*</span></label>
                             <select id="union_council" name="union_council" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                 <option value="0">Select Union Council</option>
+                                @if(old('affiliations'))
+                                @foreach ($old_union_council as $union_council )
+                                <option value="{{$union_council->id}}" {{old('union_council')== $union_council->id ? "selected": ""}}>{{$union_council->union_council_title}}</option>
+                                @endforeach
+                                @endif
                             </select>
                             <input type="hidden" id="ward_status" name="ward_status" value="0">
                             <x-input-error class="mt-2" :messages="$errors->get('union_council')" />
@@ -141,6 +150,11 @@ $old_ward = Ward::where('union_council_id',old('union_council'))->get();
                             <label for="ward" class="block mb-2 text-sm font-medium text-gray-900 ">Select ward / {{"وارڈ منتخب کریں"}} <span class="text-red-500">*</span></label>
                             <select id="ward" name="ward" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                 <option value="0">Select Ward</option>
+                                @if(old('affiliations'))
+                                @foreach ($old_ward as $ward )
+                                <option value="{{$ward->id}}" {{old('ward') == $ward->id ? "selected": ""}}>{{$ward->ward_title}}</option>
+                                @endforeach
+                                @endif
                             </select>
                             <x-input-error class="mt-2" :messages="$errors->get('ward')" />
                         </div>

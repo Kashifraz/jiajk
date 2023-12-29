@@ -1,5 +1,6 @@
 @php
 use App\Models\User;
+$cities = User::select('city')->distinct()->get();
 @endphp
 <x-app-layout>
     <x-slot name="header">
@@ -29,6 +30,14 @@ use App\Models\User;
                             <div class="px-4 text-gray-700">
                                 <h3 class="text-md tracking-wider">{{$affiliation->affiliation_title}}</h3>
                                 <p class="text-2xl">{{$user_count == 1? $user_count." member" :$user_count." members"  }}</p>
+                                @foreach ($cities as $city)
+                                @php
+                                $count = User::where("city","=",$city->city)->where("affiliations","=",$affiliation->id)->count();
+                                @endphp
+                                @if ($count > 0)
+                                <p><span class="font-bold">{{$count}}</span> lives in <span class="capitalize">{{$city->city}}</span></p>  
+                                @endif
+                                @endforeach
                             </div>
                         </div>
                         @endforeach

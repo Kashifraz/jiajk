@@ -132,9 +132,9 @@ use App\Models\Affiliation;
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <div class="mb-3 px-3">
+                <div class="mb-3 px-3">
                 {!! $members->links() !!}
+            </div>
             </div>
         </div>
 

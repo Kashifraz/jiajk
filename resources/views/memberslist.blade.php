@@ -23,7 +23,7 @@ use App\Models\Affiliation;
         </div>
         @endif
 
-        <div class="max-w-7xl mb-3 mx-auto sm:px-6 lg:px-8 mt-5 space-y-6">
+        <div class="max-w-7xl pb-8 mx-auto sm:px-6 lg:px-8 mt-5 space-y-6">
             <div class=" sm:rounded-lg bg-white shadow">
                 <div class="relative overflow-x-auto rounded">
                     <div class="p-4 flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
@@ -132,9 +132,9 @@ use App\Models\Affiliation;
                         </tbody>
                     </table>
                 </div>
-                <div class="mb-3 px-3">
-                {!! $members->links() !!}
             </div>
+            <div class="mb-3 px-3">
+                {!! $members->links() !!}
             </div>
         </div>
 

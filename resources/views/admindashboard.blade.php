@@ -28,19 +28,39 @@ $cities = User::select('city')->distinct()->get();
                                 </svg>
                             </div>
                             <div class="px-4 text-gray-700">
-                                <h3 class="text-md tracking-wider">{{$affiliation->affiliation_title}}</h3>
-                                <p class="text-2xl">{{$user_count == 1? $user_count." member" :$user_count." members"  }}</p>
-                                @foreach ($cities as $city)
-                                @php
-                                $count = User::where("city","=",$city->city)->where("affiliations","=",$affiliation->id)->count();
-                                @endphp
-                                @if ($count > 0)
-                                <p><span class="font-bold">{{$count}}</span> lives in <span class="capitalize">{{$city->city}}</span></p>  
-                                @endif
-                                @endforeach
+                                <h3 class="text-md tracking-wider">{{$affiliation->affiliation_title}} <button data-popover-target="popover-{{$affiliation->id}}" data-popover-placement="bottom" type="button"><span class="sr-only">Show information</span><i class="fa-solid fa-circle-question"></i></button></h3>
+                                <p class="text-2xl">{{$user_count == 1? $user_count." member" :$user_count." members"  }} </p>
+                                <div data-popover id="popover-{{$affiliation->id}}" role="tooltip" class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 ">
+                                    <div class="p-3 space-y-2">
+                                        <h3 class="font-semibold text-gray-900">Members Current location Stats</h3>
+                                        <ul>
+                                            @php
+                                            $is_present = false;
+                                            foreach ($cities as $city){
+                                            $count = User::where("city","=",$city->city)->where("affiliations","=",$affiliation->id)->count();
+                                            if ($count > 0 && $city->city != null){
+                                            $is_present = true;
+                                            @endphp
+                                            <li><span class="font-bold">{{$count}}</span> Members live in <span class="capitalize">{{$city->city}}</span></li>
+                                            @php
+                                            }
+                                            }
+                                            @endphp
+
+
+                                            @if ($is_present == false)
+                                            <li>No data available</li>
+                                            @endif ()
+
+                                        </ul>
+
+                                    </div>
+                                    <div data-popper-arrow></div>
+                                </div>
                             </div>
                         </div>
                         @endforeach
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
 
                     </div>
                 </div>

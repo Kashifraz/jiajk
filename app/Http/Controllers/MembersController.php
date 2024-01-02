@@ -28,8 +28,8 @@ class MembersController extends Controller
       $union_val = $request->ward_status != 0 ? ['required', "not_in:0"] : [];
       $request->validate([
          'username' => ['string', 'max:255'],
-         'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-         'password' => ['required', 'confirmed'],
+         // 'email' => ['string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+         // 'password' => ['confirmed'],
          'name' => ['required', 'string', 'max:255'],
          'father_name' => ['required', 'string', 'max:255'],
          'cnic' => ['nullable', "digits:13", "numeric"],
@@ -59,10 +59,13 @@ class MembersController extends Controller
          'ward.not_in' => 'The selected value was invalid.',
       ]);
 
+      $email = rand() . '@gmail.com';
+      $password = rand();
+
       $user = User::create([
          'username' => $request->username,
-         'email' => $request->email,
-         'password' => Hash::make($request->password),
+         'email' => $request->email == null ? $email : $request->email,
+         'password' => $request->password == null ? Hash::make($password) : Hash::make($request->password),
          'name' => $request->name,
          'father_name' => $request->father_name,
          'cnic' => $request->cnic,
@@ -195,8 +198,7 @@ class MembersController extends Controller
             ->where(["type" => 1])
             ->where('name', 'LIKE', "%{$search}%")
             ->orWhere('father_name', 'LIKE', "%{$search}%")
-            ->orWhere('city', 'LIKE', "%{$search}%")
-            ->paginate($records);
+            ->orWhere('city', 'LIKE', "%{$search}%")->paginate($records);
       } else {
          $members = User::where(["type" => 1])
             ->latest()->paginate($records != null ? $records : 10);

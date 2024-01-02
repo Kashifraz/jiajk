@@ -24,6 +24,9 @@ use App\Models\Affiliation;
         @endif
 
         <div class="max-w-7xl pb-8 mx-auto sm:px-6 lg:px-8 mt-5 space-y-6">
+            <div class="mb-3 px-3">
+                {!! $members->withQueryString()->links() !!}
+            </div>
             <div class=" sm:rounded-lg bg-white shadow">
                 <div class="relative overflow-x-auto rounded">
                     <div class="p-4 flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
@@ -87,7 +90,7 @@ use App\Models\Affiliation;
                         </thead>
                         <tbody>
                             @php
-                            $count = 1;
+                            $count = 1 + ($members->currentPage()- 1) * $records;
                             @endphp
                             @foreach ($members as $member )
                             <tr class="bg-white border-b hover:bg-gray-50">
@@ -134,7 +137,7 @@ use App\Models\Affiliation;
                 </div>
             </div>
             <div class="mb-3 px-3">
-                {!! $members->links() !!}
+                {!! $members->withQueryString()->links() !!}
             </div>
         </div>
 

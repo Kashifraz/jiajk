@@ -43,18 +43,18 @@ $old_ward = Ward::where('union_council_id',old('union_council'))->get();
                             Your Personal Information / {{"آپ کی ذاتی معلومات"}}
                         </h2>
                         <div class="mb-5">
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 "> Email / {{"ای میل"}}<span class="text-red-500">*</span></label>
+                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 "> Email / {{"ای میل"}}</label>
                             <input type="email" id="email" name="email" value="{{old('email')}}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Email">
                             <x-input-error class="mt-2" :messages="$errors->get('email')" />
                         </div>
                         <div class="mb-5">
-                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Password / {{"پاس ورڈ"}}<span class="text-red-500">*</span></label>
+                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Password / {{"پاس ورڈ"}}</label>
                             <input type="password" id="password" name="password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Password">
                             <x-input-error class="mt-2" :messages="$errors->get('password')" />
 
                         </div>
                         <div class="mb-5">
-                            <label for="password_confirmation" class="block mb-2 text-sm font-medium text-gray-900 ">Confirm Password / {{"پاس ورڈ کی تصدیق کریں"}}<span class="text-red-500">*</span></label>
+                            <label for="password_confirmation" class="block mb-2 text-sm font-medium text-gray-900 ">Confirm Password / {{"پاس ورڈ کی تصدیق کریں"}}</label>
                             <input type="password" id="password_confirmation" name="password_confirmation" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Confirm Password">
                             <x-input-error class="mt-2" :messages="$errors->get('password_confirmation')" />
 

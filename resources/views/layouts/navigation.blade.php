@@ -42,14 +42,15 @@
                         {{ __('Edit Info') }}
                     </x-nav-link>
                 </div>
-
                 @endif
-                @if (Auth::user()->type == 2)
+                @if (Auth::user()->type == 2 || Auth::user()->type == 3)
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('members.show')" :active="request()->routeIs('members.show')">
                         {{ __('Members List') }}
                     </x-nav-link>
                 </div>
+                @endif
+                @if (Auth::user()->type == 2 )
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('affiliation.create')" :active="request()->routeIs('affiliation.create')">
                         {{ __('Add Region') }}

@@ -1,3 +1,6 @@
+@php
+use App\Models\Ward;
+@endphp
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -186,23 +189,52 @@
                                                         </div>
                                                     </form>
                                                     <div class="grid grid-cols-8 details-w-{{$ward->id}}">
-                                                        <div class="col-span-1">
+                                                        <div class="col-span-2">
                                                             <p class="text-sm font-medium text-gray-900 truncate ">
                                                                 {{$ward->ward_title}}
                                                             </p>
                                                             <p class="text-sm text-gray-500 truncate ">
                                                                 Ward
                                                             </p>
+                                                            <p class="text-sm text-gray-500 truncate ">
+                                                                @php
+                                                                $population = $ward->population;
+                                                                $population = $population."";
+
+                                                                echo Ward::nice_number($ward->population);
+                                                                @endphp
+                                                            </p>
                                                         </div>
-                                                        <div class="col-span-3">
-                                                            <i id="{{$ward->id}}" onclick="showWardEdit()" class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2 text-center inline-flex items-center me-2 fa-regular fa-pen-to-square"></i>
-                                                            <form class="inline-flex" action="{{ route('ward.destroy' , $ward->id ) }}" method="POST">
-                                                                @csrf
-                                                                @method('delete')
-                                                                <button type="submit" class="text-red-700 border border-red-700 hover:bg-red-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm p-2 text-center inline-flex items-center me-2">
-                                                                    <i class="fa-regular fa-trash-can"></i>
-                                                                </button>
-                                                            </form>
+                                                        <div class="col-span-6">
+                                                            <div class="grid grid-cols-8">
+                                                                <div class="col-span-1">
+                                                                    <i id="{{$ward->id}}" onclick="showWardEdit()" class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2 text-center inline-flex items-center me-2 fa-regular fa-pen-to-square"></i>
+                                                                    <form class="inline-flex" action="{{ route('ward.destroy' , $ward->id ) }}" method="POST">
+                                                                        @csrf
+                                                                        @method('delete')
+                                                                        <button type="submit" class="text-red-700 border border-red-700 hover:bg-red-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm p-2 text-center inline-flex items-center me-2">
+                                                                            <i class="fa-regular fa-trash-can"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+                                                                <div class="col-span-7">
+                                                                    @if ($ward->population == null)
+                                                                    <form action="{{route('ward.population', $ward->id)}}" method="post">
+                                                                        @csrf
+                                                                        <div class="grid grid-cols-4">
+                                                                            <div class="mb-5 col-span-2">
+                                                                                <input type="text" id="population" name="population" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter Population" required>
+                                                                            </div>
+                                                                            <div class="col-span-2">
+                                                                                <button type="submit" class="ml-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600">Submit</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+
                                                         </div>
                                                     </div>
                                                 </div>

@@ -30,12 +30,21 @@ use App\Models\Affiliation;
             <div class=" sm:rounded-lg bg-white shadow">
                 <div class="relative overflow-x-auto rounded">
                     <div class="p-4 flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
-                        <div class="w-1/6 ">
+                        <div class="w-1/5 ">
                         </div>
                         <label for="table-search" class="sr-only">Search</label>
                         <div class="relative">
 
                             <form action="{{route('members.show')}}" method="GET" class="flex items-center">
+                                @if (Auth::user()->type != 3)
+                                <select id="destrict" name="destrict" class="mr-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                    <option value="0">Filter by destrict</option>
+                                    @foreach ($affiliations as $affiliation )
+                                    <option {{$destrict != null && $destrict==$affiliation->id ? "selected":""}} value="{{$affiliation->id}}">{{$affiliation->affiliation_title}}</option>
+                                    @endforeach
+                                </select>
+                                @endif
+
 
                                 <select id="records" name="records" class=" mr-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                     <option value="10" {{$records != null && $records==10 ? "selected":""}}>10 records per page</option>
@@ -54,11 +63,14 @@ use App\Models\Affiliation;
                                     <input type="text" id="simple-search" name="search" value="{{$search}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5" placeholder="Search members...">
                                 </div>
                                 <button type="submit" class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                                    </svg>
+                                    <i class="fa-solid fa-magnifying-glass"></i>
                                     <span class="sr-only">Search</span>
                                 </button>
+
+                                <a href="/show/members/" class="p-2.5 ms-2 text-sm font-medium text-white bg-red-700 rounded-lg border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300">
+                                    <i class="fa-solid fa-eraser"></i>
+                                    <span class="sr-only">clear</span>
+                                </a>
                             </form>
                         </div>
                     </div>
@@ -90,7 +102,7 @@ use App\Models\Affiliation;
                         </thead>
                         <tbody>
                             @php
-                            $count = 1 + ($members->currentPage()- 1) * $records;
+                            $count = 1 + ($members->currentPage()- 1) * ($records ?$records: 10 );
                             @endphp
                             @foreach ($members as $member )
                             <tr class="bg-white border-b hover:bg-gray-50">

@@ -63,8 +63,10 @@ Route::middleware('auth')->group(function () {
     Route::get('edit/member/{id}', [MembersController::class, "edit"])
         ->name('member.edit');
 
-    Route::get('show/members/{records?}/{search?}', [MembersController::class, "showAllMembers"])
+    Route::get('show/members/{destrict?}/{records?}/{search?}', [MembersController::class, "showAllMembers"])
         ->name('members.show');
+
+    Route::post('memeber/role/update/{id}', [MembersController::class, 'updateRole'])->name('member.role.update');
 
     Route::get('region/list', [AffiliationController::class, 'index'])
         ->name('region.list');
@@ -77,6 +79,9 @@ Route::middleware('auth')->group(function () {
     Route::post('unioncouncil/update/{unionCouncil}', [UnionCouncilController::class, 'update'])->name('unioncouncil.update');
     Route::delete('ward/destroy/{ward}', [WardController::class, 'destroy'])->name('ward.destroy');
     Route::post('ward/update/{ward}', [WardController::class, 'update'])->name('ward.update');
+    Route::post('ward/population/{id}', [WardController::class, 'addPopulation'])->name('ward.population');
+
+
 });
 
 Route::get('/add/members', [MembersController::class, 'addMembers'])

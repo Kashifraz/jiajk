@@ -35,4 +35,12 @@ class WardController extends Controller
         ]);
         return redirect()->back()->with("message", "ward updated successfully!");
     }
+
+    public function addPopulation(Request $request, $id)
+    {
+        Ward::whereId($id)->update([
+            "population" => $request->population
+        ]);
+        return redirect()->back()->with("message", "Population added successfully!");
+    }
 }

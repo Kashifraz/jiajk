@@ -42,7 +42,27 @@ use App\Models\Affiliation;
                         <div class="py-2 col-span-3">{{$member->verified == 1? "Verified": "Not Verified" }}</div>
                         <div class="py-2 col-span-1 font-bold">Email</div>
                         <div class="py-2 col-span-3">{{$member->email}}</div>
+                        <div class="py-2 col-span-1 font-bold">Member Role</div>
+                        <div class="py-2 col-span-3">
+                            <form action="{{route('member.role.update', $member->id)}}" method="post">
+                                <div class="grid grid-cols-5">
+                                    @csrf
+                                    <div class=" col-span-3">
+                                        <select id="role" name="role" class="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                            <option value="1" {{$member->type == 1 ? "selected": ""}}>Member</option>
+                                            <option value="3" {{$member->type == 3 ? "selected": ""}} >Moderator</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <button type="submit" class="ml-3 px-3 py-3 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                            update
+                                        </button>
+                                    </div>
 
+                                </div>
+                            </form>
+
+                        </div>
                     </div>
                 </div>
             </div>

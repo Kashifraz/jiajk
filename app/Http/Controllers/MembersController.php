@@ -190,24 +190,32 @@ class MembersController extends Controller
 
    public function showAllMembers()
    {
-      $members = null;
       $search = request('search');
       $records = request('records');
+      $destrict = request('destrict');
+      $members = User::query();
+      $affiliations = Affiliation::all();
+      if (Auth::user()->type == 3) {
+         $destrict_auth = Auth::user()->affiliations;
+         $members = $members->where("affiliations", "=", $destrict_auth)
+            ->where(["type" => 1])->latest();
+      }
+
+      if (request('destrict') && request('destrict') != null) {
+         $members = $members->where("affiliations", "=", $destrict);
+      }
       if (request('search')) {
-         $members = User::query()
-            ->where(["type" => 1])
-            ->where('name', 'LIKE', "%{$search}%")
+         $members = $members->where('name', 'LIKE', "%{$search}%")
             ->orWhere('father_name', 'LIKE', "%{$search}%")
-            ->orWhere('city', 'LIKE', "%{$search}%")->paginate($records);
-      } else {
-         $members = User::where(["type" => 1])
-            ->latest()->paginate($records != null ? $records : 10);
+            ->orWhere('city', 'LIKE', "%{$search}%");
       }
 
       return view('memberslist', [
-         'members' => $members,
+         'members' => $members->paginate($records != null ? $records : 10),
          'search' => $search,
-         'records' => $records
+         'records' => $records,
+         'destrict' => $destrict,
+         'affiliations' => $affiliations
       ]);
    }
 
@@ -215,5 +223,15 @@ class MembersController extends Controller
    {
       User::where('id', $id)->update(['verified' => 1]);
       return redirect()->back()->with("message", "user verified successfully!");
+   }
+
+   public function updateRole(Request $request, $id)
+   {
+      $member = User::find($id);
+
+      User::whereId($id)->update([
+         "type" => $request->role
+      ]);
+      return redirect()->back()->with('message', "Role updated successfully");
    }
 }

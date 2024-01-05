@@ -2,21 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsersExport;
 use App\Models\Affiliation;
 use App\Models\Constituency;
+use App\Models\Designation;
 use App\Models\UnionCouncil;
 use App\Models\User;
 use App\Models\Ward;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MembersController extends Controller
 {
    public function addMembers()
    {
       $affiliations = Affiliation::latest()->get();
-      return view('members', [
+      return view('member.create', [
          "affiliations" => $affiliations,
       ]);
    }
@@ -97,8 +100,10 @@ class MembersController extends Controller
    public function show($id)
    {
       $member = User::find($id);
-      return view('showmember', [
-         'member' => $member
+      $designations = Designation::latest()->get();
+      return view('member.show', [
+         'member' => $member,
+         'designations' => $designations
       ]);
    }
 
@@ -109,7 +114,7 @@ class MembersController extends Controller
       $constituencies = Constituency::where("affiliation_id", $member->affiliations)->get();
       $unioncouncils = UnionCouncil::where("constituency_id", $member->constituency)->get();
       $wards = Ward::where("union_council_id", $member->union_council)->get();
-      return view('editmember', [
+      return view('member.edit', [
          'member' => $member,
          'affiliations' => $affiliations,
          'constituencies' => $constituencies,
@@ -124,7 +129,7 @@ class MembersController extends Controller
       $constituency_val = $request->union_status != 0 ? ['required', "not_in:0"] : [];
       $union_val = $request->ward_status != 0 ? ['required', "not_in:0"] : [];
       $request->validate([
-         'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
+         'email' => ['string', 'lowercase', 'email', 'max:255'],
          'password' => ['confirmed'],
          'name' => ['required', 'string', 'max:255'],
          'father_name' => ['required', 'string', 'max:255'],
@@ -210,7 +215,7 @@ class MembersController extends Controller
             ->orWhere('city', 'LIKE', "%{$search}%");
       }
 
-      return view('memberslist', [
+      return view('member.list', [
          'members' => $members->paginate($records != null ? $records : 10),
          'search' => $search,
          'records' => $records,
@@ -233,5 +238,22 @@ class MembersController extends Controller
          "type" => $request->role
       ]);
       return redirect()->back()->with('message', "Role updated successfully");
+   }
+
+   public function updateDesignation(Request $request, $id)
+   {
+      $member = User::find($id);
+
+      User::whereId($id)->update([
+         "designation" => $request->designation,
+         "designation_level" => $request->designation_level
+      ]);
+       
+      return redirect()->back()->with('message', "Designation updated successfully");
+   }
+
+   public function exportExcel()
+   {
+      return Excel::download(new UsersExport, 'users.xlsx');
    }
 }

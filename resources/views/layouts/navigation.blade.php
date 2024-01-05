@@ -59,7 +59,13 @@
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('region.list')" :active="request()->routeIs('region.list')">
-                        {{ __('Region List') }}
+                        {{ __('Regions') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('designation.create')" :active="request()->routeIs('designation.create')">
+                        {{ __('Designations') }}
                     </x-nav-link>
                 </div>
                 @endif
@@ -138,15 +144,22 @@
                 {{ __('Edit Info') }}
             </x-responsive-nav-link>
             @endif
-            @if (Auth::user()->type == 2)
+
+            @if (Auth::user()->type == 2 || Auth::user()->type == 3 )
             <x-responsive-nav-link :href="route('members.show')" :active="request()->routeIs('members.show')">
                 {{ __('Member List') }}
             </x-responsive-nav-link>
+            @endif
+            
+            @if (Auth::user()->type == 2)
             <x-responsive-nav-link :href="route('affiliation.create')" :active="request()->routeIs('affiliation.create')">
                 {{ __('Add Region') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('region.list')" :active="request()->routeIs('region.list')">
-                {{ __('Region List') }}
+                {{ __('Regions') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('designation.create')" :active="request()->routeIs('designation.create')">
+                {{ __('Designations') }}
             </x-responsive-nav-link>
             @endif
         </div>

@@ -14,7 +14,7 @@ use App\Models\Affiliation;
 
     <div>
         @if(Session::has('message'))
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 mt-5 bg-white">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 mt-5 ">
             <div class="flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-200" role="alert">
                 <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
@@ -42,15 +42,16 @@ use App\Models\Affiliation;
                         <div class="py-2 col-span-3">{{$member->verified == 1? "Verified": "Not Verified" }}</div>
                         <div class="py-2 col-span-1 font-bold">Email</div>
                         <div class="py-2 col-span-3">{{$member->email}}</div>
+                        @if (Auth::user()->type == 2)
                         <div class="py-2 col-span-1 font-bold">Member Role</div>
                         <div class="py-2 col-span-3">
                             <form action="{{route('member.role.update', $member->id)}}" method="post">
                                 <div class="grid grid-cols-5">
                                     @csrf
-                                    <div class=" col-span-3">
+                                    <div class=" col-span-2">
                                         <select id="role" name="role" class="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                             <option value="1" {{$member->type == 1 ? "selected": ""}}>Member</option>
-                                            <option value="3" {{$member->type == 3 ? "selected": ""}} >Moderator</option>
+                                            <option value="3" {{$member->type == 3 ? "selected": ""}}>Moderator</option>
                                         </select>
                                     </div>
                                     <div class="col-span-2">
@@ -61,8 +62,38 @@ use App\Models\Affiliation;
 
                                 </div>
                             </form>
-
                         </div>
+                        <div class="py-2 col-span-1 font-bold">Member Designation</div>
+                        <div class="py-2 col-span-3">
+                            <form action="{{route('member.designation.update', $member->id)}}" method="post">
+                                <div class="grid grid-cols-8">
+                                    @csrf
+                                    <div class=" col-span-3">
+                                        <select id="designation" name="designation" class="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                            @foreach ($designations as $designation )
+                                            <option value="{{$designation->id}}" {{$member->type == 1 ? "selected": ""}}>{{$designation->designation_title}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class=" col-span-3">
+                                        <select id="designation_level" name="designation_level" class=" mx-3 bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                            <option value="1" {{$member->designation_level == 1 ? "selected": ""}}>Central</option>
+                                            <option value="2" {{$member->designation_level == 2 ? "selected": ""}}>Destrict</option>
+                                            <option value="3" {{$member->designation_level == 3 ? "selected": ""}}>Constituency</option>
+                                            <option value="4" {{$member->designation_level == 3 ? "selected": ""}}>Unioncouncil</option>
+                                            <option value="5" {{$member->designation_level == 4 ? "selected": ""}}>Ward</option>
+                                        </select>
+                                    </div>
+                                    <div class="ml-3 col-span-2">
+                                        <button type="submit" class="mx-3 px-3 py-3 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                            update
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

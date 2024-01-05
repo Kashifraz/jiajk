@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AffiliationController;
 use App\Http\Controllers\ConstituencyController;
+use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\MembersController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UnionCouncilController;
@@ -32,13 +33,13 @@ Route::get('/welcome', function () {
 Route::get('/admin/dashboard', function () {
     $affiliations = Affiliation::latest()->get();
 
-    return view('admindashboard', [
+    return view('dashboards.admin', [
         "affiliations" => $affiliations,
     ]);
 })->middleware(['auth', 'verified'])->name('admin.dashboard');
 
 Route::get('/member/dashboard', function () {
-    return view('memberdashboard');
+    return view('dashboards.member');
 })->middleware(['auth', 'verified'])->name('member.dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -50,9 +51,6 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
-
-    Route::get('region/create', [AffiliationController::class, "create"])
-        ->name('affiliation.create');
 
     Route::get('show/member/{id}', [MembersController::class, "show"])
         ->name('member.show');
@@ -66,10 +64,21 @@ Route::middleware('auth')->group(function () {
     Route::get('show/members/{destrict?}/{records?}/{search?}', [MembersController::class, "showAllMembers"])
         ->name('members.show');
 
-    Route::post('memeber/role/update/{id}', [MembersController::class, 'updateRole'])->name('member.role.update');
+    Route::post('memeber/role/update/{id}', [MembersController::class, 'updateRole'])
+        ->name('member.role.update');
+
+    Route::post('memeber/designation/update/{id}', [MembersController::class, 'updateDesignation'])
+        ->name('member.designation.update');
+
+    Route::get('memeber/export/excel', [MembersController::class, 'exportExcel'])
+        ->name('member.export.excel');
 
     Route::get('region/list', [AffiliationController::class, 'index'])
         ->name('region.list');
+
+
+    Route::get('region/create', [AffiliationController::class, "create"])
+        ->name('affiliation.create');
 
     Route::delete('affiliation/destroy/{affiliation}', [AffiliationController::class, 'destroy'])->name('affiliation.destroy');
     Route::post('affiliation/update/{affiliation}', [AffiliationController::class, 'update'])->name('affiliation.update');
@@ -81,7 +90,14 @@ Route::middleware('auth')->group(function () {
     Route::post('ward/update/{ward}', [WardController::class, 'update'])->name('ward.update');
     Route::post('ward/population/{id}', [WardController::class, 'addPopulation'])->name('ward.population');
 
+    Route::get('designation/create', [DesignationController::class, "create"])
+        ->name('designation.create');
 
+    Route::post('designation/store', [DesignationController::class, "store"])
+        ->name('designation.store');
+
+    Route::delete('designation/destroy/{designation}', [DesignationController::class, 'destroy'])
+        ->name('designation.destroy');
 });
 
 Route::get('/add/members', [MembersController::class, 'addMembers'])
@@ -103,6 +119,10 @@ Route::post('unioncouncil/store', [UnionCouncilController::class, "store"])
 
 Route::post('ward/store', [WardController::class, "store"])
     ->name('ward.store');
+
+Route::get('/stats', function () {
+    return view("stats");
+})->name('jiajk.stats');
 
 Route::get('getconstituency/{id}', function ($id) {
     $affiliation = Affiliation::find($id);

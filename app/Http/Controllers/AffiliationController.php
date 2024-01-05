@@ -16,7 +16,7 @@ class AffiliationController extends Controller
     public function index()
     {
         $affiliations = Affiliation::latest()->get();
-        return view('editregion', [
+        return view('region.edit', [
             "affiliations" => $affiliations
         ]);
     }
@@ -30,7 +30,7 @@ class AffiliationController extends Controller
         $constituencies = Constituency::latest()->get();
         $unioncouncils = UnionCouncil::latest()->get();
         $wards = Ward::latest()->get();
-        return view('region', [
+        return view('region.create', [
             "affiliations" => $affiliations,
             "constituencies" => $constituencies,
             "unioncouncils" => $unioncouncils,

@@ -68,6 +68,11 @@
                         {{ __('Designations') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('form.create')" :active="request()->routeIs('form.create')">
+                    {{ __('Forms') }}
+                    </x-nav-link>
+                </div>
                 @endif
 
 
@@ -150,7 +155,7 @@
                 {{ __('Member List') }}
             </x-responsive-nav-link>
             @endif
-            
+
             @if (Auth::user()->type == 2)
             <x-responsive-nav-link :href="route('affiliation.create')" :active="request()->routeIs('affiliation.create')">
                 {{ __('Add Region') }}
@@ -160,6 +165,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('designation.create')" :active="request()->routeIs('designation.create')">
                 {{ __('Designations') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('form.create')" :active="request()->routeIs('form.create')">
+                {{ __('Forms') }}
             </x-responsive-nav-link>
             @endif
         </div>

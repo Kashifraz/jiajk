@@ -3,6 +3,7 @@
 use App\Http\Controllers\AffiliationController;
 use App\Http\Controllers\ConstituencyController;
 use App\Http\Controllers\DesignationController;
+use App\Http\Controllers\FormController;
 use App\Http\Controllers\MembersController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UnionCouncilController;
@@ -52,6 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
 
+    //member routes
     Route::get('show/member/{id}', [MembersController::class, "show"])
         ->name('member.show');
 
@@ -73,23 +75,41 @@ Route::middleware('auth')->group(function () {
     Route::get('memeber/export/excel', [MembersController::class, 'exportExcel'])
         ->name('member.export.excel');
 
+    //region routes
     Route::get('region/list', [AffiliationController::class, 'index'])
         ->name('region.list');
-
 
     Route::get('region/create', [AffiliationController::class, "create"])
         ->name('affiliation.create');
 
-    Route::delete('affiliation/destroy/{affiliation}', [AffiliationController::class, 'destroy'])->name('affiliation.destroy');
-    Route::post('affiliation/update/{affiliation}', [AffiliationController::class, 'update'])->name('affiliation.update');
-    Route::delete('constituency/destroy/{constituency}', [ConstituencyController::class, 'destroy'])->name('constituency.destroy');
-    Route::post('constituency/update/{constituency}', [ConstituencyController::class, 'update'])->name('constituency.update');
-    Route::delete('unioncouncil/destroy/{unionCouncil}', [UnionCouncilController::class, 'destroy'])->name('unioncouncil.destroy');
-    Route::post('unioncouncil/update/{unionCouncil}', [UnionCouncilController::class, 'update'])->name('unioncouncil.update');
-    Route::delete('ward/destroy/{ward}', [WardController::class, 'destroy'])->name('ward.destroy');
-    Route::post('ward/update/{ward}', [WardController::class, 'update'])->name('ward.update');
-    Route::post('ward/population/{id}', [WardController::class, 'addPopulation'])->name('ward.population');
+    Route::delete('affiliation/destroy/{affiliation}', [AffiliationController::class, 'destroy'])
+        ->name('affiliation.destroy');
 
+    Route::post('affiliation/update/{affiliation}', [AffiliationController::class, 'update'])
+        ->name('affiliation.update');
+
+    Route::delete('constituency/destroy/{constituency}', [ConstituencyController::class, 'destroy'])
+        ->name('constituency.destroy');
+
+    Route::post('constituency/update/{constituency}', [ConstituencyController::class, 'update'])
+        ->name('constituency.update');
+
+    Route::delete('unioncouncil/destroy/{unionCouncil}', [UnionCouncilController::class, 'destroy'])
+        ->name('unioncouncil.destroy');
+
+    Route::post('unioncouncil/update/{unionCouncil}', [UnionCouncilController::class, 'update'])
+        ->name('unioncouncil.update');
+
+    Route::delete('ward/destroy/{ward}', [WardController::class, 'destroy'])
+        ->name('ward.destroy');
+
+    Route::post('ward/update/{ward}', [WardController::class, 'update'])
+        ->name('ward.update');
+
+    Route::post('ward/population/{id}', [WardController::class, 'addPopulation'])
+        ->name('ward.population');
+
+    //designation routes
     Route::get('designation/create', [DesignationController::class, "create"])
         ->name('designation.create');
 
@@ -98,6 +118,22 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('designation/destroy/{designation}', [DesignationController::class, 'destroy'])
         ->name('designation.destroy');
+
+    // form Questions routes 
+    Route::get("form/create", [FormController::class, "create"])
+        ->name("form.create");
+
+    Route::post("form/store", [FormController::class, "store"])
+        ->name("form.store");
+
+    Route::delete("form/delete/{form}", [FormController::class, "destroy"])
+        ->name("form.delete");
+
+    Route::get("form/edit/{form}", [FormController::class, "edit"])
+        ->name("form.edit");
+
+    Route::post("form/update/{form}", [FormController::class, "update"])
+        ->name("form.update");
 });
 
 Route::get('/add/members', [MembersController::class, 'addMembers'])

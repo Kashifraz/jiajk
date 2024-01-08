@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('designation')->after('type')->nullable();
+        Schema::create('forms', function (Blueprint $table) {
+            $table->id();
+            $table->string('question_title');
+            $table->string('form_type');
+            $table->string('question_type');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            Schema::dropIfExists('designation');
-        });
+        Schema::dropIfExists('forms');
     }
 };

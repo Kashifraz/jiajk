@@ -8,12 +8,12 @@ use App\Models\Designation;
 
 $cities = User::select('city')->distinct()->get();
 $total_users = User::count();
-$total_designated_destricts = User::where('designation_level',2)->whereNotNull('designation')->count();
+$total_designated_Districts = User::where('designation_level',2)->whereNotNull('designation')->count();
 $total_designated_constituencies = User::where('designation_level',3)->whereNotNull('designation')->count();
 $total_designated_unions = User::where('designation_level',4)->whereNotNull('designation')->count();
 $total_designated_wards = User::where('designation_level',5)->whereNotNull('designation')->count();
-$destricts = Affiliation::count();
-$destrict_stats =json_encode(array($destricts,$total_designated_destricts));
+$Districts = Affiliation::count();
+$destrict_stats =json_encode(array($Districts,$total_designated_Districts));
 $constituencys = Constituency::count();
 $constituency_stats =json_encode(array($constituencys,$total_designated_constituencies));
 $unionCouncils = UnionCouncil::count();
@@ -41,10 +41,10 @@ $ward_stats =json_encode(array($wards,$total_designated_wards));
                     <div class="grid grid-cols-2">
                         <div>
                             <h2 class="text-lg font-medium text-gray-900 p-4">
-                                {{ __('Total Destricts') }} <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$destricts}} added Destricts</span>
+                                {{ __('Total Districts') }} <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$Districts}} added Districts</span>
                             </h2>
                             <div class="p-6 bg-white shadow rounded-lg mb-5" style="width:60%;">
-                                <canvas id="destricts"></canvas>
+                                <canvas id="Districts"></canvas>
                             </div>
                         </div>
                         <div>
@@ -74,9 +74,9 @@ $ward_stats =json_encode(array($wards,$total_designated_wards));
                     </div>
 
                     <script>
-                        const destricts = {
+                        const Districts = {
                             labels: [
-                                'Destricts',
+                                'Districts',
                                 'designations',
                             ],
                             datasets: [{
@@ -136,10 +136,10 @@ $ward_stats =json_encode(array($wards,$total_designated_wards));
                         };
 
                         window.onload = function() {
-                            var ctx = document.getElementById("destricts").getContext("2d");
+                            var ctx = document.getElementById("Districts").getContext("2d");
                             window.doughnut1 = new Chart(ctx, {
                                 type: 'doughnut',
-                                data: destricts,
+                                data: Districts,
                                 options: {
 
                                     responsive: true,

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('designation')->after('type')->nullable();
+            $table->longText('form_b')->after('designation_level')->nullable();
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            Schema::dropColumn('designation');
+            Schema::dropColumn('form_b');
         });
     }
 };

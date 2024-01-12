@@ -3,7 +3,7 @@
 use App\Http\Controllers\AffiliationController;
 use App\Http\Controllers\ConstituencyController;
 use App\Http\Controllers\DesignationController;
-use App\Http\Controllers\FormController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\MembersController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UnionCouncilController;
@@ -120,20 +120,29 @@ Route::middleware('auth')->group(function () {
         ->name('designation.destroy');
 
     // form Questions routes 
-    Route::get("form/create", [FormController::class, "create"])
+    Route::get("form/create", [QuestionController::class, "create"])
         ->name("form.create");
 
-    Route::post("form/store", [FormController::class, "store"])
+    Route::post("form/store", [QuestionController::class, "store"])
         ->name("form.store");
 
-    Route::delete("form/delete/{form}", [FormController::class, "destroy"])
+    Route::delete("form/delete/{question}", [QuestionController::class, "destroy"])
         ->name("form.delete");
 
-    Route::get("form/edit/{form}", [FormController::class, "edit"])
+    Route::get("form/edit/{question}", [QuestionController::class, "edit"])
         ->name("form.edit");
 
-    Route::post("form/update/{form}", [FormController::class, "update"])
+    Route::post("form/update/{question}", [QuestionController::class, "update"])
         ->name("form.update");
+
+    Route::get("form/show/a", [QuestionController::class, "showFormA"])
+        ->name("form.show.a");
+
+    Route::get("form/show/b", [QuestionController::class, "showFormB"])
+        ->name("form.show.b");
+
+    Route::post("form/a/submit", [QuestionController::class, "submitFormA"])
+        ->name('form.a.submit');
 });
 
 Route::get('/add/members', [MembersController::class, 'addMembers'])

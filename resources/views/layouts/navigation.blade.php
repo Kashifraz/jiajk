@@ -73,6 +73,16 @@
                     {{ __('Forms') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('form.show.a')" :active="request()->routeIs('form.show.a')">
+                    {{ __('Form A') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('form.show.b')" :active="request()->routeIs('form.show.b')">
+                    {{ __('Form B') }}
+                    </x-nav-link>
+                </div>
                 @endif
 
 
@@ -168,6 +178,12 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('form.create')" :active="request()->routeIs('form.create')">
                 {{ __('Forms') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('form.show.a')" :active="request()->routeIs('form.show.a')">
+                {{ __('Form A') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('form.show.b')" :active="request()->routeIs('form.show.b')">
+                {{ __('Form B') }}
             </x-responsive-nav-link>
             @endif
         </div>

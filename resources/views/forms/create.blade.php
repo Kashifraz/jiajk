@@ -43,6 +43,11 @@
                                 <x-input-error class="mt-2" :messages="$errors->get('form_type')" />
                             </div>
                             <div class="mb-5">
+                                <label for="question_order" class="block mb-2 text-sm font-medium text-gray-900 ">Form Type</label>
+                                <input type="number" id="question_order" name="question_order" value="{{isset($form) && $form->question_order ? $form->question_order:''}}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Question order">
+                                <x-input-error class="mt-2" :messages="$errors->get('question_order')" />
+                            </div>
+                            <div class="mb-5">
                                 <label for="question_type" class="block mb-2 text-sm font-medium text-gray-900 ">Form Type</label>
                                 <select id="question_type" name="question_type" class="mr-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                     <option value="1" {{isset($form) != null && $form->question_type == 1 ? "selected": "" }}>Text</option>

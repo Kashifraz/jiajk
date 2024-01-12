@@ -52,6 +52,8 @@
                                 <select id="question_type" name="question_type" class="mr-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                     <option value="1" {{isset($form) != null && $form->question_type == 1 ? "selected": "" }}>Text</option>
                                     <option value="2" {{isset($form) != null && $form->question_type == 2 ? "selected": "" }}>Select</option>
+                                    <option value="3" {{isset($form) != null && $form->question_type == 3 ? "selected": "" }}>options</option>
+                                    <option value="4" {{isset($form) != null && $form->question_type == 4 ? "selected": "" }}>List</option>
                                 </select>
                                 <x-input-error class="mt-2" :messages="$errors->get('question_type')" />
                             </div>

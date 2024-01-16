@@ -70,21 +70,25 @@
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('form.create')" :active="request()->routeIs('form.create')">
-                    {{ __('Forms') }}
+                        {{ __('Forms') }}
                     </x-nav-link>
                 </div>
+                @endif
+                @if (Auth::user()->member_level == "applicant")
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('form.show.a')" :active="request()->routeIs('form.show.a')">
-                    {{ __('Form A') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('form.show.b')" :active="request()->routeIs('form.show.b')">
-                    {{ __('Form B') }}
+                        {{ __('Form A') }}
                     </x-nav-link>
                 </div>
                 @endif
 
+                @if (Auth::user()->member_level =="gc")
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('form.show.b')" :active="request()->routeIs('form.show.b')">
+                        {{ __('Form B') }}
+                    </x-nav-link>
+                </div>
+                @endif
 
                 @endif
             </div>
@@ -179,13 +183,18 @@
             <x-responsive-nav-link :href="route('form.create')" :active="request()->routeIs('form.create')">
                 {{ __('Forms') }}
             </x-responsive-nav-link>
+            @endif
+            @if (Auth::user()->member_level === "applicant")
             <x-responsive-nav-link :href="route('form.show.a')" :active="request()->routeIs('form.show.a')">
                 {{ __('Form A') }}
             </x-responsive-nav-link>
+            @endif
+            @if (Auth::user()->member_level === "gc")
             <x-responsive-nav-link :href="route('form.show.b')" :active="request()->routeIs('form.show.b')">
                 {{ __('Form B') }}
             </x-responsive-nav-link>
             @endif
+
         </div>
 
         <!-- Responsive Settings Options -->

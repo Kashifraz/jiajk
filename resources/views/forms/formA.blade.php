@@ -33,7 +33,7 @@
                             $ids = array();
                             @endphp
                             @foreach ($questions as $question)
-                            <?php array_push($ids,$question->id); ?>
+                            <?php array_push($ids, $question->id); ?>
                             @if ($question->question_type == 1)
                             <div class="mb-5">
                                 <label for="{{$question->id}}" class="block mb-2 text-lg font-medium text-gray-900 ">{{$question->question_title}}</label>
@@ -49,6 +49,13 @@
                                     <option value="2">No</option>
                                 </select>
                                 <x-input-error class="mt-2" :messages="$errors->get('form_type')" />
+                            </div>
+                            @endif
+                            @if ($question->question_type == 3)
+                            <div class="mb-5">
+                                <label for="{{$question->id}}" class="block mb-2 text-lg font-medium text-gray-900 ">{{$question->question_title}}</label>
+                                <input type="datetime-local" id="{{$question->id}}" name="answer[]" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Enter your brief answer">
+                                <x-input-error class="mt-2" :messages="$errors->get('{{$question->id}}')" />
                             </div>
                             @endif
                             @endforeach

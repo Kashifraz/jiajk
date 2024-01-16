@@ -69,6 +69,9 @@ Route::middleware('auth')->group(function () {
     Route::post('memeber/role/update/{id}', [MembersController::class, 'updateRole'])
         ->name('member.role.update');
 
+    Route::post('memeber/level/update/{id}', [MembersController::class, 'promoteMember'])
+        ->name('member.level.update');
+
     Route::post('memeber/designation/update/{id}', [MembersController::class, 'updateDesignation'])
         ->name('member.designation.update');
 

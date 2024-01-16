@@ -248,8 +248,16 @@ class MembersController extends Controller
          "designation" => $request->designation,
          "designation_level" => $request->designation_level
       ]);
-       
+
       return redirect()->back()->with('message', "Designation updated successfully");
+   }
+
+   public function promoteMember($id)
+   {
+      User::whereId($id)->update([
+         "member_level" => "applicant"
+     ]);
+     return redirect()->back()->with("message", "Member promoted successfully!");
    }
 
    public function exportExcel()

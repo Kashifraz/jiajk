@@ -9,6 +9,7 @@ use App\Models\Affiliation;
                 <i class="fa-solid fa-user-pen mr-1"></i>
                 Edit
             </a>
+
         </h2>
     </x-slot>
 
@@ -43,6 +44,22 @@ use App\Models\Affiliation;
                         <div class="py-2 col-span-1 font-bold">Email</div>
                         <div class="py-2 col-span-3">{{$member->email}}</div>
                         @if (Auth::user()->type == 2)
+                        <div class="py-2 col-span-1 font-bold">Member Level</div>
+                        <div class="py-2 col-span-3">
+                            <form action="{{route('member.level.update', $member->id)}}" method="post">
+                                <div class="grid grid-cols-5">
+                                    @csrf
+                                    <div class=" col-span-1">
+                                        <p class="capitalize">{{$member->member_level}}</p>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <button type="submit" class="ml-3 px-3 py-3 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                            Promote Now
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                         <div class="py-2 col-span-1 font-bold">Member Role</div>
                         <div class="py-2 col-span-3">
                             <form action="{{route('member.role.update', $member->id)}}" method="post">

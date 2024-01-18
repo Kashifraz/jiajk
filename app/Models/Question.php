@@ -13,6 +13,7 @@ class Question extends Model
         'question_title',
         'form_type',
         'question_order',
-        'question_type'
+        'question_type',
+        'options'
     ];
 }

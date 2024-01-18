@@ -58,7 +58,41 @@
                                 <x-input-error class="mt-2" :messages="$errors->get('{{$question->id}}')" />
                             </div>
                             @endif
+
+                            @if ($question->question_type == 4)
+                            <div class="mb-5">
+                                <label for="{{$question->id}}" class="block mb-2 text-lg font-medium text-gray-900 ">{{$question->question_title}}</label>
+                                <select id="{{$question->id}}" name="answer[]" class="mr-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                    @php
+                                    $options = json_decode($question->options);
+                                    print_r($options);
+                                    @endphp
+                                    @if (is_array($options) || is_object($options))
+                                    @foreach ($options as $option )
+                                    <option value="{{$option}}">{{$option}}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
+                                <x-input-error class="mt-2" :messages="$errors->get('form_type')" />
+                            </div>
+                            @endif
+
+                            @if ($question->question_type == 5)
+                            <div class="mb-5">
+                                <label for="{{$question->id}}" class="block mb-2 text-lg font-medium text-gray-900 ">{{$question->question_title}}</label>
+                                @foreach (json_decode($question->options) as $option )
+                                <div class="flex items-center mb-3">
+                                    <input checked id="checkbox" type="checkbox" name="answer[{{$question->question_order-1}}][]" value="{{$option}}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                    <label for="checked-checkbox" class="ms-2 text-sm font-medium text-gray-900">{{$option}}</label>
+                                </div>
+                                @endforeach
+                                <x-input-error class="mt-2" :messages="$errors->get('form_type')" />
+                            </div>
+                            @endif
                             @endforeach
+
+
+
                             <input type="hidden" name="ids" value="{{json_encode($ids)}}">
                             <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Submit</button>
                         </form>

@@ -54,9 +54,12 @@
                                     <option value="2" {{isset($form) != null && $form->question_type == 2 ? "selected": "" }}>Select</option>
                                     <option value="3" {{isset($form) != null && $form->question_type == 2 ? "selected": "" }}>Date</option>
                                     <option value="4" {{isset($form) != null && $form->question_type == 3 ? "selected": "" }}>options</option>
-                                    <option value="5" {{isset($form) != null && $form->question_type == 4 ? "selected": "" }}>List</option>
+                                    <option value="5 " {{isset($form) != null && $form->question_type == 4 ? "selected": "" }}>List</option>
                                 </select>
                                 <x-input-error class="mt-2" :messages="$errors->get('question_type')" />
+                            </div>
+                            <div class="mb-5 hidden" id="options">
+                                <button id="option_btn" class="font-medium text-blue-600 underline dark:text-blue-500 hover:no-underline mb-4">Add option</button>
                             </div>
                             <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Submit</button>
                         </form>
@@ -88,6 +91,9 @@
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Question Type
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Order
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     action
@@ -124,9 +130,20 @@
                                     }else if($question->question_type == 2){
                                     echo "Select Input";
                                     }
+                                    else if($question->question_type == 3){
+                                    echo "Date Input";
+                                    }
+                                    else if($question->question_type == 4){
+                                    echo "Option Input";
+                                    }
+                                    else if($question->question_type == 5){
+                                    echo "List Input";
+                                    }
                                     @endphp
                                 </td>
-
+                                <td class="px-6 py-4 ">
+                                {{$question->question_order}}
+                                </td>
                                 <td class="px-6 py-4">
                                     <a href="{{route('form.edit',$question->id )}}"><i class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2 text-center inline-flex items-center me-2 fa-regular fa-pen-to-square"></i></a>
                                     <form class="inline-flex" action="{{route('form.delete',$question->id )}}" method="POST">
@@ -149,5 +166,22 @@
             </div>
         </div>
         </form>
+
+        <script>
+            var count = 0;
+            $("#question_type").change(function(e) {
+                if (e.target.value == 4 || e.target.value == 5) {
+                    $("#options").removeClass("hidden");
+                } else {
+                    $("#options").addClass("hidden");
+                }
+            });
+
+            $("#option_btn").click(function(e) {
+                e.preventDefault();
+                count++;
+                $("#options").append('<div class="mb-5"><input type="text"  name="options[]"  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="enter option ' + count + '"></div>');
+            });
+        </script>
     </div>
 </x-app-layout>

@@ -22,7 +22,7 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        $formQuestions = Question::latest()->paginate(5);
+        $formQuestions = Question::orderBy('question_order', 'ASC')->paginate(5);
         return view("forms.create", [
             "formQuestions" => $formQuestions
         ]);
@@ -37,14 +37,15 @@ class QuestionController extends Controller
             'question_title' => ['required', 'string',],
             'form_type' => ['required'],
             'question_order' => ['required'],
-            'question_type' => ['required']
+            'question_type' => ['required'],
         ]);
 
         $Question = Question::create([
             'question_title' => $request->question_title,
             'form_type' => $request->form_type,
             'question_order' => $request->question_order,
-            'question_type' => $request->question_type
+            'question_type' => $request->question_type,
+            'options' => json_encode($request->options),
         ]);
 
         return redirect()->back()->with("message", "question added successfully");
@@ -55,7 +56,7 @@ class QuestionController extends Controller
      */
     public function showFormA(Question $Question)
     {
-        $questions = Question::where("form_type", 1)->get();
+        $questions = Question::where("form_type", 1)->orderBy('question_order', 'ASC')->get();
         return view("forms.formA", [
             "questions" => $questions
         ]);
@@ -67,13 +68,14 @@ class QuestionController extends Controller
         $answers = null;
         for ($id = 0; $id < count($question_ids); $id++) {
             $answers[] = [
-                'question_' . $question_ids[$id] => $request->answer[$id]   
+                'question_' . $question_ids[$id] => $request->answer[$id]
             ];
         }
+
         $user = User::whereId(Auth::user()->id)->update([
-            "form_a" => json_encode($answers) 
+            "form_a" => json_encode($answers)
         ]);
-        
+
         return redirect()->back()->with("message", "Form A submitted successfully");
     }
 
@@ -90,7 +92,7 @@ class QuestionController extends Controller
      */
     public function edit(Question $Question)
     {
-        $formQuestions = Question::latest()->paginate(5);
+        $formQuestions = Question::orderBy('question_order', 'ASC')->paginate(5);
         return view("forms.create", [
             "form" => $Question,
             "formQuestions" => $formQuestions

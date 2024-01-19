@@ -54,15 +54,16 @@ class QuestionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function showFormA(Question $Question)
+    public function showFormA(User $user)
     {
         $questions = Question::where("form_type", 1)->orderBy('question_order', 'ASC')->get();
         return view("forms.formA", [
-            "questions" => $questions
+            "questions" => $questions,
+            "user" => $user
         ]);
     }
 
-    public function submitFormA(Request $request)
+    public function submitFormA(Request $request, User $user = null)
     {
         $question_ids = json_decode($request->ids);
         $answers = null;
@@ -72,9 +73,15 @@ class QuestionController extends Controller
             ];
         }
 
-        $user = User::whereId(Auth::user()->id)->update([
-            "form_a" => json_encode($answers)
-        ]);
+        if (Auth::user()->type != 2) {
+            $user = User::whereId(Auth::user()->id)->update([
+                "form_a" => json_encode($answers)
+            ]);
+        } else {
+            $user = User::whereId($user->id)->update([
+                "form_a" => json_encode($answers)
+            ]);
+        }
 
         return redirect()->back()->with("message", "Form A submitted successfully");
     }

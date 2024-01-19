@@ -4,7 +4,6 @@
             {{ __('Form A') }}
         </h2>
     </x-slot>
-
     <div>
         @if(Session::has('message'))
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 mt-5">
@@ -27,7 +26,7 @@
                         <h2 class="text-lg font-medium text-gray-900 mb-4">
                             Submit Answers to Form A
                         </h2>
-                        <form method="post" action="{{route('form.a.submit')}}" class="mt-6 space-y-6">
+                        <form method="post" action="{{route('form.a.submit', $user->id)}}" class="mt-6 space-y-6">
                             @csrf
                             @php
                             $ids = array();

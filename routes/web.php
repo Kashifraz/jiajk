@@ -138,13 +138,13 @@ Route::middleware('auth')->group(function () {
     Route::post("form/update/{question}", [QuestionController::class, "update"])
         ->name("form.update");
 
-    Route::get("form/show/a", [QuestionController::class, "showFormA"])
+    Route::get("form/show/a/{user?}", [QuestionController::class, "showFormA"])
         ->name("form.show.a");
 
     Route::get("form/show/b", [QuestionController::class, "showFormB"])
         ->name("form.show.b");
 
-    Route::post("form/a/submit", [QuestionController::class, "submitFormA"])
+    Route::post("form/a/submit/{user?}", [QuestionController::class, "submitFormA"])
         ->name('form.a.submit');
 });
 

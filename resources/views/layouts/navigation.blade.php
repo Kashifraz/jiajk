@@ -74,7 +74,7 @@
                     </x-nav-link>
                 </div>
                 @endif
-                @if (Auth::user()->member_level == "member")
+                @if (Auth::user()->member_level == "member" && Auth::user()->type != 2)
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('form.show.a')" :active="request()->routeIs('form.show.a')">
                         {{ __('Form A') }}
@@ -82,7 +82,7 @@
                 </div>
                 @endif
 
-                @if (Auth::user()->member_level =="applicant")
+                @if (Auth::user()->member_level =="applicant" && Auth::user()->type != 2)
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('form.show.b')" :active="request()->routeIs('form.show.b')">
                         {{ __('Form B') }}

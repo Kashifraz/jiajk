@@ -6,6 +6,7 @@ use App\Exports\UsersExport;
 use App\Models\Affiliation;
 use App\Models\Constituency;
 use App\Models\Designation;
+use App\Models\Question;
 use App\Models\UnionCouncil;
 use App\Models\User;
 use App\Models\Ward;
@@ -101,9 +102,16 @@ class MembersController extends Controller
    {
       $member = User::find($id);
       $designations = Designation::latest()->get();
+      $questions = Question::where("form_type", 1)->orderBy('question_order', 'ASC')->get();
+      $ids = array();
+      foreach ($questions as $question){
+          array_push($ids, $question->id);
+      }
       return view('member.show', [
          'member' => $member,
-         'designations' => $designations
+         'designations' => $designations,
+         'questions' => $questions,
+         'ids' => json_encode($ids)
       ]);
    }
 
@@ -256,8 +264,8 @@ class MembersController extends Controller
    {
       User::whereId($id)->update([
          "member_level" => "applicant"
-     ]);
-     return redirect()->back()->with("message", "Member promoted successfully!");
+      ]);
+      return redirect()->back()->with("message", "Member promoted successfully!");
    }
 
    public function exportExcel()

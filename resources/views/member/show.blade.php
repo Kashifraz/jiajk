@@ -171,18 +171,14 @@ use App\Models\Affiliation;
                     </div>
                 </div>
             </div>
+            @if ($member->form_a != NULL)
             <div class=" sm:rounded-lg bg-white shadow">
                 <div class="p-4 relative overflow-x-auto rounded">
                     <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Form A Answers</h2>
                     @php
                     $answers = json_decode($member->form_a, true);
                     $question_ids = json_decode($ids);
-                    for($i = 0; $i<count($question_ids); $i++){
-                        $key = "question_".$question_ids[$i];
-                        print_r($answers[$i][$key]);
-                    }
-                    @endphp
-                    <form action="{{route('member.level.update', $member->id)}}" method="post">
+                    for($i = 0; $i<count($question_ids); $i++){ $key="question_" .$question_ids[$i]; print_r($answers[$i][$key]); } @endphp <form action="{{route('member.level.update', $member->id)}}" method="post">
                         <div class="grid grid-cols-5">
                             @csrf
                             <div class="col-span-2">
@@ -191,9 +187,11 @@ use App\Models\Affiliation;
                                 </button>
                             </div>
                         </div>
-                    </form>
+                        </form>
                 </div>
             </div>
+            @endif
+
         </div>
     </div>
 </x-app-layout>

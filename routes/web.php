@@ -75,7 +75,7 @@ Route::middleware('auth')->group(function () {
     Route::post('memeber/designation/update/{id}', [MembersController::class, 'updateDesignation'])
         ->name('member.designation.update');
 
-    Route::get('memeber/export/excel', [MembersController::class, 'exportExcel'])
+    Route::get('member/export/excel/{destrict?}/{search?}', [MembersController::class, 'exportExcel'])
         ->name('member.export.excel');
 
     //region routes

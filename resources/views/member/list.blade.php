@@ -45,7 +45,6 @@ use App\Models\Affiliation;
                                 </select>
                                 @endif
 
-
                                 <select id="records" name="records" class=" mr-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                     <option value="10" {{$records != null && $records==10 ? "selected":""}}>10 records per page</option>
                                     <option value="20" {{$records != null && $records==20 ? "selected":""}}>20 records per page</option>
@@ -69,6 +68,10 @@ use App\Models\Affiliation;
 
                                 <a href="/show/members/" class="p-2.5 ms-2 text-sm font-medium text-white bg-red-700 rounded-lg border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300">
                                     <i class="fa-solid fa-eraser"></i>
+                                    <span class="sr-only">clear</span>
+                                </a>
+                                <a href="/member/export/excel/{{$destrict}}/{{$search}}" class="p-2.5 ms-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300">
+                                    <i class="fa-solid fa-file-excel"></i>
                                     <span class="sr-only">clear</span>
                                 </a>
                             </form>

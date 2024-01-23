@@ -104,8 +104,8 @@ class MembersController extends Controller
       $designations = Designation::latest()->get();
       $questions = Question::where("form_type", 1)->orderBy('question_order', 'ASC')->get();
       $ids = array();
-      foreach ($questions as $question){
-          array_push($ids, $question->id);
+      foreach ($questions as $question) {
+         array_push($ids, $question->id);
       }
       return view('member.show', [
          'member' => $member,
@@ -270,6 +270,9 @@ class MembersController extends Controller
 
    public function exportExcel()
    {
-      return Excel::download(new UsersExport, 'users.xlsx');
+      $search = request('search');
+      $destrict = request('destrict');
+
+      return Excel::download(new UsersExport($destrict, $search),'users.xlsx');
    }
 }

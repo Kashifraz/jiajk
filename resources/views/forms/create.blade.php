@@ -52,9 +52,9 @@
                                 <select id="question_type" name="question_type" class="mr-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                     <option value="1" {{isset($form) != null && $form->question_type == 1 ? "selected": "" }}>Text</option>
                                     <option value="2" {{isset($form) != null && $form->question_type == 2 ? "selected": "" }}>Select</option>
-                                    <option value="3" {{isset($form) != null && $form->question_type == 2 ? "selected": "" }}>Date</option>
-                                    <option value="4" {{isset($form) != null && $form->question_type == 3 ? "selected": "" }}>options</option>
-                                    <option value="5 " {{isset($form) != null && $form->question_type == 4 ? "selected": "" }}>List</option>
+                                    <option value="3" {{isset($form) != null && $form->question_type == 3 ? "selected": "" }}>Date</option>
+                                    <option value="4" {{isset($form) != null && $form->question_type == 4 ? "selected": "" }}>options</option>
+                                    <option value="5 " {{isset($form) != null && $form->question_type == 5 ? "selected": "" }}>List</option>
                                 </select>
                                 <x-input-error class="mt-2" :messages="$errors->get('question_type')" />
                             </div>
@@ -142,7 +142,7 @@
                                     @endphp
                                 </td>
                                 <td class="px-6 py-4 ">
-                                {{$question->question_order}}
+                                    {{$question->question_order}}
                                 </td>
                                 <td class="px-6 py-4">
                                     <a href="{{route('form.edit',$question->id )}}"><i class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2 text-center inline-flex items-center me-2 fa-regular fa-pen-to-square"></i></a>
@@ -168,6 +168,13 @@
         </form>
 
         <script>
+            $(document).ready(function() {
+                if ($('#question_type').val() == 4 || $('#question_type').val() == 5) {
+                    $("#options").removeClass("hidden");
+                } else {
+                    $("#options").addClass("hidden");
+                }
+            });
             var count = 0;
             $("#question_type").change(function(e) {
                 if (e.target.value == 4 || e.target.value == 5) {

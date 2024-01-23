@@ -5,7 +5,6 @@ namespace App\Exports;
 use App\Models\Affiliation;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-// use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
@@ -44,9 +43,5 @@ class UsersExport implements FromView
         return view('exports.users', [
             'users' => $members->get()
         ]);
-    }
-
-    public function query()
-    {
     }
 }

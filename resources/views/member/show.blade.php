@@ -1,5 +1,6 @@
 @php
 use App\Models\Affiliation;
+use App\Models\Question;
 @endphp
 <x-app-layout>
     <x-slot name="header">
@@ -61,6 +62,7 @@ use App\Models\Affiliation;
                                     <div class=" col-span-2">
                                         <select id="role" name="role" class="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                             <option value="1" {{$member->type == 1 ? "selected": ""}}>Member</option>
+                                            <option value="1" {{$member->type == 2 ? "selected": ""}}>Admin</option>
                                             <option value="3" {{$member->type == 3 ? "selected": ""}}>Moderator</option>
                                         </select>
                                     </div>
@@ -90,8 +92,8 @@ use App\Models\Affiliation;
                                             <option value="1" {{$member->designation_level == 1 ? "selected": ""}}>Central</option>
                                             <option value="2" {{$member->designation_level == 2 ? "selected": ""}}>Destrict</option>
                                             <option value="3" {{$member->designation_level == 3 ? "selected": ""}}>Constituency</option>
-                                            <option value="4" {{$member->designation_level == 3 ? "selected": ""}}>Unioncouncil</option>
-                                            <option value="5" {{$member->designation_level == 4 ? "selected": ""}}>Ward</option>
+                                            <option value="4" {{$member->designation_level == 4 ? "selected": ""}}>Unioncouncil</option>
+                                            <option value="5" {{$member->designation_level == 5 ? "selected": ""}}>Ward</option>
                                         </select>
                                     </div>
                                     <div class="ml-3 col-span-2">
@@ -171,12 +173,52 @@ use App\Models\Affiliation;
                     </div>
                 </div>
             </div>
+
             @if ($member->form_a != NULL)
             <div class=" sm:rounded-lg bg-white shadow">
-                <div class="p-4 relative overflow-x-auto rounded">
+                <div class="p-4 relative overflow-x-auto rounded ">
                     <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Form A Answers</h2>
+                    <div class="mb-5 pl-3">
+                        <?php
+                        $answers = json_decode($member->form_a, true);
+                        $question_ids = json_decode($ids);
+                        for ($i = 0; $i < count($question_ids); $i++) {
+                            $key = "question_" . $question_ids[$i];
+                            $question = Question::find($question_ids[$i]);
+                            echo "<p class='text-lg font-medium py-3'>" . $question->question_title . "</p>";
+                            if (!is_array($answers[$i][$key])) {
+                                echo "<p class='text-md ml-3'>" . $answers[$i][$key] . "</p>";
+                            } else {
+                                foreach ($answers[$i][$key] as $option) {
+                                    echo "<ul class='ml-3'>";
+                                    echo "<li>" . $option . "</li>";
+                                    echo "</ul>";
+                                }
+                            }
+                        }
+                        ?>
+                    </div>
+
+                    <form action="{{route('member.level.update', $member->id)}}" method="post">
+                        <div class="grid grid-cols-5">
+                            @csrf
+                            <div class="col-span-2">
+                                <button type="submit" class="ml-3 px-3 py-3 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    Promote Now
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            @endif
+
+            @if ($member->form_b != NULL)
+            <div class=" sm:rounded-lg bg-white shadow">
+                <div class="p-4 relative overflow-x-auto rounded">
+                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Form B Answers</h2>
                     @php
-                    $answers = json_decode($member->form_a, true);
+                    $answers = json_decode($member->form_b, true);
                     $question_ids = json_decode($ids);
                     for($i = 0; $i<count($question_ids); $i++){ $key="question_" .$question_ids[$i]; print_r($answers[$i][$key]); } @endphp <form action="{{route('member.level.update', $member->id)}}" method="post">
                         <div class="grid grid-cols-5">

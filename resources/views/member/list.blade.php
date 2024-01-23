@@ -29,12 +29,8 @@ use App\Models\Affiliation;
             </div>
             <div class=" sm:rounded-lg bg-white shadow">
                 <div class="relative overflow-x-auto rounded">
-                    <div class="p-4 flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
-                        <div class="w-1/5 ">
-                        </div>
-                        <label for="table-search" class="sr-only">Search</label>
+                    <div class="p-4 ">
                         <div class="relative">
-
                             <form action="{{route('members.show')}}" method="GET" class="flex items-center">
                                 @if (Auth::user()->type != 3)
                                 <select id="destrict" name="destrict" class="mr-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">

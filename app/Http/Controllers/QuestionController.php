@@ -122,6 +122,7 @@ class QuestionController extends Controller
         $Question->form_type = $request->form_type;
         $Question->question_order = $request->question_order;
         $Question->question_type = $request->question_type;
+        $Question->options = json_encode($request->options);
         $Question->save();
 
         return redirect()->route("form.create")

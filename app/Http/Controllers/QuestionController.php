@@ -86,12 +86,36 @@ class QuestionController extends Controller
         return redirect()->back()->with("message", "Form A submitted successfully");
     }
 
-    public function showFormB(Question $Question)
+    public function showFormB(User $user)
     {
-        $questions = Question::where("form_type", 2)->get();
+        $questions = Question::where("form_type", 2)->orderBy('question_order', 'ASC')->get();
         return view("forms.formB", [
-            "questions" => $questions
+            "questions" => $questions,
+            "user" => $user
         ]);
+    }
+
+    public function submitFormB(Request $request, User $user = null)
+    {
+        $question_ids = json_decode($request->ids);
+        $answers = null;
+        for ($id = 0; $id < count($question_ids); $id++) {
+            $answers[] = [
+                'question_' . $question_ids[$id] => $request->answer[$id]
+            ];
+        }
+
+        if (Auth::user()->type != 2) {
+            $user = User::whereId(Auth::user()->id)->update([
+                "form_b" => json_encode($answers)
+            ]);
+        } else {
+            $user = User::whereId($user->id)->update([
+                "form_b" => json_encode($answers)
+            ]);
+        }
+
+        return redirect()->back()->with("message", "Form B submitted successfully");
     }
 
     /**

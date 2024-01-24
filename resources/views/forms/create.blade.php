@@ -43,12 +43,12 @@
                                 <x-input-error class="mt-2" :messages="$errors->get('form_type')" />
                             </div>
                             <div class="mb-5">
-                                <label for="question_order" class="block mb-2 text-sm font-medium text-gray-900 ">Form Type</label>
+                                <label for="question_order" class="block mb-2 text-sm font-medium text-gray-900 ">Question Order</label>
                                 <input type="number" id="question_order" name="question_order" value="{{isset($form) && $form->question_order ? $form->question_order:''}}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Question order">
                                 <x-input-error class="mt-2" :messages="$errors->get('question_order')" />
                             </div>
                             <div class="mb-5">
-                                <label for="question_type" class="block mb-2 text-sm font-medium text-gray-900 ">Form Type</label>
+                                <label for="question_type" class="block mb-2 text-sm font-medium text-gray-900 ">Question Type</label>
                                 <select id="question_type" name="question_type" class="mr-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                     <option value="1" {{isset($form) != null && $form->question_type == 1 ? "selected": "" }}>Text</option>
                                     <option value="2" {{isset($form) != null && $form->question_type == 2 ? "selected": "" }}>Select</option>
@@ -73,10 +73,10 @@
                 <div class="md:col-span-3">
                     <h2 class="text-lg font-medium text-gray-900 mb-4">
                         All Added Questions
-                        <a href="{{route('form.show.a')}}" class="ml-3 px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        <a href="{{route('form.show.a', Auth::user()->id)}}" class="ml-3 px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             Form A
                         </a>
-                        <a href="{{route('form.show.b')}}" class="ml-3 px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        <a href="{{route('form.show.b', Auth::user()->id)}}" class="ml-3 px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             Form B
                         </a>
                     </h2>

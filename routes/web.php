@@ -141,11 +141,14 @@ Route::middleware('auth')->group(function () {
     Route::get("form/show/a/{user?}", [QuestionController::class, "showFormA"])
         ->name("form.show.a");
 
-    Route::get("form/show/b", [QuestionController::class, "showFormB"])
+    Route::get("form/show/b/{user?}", [QuestionController::class, "showFormB"])
         ->name("form.show.b");
 
     Route::post("form/a/submit/{user?}", [QuestionController::class, "submitFormA"])
         ->name('form.a.submit');
+
+    Route::post("form/b/submit/{user?}", [QuestionController::class, "submitFormB"])
+        ->name('form.b.submit');
 });
 
 Route::get('/add/members', [MembersController::class, 'addMembers'])

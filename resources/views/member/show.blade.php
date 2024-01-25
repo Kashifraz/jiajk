@@ -48,9 +48,16 @@ use App\Models\Question;
                         <div class="py-2 col-span-3">
                             <div class=" col-span-2 inline-flex">
                                 <p class="capitalize">{{$member->member_level}}</p>
+                                @if ($member->member_level === "applicant")
+                                <a href="{{route('form.show.b', $member->id )}}" class=" ml-3 font-medium text-blue-600 underline dark:text-blue-500 hover:no-underline">
+                                    Submit form B
+                                </a>
+                                @elseif($member->member_level === "member")
                                 <a href="{{route('form.show.a', $member->id )}}" class=" ml-3 font-medium text-blue-600 underline dark:text-blue-500 hover:no-underline">
                                     Submit form A
                                 </a>
+                                @endif
+
                             </div>
 
                         </div>
@@ -203,9 +210,15 @@ use App\Models\Question;
                         <div class="grid grid-cols-5">
                             @csrf
                             <div class="col-span-2">
+                                @if ($member->member_level === "member")
                                 <button type="submit" class="ml-3 px-3 py-3 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     Promote Now
                                 </button>
+                                @else
+                                <div class="bg-green-100 text-green-800 text-xs w-1/2 font-medium me-2 px-2.5 py-2 rounded mb-5 ml-4">
+                                    Member promoted to Applicant
+                                </div>
+                                @endif
                             </div>
                         </div>
                     </form>
@@ -215,25 +228,48 @@ use App\Models\Question;
 
             @if ($member->form_b != NULL)
             <div class=" sm:rounded-lg bg-white shadow">
-                <div class="p-4 relative overflow-x-auto rounded">
+                <div class="p-4 relative overflow-x-auto rounded ">
                     <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Form B Answers</h2>
-                    @php
-                    $answers = json_decode($member->form_b, true);
-                    $question_ids = json_decode($ids);
-                    for($i = 0; $i<count($question_ids); $i++){ $key="question_" .$question_ids[$i]; print_r($answers[$i][$key]); } @endphp <form action="{{route('member.level.update', $member->id)}}" method="post">
+                    <div class="mb-5 pl-3">
+                        <?php
+                        $answers = json_decode($member->form_b, true);
+                        $question_ids = json_decode($ids_b);
+                        for ($i = 0; $i < count($question_ids); $i++) {
+                            $key = "question_" . $question_ids[$i];
+                            $question = Question::find($question_ids[$i]);
+                            echo "<p class='text-lg font-medium py-3'>" . $question->question_title . "</p>";
+                            if (!is_array($answers[$i][$key])) {
+                                echo "<p class='text-md ml-3'>" . $answers[$i][$key] . "</p>";
+                            } else {
+                                foreach ($answers[$i][$key] as $option) {
+                                    echo "<ul class='ml-3'>";
+                                    echo "<li>" . $option . "</li>";
+                                    echo "</ul>";
+                                }
+                            }
+                        }
+                        ?>
+                    </div>
+
+                    <form action="{{route('member.level.update', $member->id)}}" method="post">
                         <div class="grid grid-cols-5">
                             @csrf
                             <div class="col-span-2">
+                                @if ($member->member_level === "applicant")
                                 <button type="submit" class="ml-3 px-3 py-3 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     Promote Now
                                 </button>
+                                @else
+                                <div class="bg-green-100 text-green-800 text-xs w-1/2 font-medium me-2 px-2.5 py-2 rounded mb-5 ml-4">
+                                    Member promoted to GC
+                                </div>
+                                @endif
                             </div>
                         </div>
-                        </form>
+                    </form>
                 </div>
             </div>
             @endif
-
         </div>
     </div>
 </x-app-layout>

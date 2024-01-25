@@ -103,15 +103,23 @@ class MembersController extends Controller
       $member = User::find($id);
       $designations = Designation::latest()->get();
       $questions = Question::where("form_type", 1)->orderBy('question_order', 'ASC')->get();
+      $questions_b = Question::where("form_type", 2)->orderBy('question_order', 'ASC')->get();
       $ids = array();
+      $ids_b = array();
+
       foreach ($questions as $question) {
          array_push($ids, $question->id);
       }
+
+      foreach ($questions_b as $question) {
+         array_push($ids_b, $question->id);
+      }
+
       return view('member.show', [
          'member' => $member,
          'designations' => $designations,
-         'questions' => $questions,
-         'ids' => json_encode($ids)
+         'ids' => json_encode($ids),
+         'ids_b' => json_encode($ids_b)
       ]);
    }
 
@@ -262,9 +270,16 @@ class MembersController extends Controller
 
    public function promoteMember($id)
    {
-      User::whereId($id)->update([
-         "member_level" => "applicant"
-      ]);
+      $user = User::find($id);
+      if ($user->member_level == "member") {
+         User::whereId($id)->update([
+            "member_level" => "applicant"
+         ]);
+      } else if ($user->member_level == "applicant") {
+         User::whereId($id)->update([
+            "member_level" => "gc"
+         ]);
+      }
       return redirect()->back()->with("message", "Member promoted successfully!");
    }
 
@@ -273,6 +288,6 @@ class MembersController extends Controller
       $search = request('search');
       $destrict = request('destrict');
 
-      return Excel::download(new UsersExport($destrict, $search),'users.xlsx');
+      return Excel::download(new UsersExport($destrict, $search), 'users.xlsx');
    }
 }

@@ -193,22 +193,8 @@ Route::middleware('auth')->group(function () {
               $output .= "'" . implode("','", $table_value_array) . "');\n";
              }
             }
-            $file_name = 'database_backup_on_' . date('y-m-d') . '.sql';
-            $file_handle = fopen($file_name, 'w+');
-            fwrite($file_handle, $output);
-            fclose($file_handle);
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename=' . basename($file_name));
-            header('Content-Transfer-Encoding: binary');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-               header('Pragma: public');
-               header('Content-Length: ' . filesize($file_name));
-               ob_clean();
-               flush();
-               readfile($file_name);
-               unlink($file_name);   
+             return $output;
+             
     });
 });
 

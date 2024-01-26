@@ -193,15 +193,20 @@ use App\Models\Question;
                             $key = "question_" . $question_ids[$i];
                             $question = Question::find($question_ids[$i]);
                             echo "<p class='text-lg font-medium py-3'>" . $question->question_title . "</p>";
-                            if (!is_array($answers[$i][$key])) {
-                                echo "<p class='text-md ml-3'>" . $answers[$i][$key] . "</p>";
-                            } else {
-                                foreach ($answers[$i][$key] as $option) {
-                                    echo "<ul class='ml-3'>";
-                                    echo "<li>" . $option . "</li>";
-                                    echo "</ul>";
+                            if(isset($answers[$i][$key])){
+                                if (!is_array($answers[$i][$key])) {
+                                    echo "<p class='text-md ml-3'>" . $answers[$i][$key] . "</p>";
+                                } else {
+                                    foreach ($answers[$i][$key] as $option) {
+                                        echo "<ul class='ml-3'>";
+                                        echo "<li>" . $option . "</li>";
+                                        echo "</ul>";
+                                    }
                                 }
+                            }else{
+                                echo "no answer";
                             }
+                          
                         }
                         ?>
                     </div>
@@ -234,18 +239,25 @@ use App\Models\Question;
                         <?php
                         $answers = json_decode($member->form_b, true);
                         $question_ids = json_decode($ids_b);
+
                         for ($i = 0; $i < count($question_ids); $i++) {
+
                             $key = "question_" . $question_ids[$i];
                             $question = Question::find($question_ids[$i]);
                             echo "<p class='text-lg font-medium py-3'>" . $question->question_title . "</p>";
-                            if (!is_array($answers[$i][$key])) {
-                                echo "<p class='text-md ml-3'>" . $answers[$i][$key] . "</p>";
-                            } else {
-                                foreach ($answers[$i][$key] as $option) {
-                                    echo "<ul class='ml-3'>";
-                                    echo "<li>" . $option . "</li>";
-                                    echo "</ul>";
+
+                            if (isset($answers[$i][$key])) {
+                                if (!is_array($answers[$i][$key])) {
+                                    echo "<p class='text-md ml-3'>" . $answers[$i][$key] . "</p>";
+                                } else {
+                                    foreach ($answers[$i][$key] as $option) {
+                                        echo "<ul class='ml-3'>";
+                                        echo "<li>" . $option . "</li>";
+                                        echo "</ul>";
+                                    }
                                 }
+                            } else {
+                                echo "no answer";
                             }
                         }
                         ?>

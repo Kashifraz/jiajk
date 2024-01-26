@@ -8,6 +8,9 @@ use App\Models\Designation;
 
 $cities = User::select('city')->distinct()->get();
 $total_users = User::count();
+$total_members = User::where('member_level', 'member')->count();
+$total_applicants = User::where('member_level', 'applicant')->count();
+$total_gcs = User::where('member_level', 'gc')->count();
 $total_designated_Districts = User::where('designation_level',2)->whereNotNull('designation')->count();
 $total_designated_constituencies = User::where('designation_level',3)->whereNotNull('designation')->count();
 $total_designated_unions = User::where('designation_level',4)->whereNotNull('designation')->count();
@@ -37,13 +40,34 @@ $ward_stats =json_encode(array($wards,$total_designated_wards));
                     <h2 class="text-lg font-medium text-gray-900 p-4">
                         {{ __('Members Statistics') }} <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$total_users}} registered members</span>
                     </h2>
-
-                    <div class="grid grid-cols-2">
+                    <hr>
+                    <div class="grid sm:grid-cols-3 grid-cols-1 text-center">
+                        <div class="my-5">
+                            <h2 class="text-lg font-medium text-gray-900">
+                                <i class="fa-solid fa-user text-xl"></i> {{ __('Total Members') }}
+                            </h2>
+                            <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$total_members}} registered members</span>
+                        </div>
+                        <div class="my-5">
+                            <h2 class="text-lg font-medium text-gray-900">
+                                <i class="fa-solid fa-user-tie text-xl"></i> {{ __('Total Applicants') }}
+                            </h2>
+                            <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$total_applicants}} registered applicants</span>
+                        </div>
+                        <div class="my-5">
+                            <h2 class="text-lg font-medium text-gray-900">
+                                <i class="fa-solid fa-user-graduate text-xl"></i> {{ __('Total GCs') }}
+                            </h2>
+                            <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$total_gcs}} registered GCs</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class=" flex justify-center grid sm:grid-cols-3 grid-cols-1 my-8">
                         <div>
                             <h2 class="text-lg font-medium text-gray-900 p-4">
                                 {{ __('Total Districts') }} <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$Districts}} added Districts</span>
                             </h2>
-                            <div class="p-6 bg-white shadow rounded-lg mb-5" style="width:60%;">
+                            <div class="p-6 bg-white shadow rounded-lg mb-5" style="width:90%;">
                                 <canvas id="Districts"></canvas>
                             </div>
                         </div>
@@ -51,7 +75,7 @@ $ward_stats =json_encode(array($wards,$total_designated_wards));
                             <h2 class="text-lg font-medium text-gray-900 p-4">
                                 {{ __('Constituencies') }} <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$constituencys}} added Constituencies</span>
                             </h2>
-                            <div class="p-6 bg-white shadow rounded-lg mb-5" style="width:60%;">
+                            <div class="p-6 bg-white shadow rounded-lg mb-5" style="width:90%;">
                                 <canvas id="constituencies"></canvas>
                             </div>
                         </div>
@@ -59,7 +83,7 @@ $ward_stats =json_encode(array($wards,$total_designated_wards));
                             <h2 class="text-lg font-medium text-gray-900 p-4">
                                 {{ __('Union Councils') }} <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$unionCouncils}} added unionCouncils</span>
                             </h2>
-                            <div class="p-6 bg-white shadow rounded-lg mb-5" style="width:60%;">
+                            <div class="p-6 bg-white shadow rounded-lg mb-5" style="width:90%;">
                                 <canvas id="unioncouncils"></canvas>
                             </div>
                         </div>
@@ -67,11 +91,12 @@ $ward_stats =json_encode(array($wards,$total_designated_wards));
                             <h2 class="text-lg font-medium text-gray-900 p-4">
                                 {{ __('Wards') }} <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$wards}} added Wards</span>
                             </h2>
-                            <div class="p-6 bg-white shadow rounded-lg mb-5" style="width:60%;">
+                            <div class="p-6 bg-white shadow rounded-lg mb-5" style="width:90%;">
                                 <canvas id="wards"></canvas>
                             </div>
                         </div>
                     </div>
+
 
                     <script>
                         const Districts = {

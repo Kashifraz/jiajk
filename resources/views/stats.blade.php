@@ -49,7 +49,7 @@ $ward_stats =json_encode(array($wards,$total_designated_wards));
                                 <button data-popover-target="popover" data-popover-placement="bottom" type="button"><span class="sr-only">Show information</span><i class="fa-solid fa-circle-question"></i></button>
                             </h2>
                             <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$total_members}} registered members</span>
-                            <div data-popover id="popover" role="tooltip" class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 ">
+                            <div data-popover id="popover" role="tooltip" class="absolute z-10 overflow-y-scroll max-h-72 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 ">
                                 <div class="p-3 space-y-2">
                                     <h3 class="font-semibold text-gray-900">Members Stats</h3>
                                     @foreach ($Districts as $District)
@@ -67,7 +67,7 @@ $ward_stats =json_encode(array($wards,$total_designated_wards));
                                 <button data-popover-target="popover-1" data-popover-placement="bottom" type="button"><span class="sr-only">Show information</span><i class="fa-solid fa-circle-question"></i></button>
                             </h2>
                             <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$total_applicants}} registered applicants</span>
-                            <div data-popover id="popover-1" role="tooltip" class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 ">
+                            <div data-popover id="popover-1" role="tooltip" class="absolute overflow-y-scroll max-h-72 z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 ">
                                 <div class="p-3 space-y-2">
                                     <h3 class="font-semibold text-gray-900">Applicants Stats</h3>
                                     @foreach ($Districts as $District)
@@ -85,7 +85,7 @@ $ward_stats =json_encode(array($wards,$total_designated_wards));
                                 <button data-popover-target="popover-2" data-popover-placement="bottom" type="button"><span class="sr-only">Show information</span><i class="fa-solid fa-circle-question"></i></button>
                             </h2>
                             <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$total_gcs}} registered GCs</span>
-                            <div data-popover id="popover-2" role="tooltip" class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 ">
+                            <div data-popover id="popover-2" role="tooltip" class="absolute z-10 overflow-y-scroll max-h-72 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 ">
                                 <div class="p-3 space-y-2">
                                     <h3 class="font-semibold text-gray-900">GCs Stats</h3>
                                     @foreach ($Districts as $District)

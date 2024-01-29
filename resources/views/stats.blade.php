@@ -15,8 +15,8 @@ $total_designated_Districts = User::where('designation_level',2)->whereNotNull('
 $total_designated_constituencies = User::where('designation_level',3)->whereNotNull('designation')->count();
 $total_designated_unions = User::where('designation_level',4)->whereNotNull('designation')->count();
 $total_designated_wards = User::where('designation_level',5)->whereNotNull('designation')->count();
-$Districts = Affiliation::count();
-$destrict_stats =json_encode(array($Districts,$total_designated_Districts));
+$Districts = Affiliation::get();
+$destrict_stats =json_encode(array(count($Districts),$total_designated_Districts));
 $constituencys = Constituency::count();
 $constituency_stats =json_encode(array($constituencys,$total_designated_constituencies));
 $unionCouncils = UnionCouncil::count();
@@ -31,6 +31,7 @@ $ward_stats =json_encode(array($wards,$total_designated_wards));
         </h2>
         <!-- Other head elements -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
     </x-slot>
 
     <div class="py-6">
@@ -42,30 +43,66 @@ $ward_stats =json_encode(array($wards,$total_designated_wards));
                     </h2>
                     <hr>
                     <div class="grid sm:grid-cols-3 grid-cols-1 text-center">
-                        <div class="my-5">
+                        <div class="px-4 text-gray-700 my-5">
                             <h2 class="text-lg font-medium text-gray-900">
                                 <i class="fa-solid fa-user text-xl"></i> {{ __('Total Members') }}
+                                <button data-popover-target="popover" data-popover-placement="bottom" type="button"><span class="sr-only">Show information</span><i class="fa-solid fa-circle-question"></i></button>
                             </h2>
                             <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$total_members}} registered members</span>
+                            <div data-popover id="popover" role="tooltip" class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 ">
+                                <div class="p-3 space-y-2">
+                                    <h3 class="font-semibold text-gray-900">Members Stats</h3>
+                                    @foreach ($Districts as $District)
+                                    <?php
+                                    $members = User::where('affiliations', $District->id)->where('member_level', 'member')->count(); ?>
+                                    <p>{{$District->affiliation_title}} : {{$members}} members found</p>
+                                    @endforeach
+                                </div>
+                                <div data-popper-arrow></div>
+                            </div>
                         </div>
-                        <div class="my-5">
+                        <div class="px-4 text-gray-700 my-5">
                             <h2 class="text-lg font-medium text-gray-900">
-                                <i class="fa-solid fa-user-tie text-xl"></i> {{ __('Total Applicants') }}
+                                <i class="fa-solid fa-user text-xl"></i> {{ __('Total Applicants') }}
+                                <button data-popover-target="popover-1" data-popover-placement="bottom" type="button"><span class="sr-only">Show information</span><i class="fa-solid fa-circle-question"></i></button>
                             </h2>
                             <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$total_applicants}} registered applicants</span>
+                            <div data-popover id="popover-1" role="tooltip" class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 ">
+                                <div class="p-3 space-y-2">
+                                    <h3 class="font-semibold text-gray-900">Applicants Stats</h3>
+                                    @foreach ($Districts as $District)
+                                    <?php
+                                    $members = User::where('affiliations', $District->id)->where('member_level', 'applicant')->count(); ?>
+                                    <p>{{$District->affiliation_title}} : {{$members}} applicants found</p>
+                                    @endforeach
+                                </div>
+                                <div data-popper-arrow></div>
+                            </div>
                         </div>
-                        <div class="my-5">
+                        <div class="px-4 text-gray-700 my-5">
                             <h2 class="text-lg font-medium text-gray-900">
-                                <i class="fa-solid fa-user-graduate text-xl"></i> {{ __('Total GCs') }}
+                                <i class="fa-solid fa-user text-xl"></i> {{ __('Total GCs') }}
+                                <button data-popover-target="popover-2" data-popover-placement="bottom" type="button"><span class="sr-only">Show information</span><i class="fa-solid fa-circle-question"></i></button>
                             </h2>
                             <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$total_gcs}} registered GCs</span>
+                            <div data-popover id="popover-2" role="tooltip" class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 ">
+                                <div class="p-3 space-y-2">
+                                    <h3 class="font-semibold text-gray-900">GCs Stats</h3>
+                                    @foreach ($Districts as $District)
+                                    <?php
+                                    $members = User::where('affiliations', $District->id)->where('member_level', 'gc')->count(); ?>
+                                    <p>{{$District->affiliation_title}} : {{$members}} GCs found</p>
+                                    @endforeach
+                                </div>
+                                <div data-popper-arrow></div>
+                            </div>
                         </div>
                     </div>
                     <hr>
                     <div class=" flex justify-center grid sm:grid-cols-3 grid-cols-1 my-8">
                         <div>
                             <h2 class="text-lg font-medium text-gray-900 p-4">
-                                {{ __('Total Districts') }} <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$Districts}} added Districts</span>
+                                {{ __('Total Districts') }} <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{count($Districts)}} added Districts</span>
                             </h2>
                             <div class="p-6 bg-white shadow rounded-lg mb-5" style="width:90%;">
                                 <canvas id="Districts"></canvas>
@@ -95,6 +132,8 @@ $ward_stats =json_encode(array($wards,$total_designated_wards));
                                 <canvas id="wards"></canvas>
                             </div>
                         </div>
+
+
                     </div>
 
 

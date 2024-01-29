@@ -174,10 +174,10 @@ Route::middleware('auth')->group(function () {
              $statement->execute();
              $show_table_result = $statement->fetchAll();
     
-             foreach($show_table_result as $show_table_row)
-             {
-              $output .= "\n\n" . $show_table_row["Create Table"] . ";\n\n";
-             }
+            //  foreach($show_table_result as $show_table_row)
+            //  {
+            //   $output .= "\n\n" . $show_table_row["Create Table"] . ";\n\n";
+            //  }
              $select_query = "SELECT * FROM " . $table . "";
              $statement = $connect->prepare($select_query);
              $statement->execute();
@@ -190,7 +190,7 @@ Route::middleware('auth')->group(function () {
               $table_value_array = array_values($single_result);
               $output .= "\nINSERT INTO $table (";
               $output .= "" . implode(", ", $table_column_array) . ") VALUES (";
-              $output .= "'" . implode("','", $table_value_array) . "');\n";
+              $output .= "'" . implode('","', $table_value_array) . '");\n';
              }
             }
              return $output;

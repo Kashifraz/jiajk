@@ -10,18 +10,14 @@ use Illuminate\Support\Facades\Auth;
 class QuestionController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Show the Question for creating a new resource.
      */
     public function create()
     {
+        $user = Auth::user();
+        if (!$user->can('view questions')) {
+            die("Warning! Access to the resource is denied");
+        }
         $formQuestions = Question::orderBy('question_order', 'ASC')->paginate(5);
         return view("forms.create", [
             "formQuestions" => $formQuestions
@@ -33,6 +29,10 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
+        if ($user->can('add questions')) {
+            die("Warning! You are not Authorized to Perform this Action");
+        }
         $request->validate([
             'question_title' => ['required', 'string',],
             'form_type' => ['required'],
@@ -56,6 +56,10 @@ class QuestionController extends Controller
      */
     public function showFormA(User $user)
     {
+        $user = Auth::user();
+        if (!$user->can('forma view')) {
+            die("Warning! Access to the resource is denied");
+        }
         $questions = Question::where("form_type", 1)->orderBy('question_order', 'ASC')->get();
         return view("forms.formA", [
             "questions" => $questions,
@@ -65,6 +69,10 @@ class QuestionController extends Controller
 
     public function submitFormA(Request $request, User $user = null)
     {
+        $user = Auth::user();
+        if (!$user->can('forma submit')) {
+            die("Warning! You are not Authorized to Perform this Action");
+        }
         $question_ids = json_decode($request->ids);
         $answers = null;
         for ($id = 0; $id < count($question_ids); $id++) {
@@ -88,6 +96,10 @@ class QuestionController extends Controller
 
     public function showFormB(User $user)
     {
+        $user = Auth::user();
+        if (!$user->can('formb view')) {
+            die("Warning! Access to the resource is denied");
+        }
         $questions = Question::where("form_type", 2)->orderBy('question_order', 'ASC')->get();
         return view("forms.formB", [
             "questions" => $questions,
@@ -97,6 +109,10 @@ class QuestionController extends Controller
 
     public function submitFormB(Request $request, User $user = null)
     {
+        $user = Auth::user();
+        if (!$user->can('formb submit')) {
+            die("Warning! You are not Authorized to Perform this Action");
+        }
         $question_ids = json_decode($request->ids);
         $answers = null;
         for ($id = 0; $id < count($question_ids); $id++) {
@@ -123,6 +139,10 @@ class QuestionController extends Controller
      */
     public function edit(Question $Question)
     {
+        $user = Auth::user();
+        if (!$user->can('edit questions')) {
+            die("Warning! Access to the resource is denied");
+        }
         $formQuestions = Question::orderBy('question_order', 'ASC')->paginate(5);
         return view("forms.create", [
             "form" => $Question,
@@ -135,6 +155,10 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $Question)
     {
+        $user = Auth::user();
+        if (!$user->can('edit questions')) {
+            die("Warning! You are not Authorized to Perform this Action");
+        }
         $request->validate([
             'question_title' => ['required', 'string'],
             'form_type' => ['required'],
@@ -158,6 +182,10 @@ class QuestionController extends Controller
      */
     public function destroy(Question $Question)
     {
+        $user = Auth::user();
+        if (!$user->can('delete questions')) {
+            die("Warning! You are not Authorized to Perform this Action");
+        }
         $Question->delete();
         return redirect()->back()
             ->with("message", "Question question deleted successfully!");

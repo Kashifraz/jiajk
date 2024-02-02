@@ -4,7 +4,11 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
-
+    @role('member')
+    I am a member!
+    @else
+    I am not a member...
+    @endrole
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">

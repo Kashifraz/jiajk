@@ -94,7 +94,7 @@ class MembersController extends Controller
          'mobile_phone' => $request->mobile_phone,
          'type' => 1,
       ]);
-
+      $user->assignRole('member');
       return redirect()->back()->with("message", "Member added successfully!");
    }
 
@@ -125,6 +125,10 @@ class MembersController extends Controller
 
    public function edit($id)
    {
+      $user = Auth::user();
+      if (!$user->can('edit member')) {
+         die("Warning! Access to the resource is denied");
+      }
       $member = User::find($id);
       $affiliations = Affiliation::latest()->get();
       $constituencies = Constituency::where("affiliation_id", $member->affiliations)->get();
@@ -141,6 +145,10 @@ class MembersController extends Controller
 
    public function update(Request $request, $id)
    {
+      $user = Auth::user();
+      if (!$user->can('edit member')) {
+         die("Warning! Access to the resource is denied");
+      }
       $affiliation_val = $request->constituency_status != 0 ? ['required', "not_in:0"] : [];
       $constituency_val = $request->union_status != 0 ? ['required', "not_in:0"] : [];
       $union_val = $request->ward_status != 0 ? ['required', "not_in:0"] : [];
@@ -207,10 +215,12 @@ class MembersController extends Controller
       return redirect()->back()->with("message", "Updated added successfully!");
    }
 
-
-
    public function showAllMembers()
    {
+      $user = Auth::user();
+      if (!$user->can('show all members')) {
+         die("Warning! Access to the resource is denied");
+      }
       $search = request('search');
       $records = request('records');
       $destrict = request('destrict');
@@ -242,12 +252,20 @@ class MembersController extends Controller
 
    public function verify($id)
    {
+      $user = Auth::user();
+      if (!$user->can('verify member')) {
+         die("Warning! you are not authorized to perform this action.");
+      }
       User::where('id', $id)->update(['verified' => 1]);
       return redirect()->back()->with("message", "user verified successfully!");
    }
 
    public function updateRole(Request $request, $id)
    {
+      $user = Auth::user();
+      if (!$user->can('update role')) {
+         die("Warning! you are not authorized to perform this action.");
+      }
       $member = User::find($id);
 
       User::whereId($id)->update([
@@ -258,6 +276,10 @@ class MembersController extends Controller
 
    public function updateDesignation(Request $request, $id)
    {
+      $user = Auth::user();
+      if (!$user->can('update designation')) {
+         die("Warning! you are not authorized to perform this action.");
+      }
       $member = User::find($id);
 
       User::whereId($id)->update([
@@ -270,21 +292,33 @@ class MembersController extends Controller
 
    public function promoteMember($id)
    {
+      $user = Auth::user();
+      if (!$user->can('promote member')) {
+         die("Warning! you are not authorized to perform this action.");
+      }
       $user = User::find($id);
       if ($user->member_level == "member") {
          User::whereId($id)->update([
             "member_level" => "applicant"
          ]);
+         $user->assignRole('applicant');
+         $user->removeRole('member');
       } else if ($user->member_level == "applicant") {
          User::whereId($id)->update([
             "member_level" => "gc"
          ]);
+         $user->assignRole('gc');
+         $user->removeRole('applicant');
       }
       return redirect()->back()->with("message", "Member promoted successfully!");
    }
 
    public function exportExcel()
    {
+      $user = Auth::user();
+      if (!$user->can('export excel')) {
+         die("Warning! you are not authorized to perform this action.");
+      }
       $search = request('search');
       $destrict = request('destrict');
 

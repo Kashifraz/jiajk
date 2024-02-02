@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         //     'password' => Hash::make("password"),
         //     'type' => 2
         // ]);
-        $user = \App\Models\User::find(1);
+        $user = \App\Models\User::find(101);
 
         $user->assignRole('admin');
     }

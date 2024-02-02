@@ -40,6 +40,11 @@ use App\Models\Affiliation;
                                     @endforeach
                                 </select>
                                 @endif
+                                <select id="level" name="level" class=" mr-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                    <option value="member" {{$level != null && $level=="member" ? "selected":""}}>Members</option>
+                                    <option value="applicant" {{$level != null && $level=="applicant" ? "selected":""}}>Applicants</option>
+                                    <option value="gc" {{$level != null && $level=="gc" ? "selected":""}}>GCs</option>
+                                </select>
 
                                 <select id="records" name="records" class=" mr-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                     <option value="10" {{$records != null && $records==10 ? "selected":""}}>10 records per page</option>

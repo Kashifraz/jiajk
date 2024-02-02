@@ -223,6 +223,7 @@ class MembersController extends Controller
       }
       $search = request('search');
       $records = request('records');
+      $level = request('level');
       $destrict = request('destrict');
       $members = User::query();
       $affiliations = Affiliation::all();
@@ -235,6 +236,11 @@ class MembersController extends Controller
       if (request('destrict') && request('destrict') != null) {
          $members = $members->where("affiliations", "=", $destrict);
       }
+
+      if (request('level') && request('level') != null) {
+         $members = $members->where("member_level", $level);
+      }
+
       if (request('search')) {
          $members = $members->where('name', 'LIKE', "%{$search}%")
             ->orWhere('father_name', 'LIKE', "%{$search}%")
@@ -245,6 +251,7 @@ class MembersController extends Controller
          'members' => $members->paginate($records != null ? $records : 10),
          'search' => $search,
          'records' => $records,
+         'level' => $level,
          'destrict' => $destrict,
          'affiliations' => $affiliations
       ]);

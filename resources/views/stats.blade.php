@@ -6,6 +6,22 @@ use App\Models\UnionCouncil;
 use App\Models\Ward;
 use App\Models\Designation;
 
+if(Auth::user()->type == 3){
+$total_users = User::where('affiliations',Auth::user()->affiliations)->count();
+$total_members = User::where('member_level', 'member')->where('affiliations',Auth::user()->affiliations)->count();
+$total_applicants = User::where('member_level', 'applicant')->where('affiliations',Auth::user()->affiliations)->count();
+$total_gcs = User::where('member_level', 'gc')->where('affiliations',Auth::user()->affiliations)->count();
+
+$total_designated_constituencies = User::where('designation_level',3)->whereNotNull('designation')->where('affiliation_id',Auth::user()->affiliations)->count();
+$total_designated_unions = User::where('designation_level',4)->whereNotNull('designation')->where('affiliations',Auth::user()->affiliations)->count();
+$total_designated_wards = User::where('designation_level',5)->whereNotNull('designation')->where('affiliations',Auth::user()->affiliations)->count();
+$constituencys = Constituency::count();
+$constituency_stats =json_encode(array($constituencys,$total_designated_constituencies));
+$unionCouncils = UnionCouncil::count();
+$unioncouncil_stats =json_encode(array($unionCouncils,$total_designated_unions));
+$wards = Ward::count();
+$ward_stats =json_encode(array($wards,$total_designated_wards));
+}else{
 $cities = User::select('city')->distinct()->get();
 $total_users = User::count();
 $total_members = User::where('member_level', 'member')->count();
@@ -23,6 +39,8 @@ $unionCouncils = UnionCouncil::count();
 $unioncouncil_stats =json_encode(array($unionCouncils,$total_designated_unions));
 $wards = Ward::count();
 $ward_stats =json_encode(array($wards,$total_designated_wards));
+}
+
 @endphp
 <x-app-layout>
     <x-slot name="header">

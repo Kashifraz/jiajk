@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::get('edit/member/{id}', [MembersController::class, "edit"])
         ->name('member.edit');
 
-    Route::get('show/members/{destrict?}/{records?}/{search?}', [MembersController::class, "showAllMembers"])
+    Route::get('show/members/{destrict?}/{level?}/{records?}/{search?}', [MembersController::class, "showAllMembers"])
         ->name('members.show');
 
     Route::post('memeber/role/update/{id}', [MembersController::class, 'updateRole'])

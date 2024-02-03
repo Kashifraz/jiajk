@@ -14,8 +14,8 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        $user = Auth::user();
-        if (!$user->can('view questions')) {
+        $auth_user = Auth::user();
+        if (!$auth_user->can('view questions')) {
             die("Warning! Access to the resource is denied");
         }
         $formQuestions = Question::orderBy('question_order', 'ASC')->paginate(5);
@@ -29,8 +29,8 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        $user = Auth::user();
-        if ($user->can('add questions')) {
+        $auth_user = Auth::user();
+        if (!$auth_user->can('add questions')) {
             die("Warning! You are not Authorized to Perform this Action");
         }
         $request->validate([
@@ -56,8 +56,8 @@ class QuestionController extends Controller
      */
     public function showFormA(User $user)
     {
-        $user = Auth::user();
-        if (!$user->can('forma view')) {
+        $auth_user = Auth::user();
+        if (!$auth_user->can('forma view')) {
             die("Warning! Access to the resource is denied");
         }
         $questions = Question::where("form_type", 1)->orderBy('question_order', 'ASC')->get();
@@ -69,8 +69,8 @@ class QuestionController extends Controller
 
     public function submitFormA(Request $request, User $user = null)
     {
-        $user = Auth::user();
-        if (!$user->can('forma submit')) {
+        $auth_user = Auth::user();
+        if (!$auth_user->can('forma submit')) {
             die("Warning! You are not Authorized to Perform this Action");
         }
         $question_ids = json_decode($request->ids);
@@ -96,8 +96,8 @@ class QuestionController extends Controller
 
     public function showFormB(User $user)
     {
-        $user = Auth::user();
-        if (!$user->can('formb view')) {
+        $auth_user = Auth::user();
+        if (!$auth_user->can('formb view')) {
             die("Warning! Access to the resource is denied");
         }
         $questions = Question::where("form_type", 2)->orderBy('question_order', 'ASC')->get();
@@ -109,8 +109,8 @@ class QuestionController extends Controller
 
     public function submitFormB(Request $request, User $user = null)
     {
-        $user = Auth::user();
-        if (!$user->can('formb submit')) {
+        $auth_user = Auth::user();
+        if (!$auth_user->can('formb submit')) {
             die("Warning! You are not Authorized to Perform this Action");
         }
         $question_ids = json_decode($request->ids);
@@ -139,8 +139,8 @@ class QuestionController extends Controller
      */
     public function edit(Question $Question)
     {
-        $user = Auth::user();
-        if (!$user->can('edit questions')) {
+        $auth_user = Auth::user();
+        if (!$auth_user->can('edit questions')) {
             die("Warning! Access to the resource is denied");
         }
         $formQuestions = Question::orderBy('question_order', 'ASC')->paginate(5);
@@ -155,8 +155,8 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $Question)
     {
-        $user = Auth::user();
-        if (!$user->can('edit questions')) {
+        $auth_user = Auth::user();
+        if (!$auth_user->can('edit questions')) {
             die("Warning! You are not Authorized to Perform this Action");
         }
         $request->validate([
@@ -182,8 +182,8 @@ class QuestionController extends Controller
      */
     public function destroy(Question $Question)
     {
-        $user = Auth::user();
-        if (!$user->can('delete questions')) {
+        $auth_user = Auth::user();
+        if (!$auth_user->can('delete questions')) {
             die("Warning! You are not Authorized to Perform this Action");
         }
         $Question->delete();

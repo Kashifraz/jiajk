@@ -69,7 +69,7 @@ use App\Models\Question;
                                     <div class=" col-span-2">
                                         <select id="role" name="role" class="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                             <option value="1" {{$member->type == 1 ? "selected": ""}}>Member</option>
-                                            <option value="1" {{$member->type == 2 ? "selected": ""}}>Admin</option>
+                                            <option value="2" {{$member->type == 2 ? "selected": ""}}>Admin</option>
                                             <option value="3" {{$member->type == 3 ? "selected": ""}}>Moderator</option>
                                         </select>
                                     </div>
@@ -181,7 +181,7 @@ use App\Models\Question;
                 </div>
             </div>
 
-            @if ($member->form_a != NULL)
+            @if (isset($member->form_a))
             <div class=" sm:rounded-lg bg-white shadow">
                 <div class="p-4 relative overflow-x-auto rounded ">
                     <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Form A Answers</h2>
@@ -231,7 +231,7 @@ use App\Models\Question;
             </div>
             @endif
 
-            @if ($member->form_b != NULL)
+            @if (isset($member->form_b))
             <div class=" sm:rounded-lg bg-white shadow">
                 <div class="p-4 relative overflow-x-auto rounded ">
                     <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Form B Answers</h2>

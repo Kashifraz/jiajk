@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Affiliation;
 use Illuminate\Support\Facades\Route;
 use Spatie\Backup\BackupDestination\BackupDestinationFactory;
 use Spatie\Backup\BackupDestination\BackupDestinationStatus;
@@ -28,8 +29,15 @@ Route::get('/welcome', function () {
 
 Route::get('/member/dashboard', function () {
     return view('dashboards.member');
-})->middleware([\Spatie\Permission\Middleware\RoleMiddleware::using(['member'])])
-->name('member.dashboard');
+})->name('member.dashboard');
+// ->middleware([\Spatie\Permission\Middleware\RoleMiddleware::using(['member'])])
+Route::get('/admin/dashboard', function () {
+    $affiliations = Affiliation::latest()->get();
+
+    return view('dashboards.admin', [
+        "affiliations" => $affiliations,
+    ]);
+})->name('admin.dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])

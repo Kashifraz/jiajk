@@ -126,14 +126,17 @@ class MembersController extends Controller
    public function edit($id)
    {
       $user = Auth::user();
-      if (!$user->can('edit member')) {
+
+      if (($user->id == $id) || $user->can('edit member')) {
+         $member = User::find($id);
+         $affiliations = Affiliation::latest()->get();
+         $constituencies = Constituency::where("affiliation_id", $member->affiliations)->get();
+         $unioncouncils = UnionCouncil::where("constituency_id", $member->constituency)->get();
+         $wards = Ward::where("union_council_id", $member->union_council)->get();
+      } else {
          die("Warning! Access to the resource is denied");
       }
-      $member = User::find($id);
-      $affiliations = Affiliation::latest()->get();
-      $constituencies = Constituency::where("affiliation_id", $member->affiliations)->get();
-      $unioncouncils = UnionCouncil::where("constituency_id", $member->constituency)->get();
-      $wards = Ward::where("union_council_id", $member->union_council)->get();
+
       return view('member.edit', [
          'member' => $member,
          'affiliations' => $affiliations,
@@ -145,10 +148,6 @@ class MembersController extends Controller
 
    public function update(Request $request, $id)
    {
-      $user = Auth::user();
-      if (!$user->can('edit member')) {
-         die("Warning! Access to the resource is denied");
-      }
       $affiliation_val = $request->constituency_status != 0 ? ['required', "not_in:0"] : [];
       $constituency_val = $request->union_status != 0 ? ['required', "not_in:0"] : [];
       $union_val = $request->ward_status != 0 ? ['required', "not_in:0"] : [];
@@ -273,11 +272,20 @@ class MembersController extends Controller
       if (!$user->can('update role')) {
          die("Warning! you are not authorized to perform this action.");
       }
-      $member = User::find($id);
 
+      $member = User::find($id);
+      if($request->role == 1){
+         $member->assignRole('member');
+      }else if($request->role == 2){
+         $member->assignRole('admin');
+      }else if($request->role == 3){
+         $member->assignRole('moderator');
+      }
       User::whereId($id)->update([
          "type" => $request->role
       ]);
+
+      
       return redirect()->back()->with('message', "Role updated successfully");
    }
 

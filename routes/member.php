@@ -4,16 +4,6 @@ use App\Http\Controllers\MembersController;
 use App\Models\Affiliation;
 use Illuminate\Support\Facades\Route;
 
-
-Route::get('/admin/dashboard', function () {
-    $affiliations = Affiliation::latest()->get();
-
-    return view('dashboards.admin', [
-        "affiliations" => $affiliations,
-    ]);
-})->middleware([\Spatie\Permission\Middleware\RoleMiddleware::using(['admin'])])
-    ->name('admin.dashboard');
-
 Route::middleware('auth')->group(function () {
 
     //member routes

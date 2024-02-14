@@ -36,7 +36,7 @@
                     </x-nav-link>
                 </div>
 
-                @if (Auth::user()->type == 1)
+                @if (Auth::user()->type == 1 || Auth::user()->type == 3)
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('member.edit',Auth::user()->id)" :active="request()->routeIs('member.edit')">
                         {{ __('Edit Info') }}

@@ -33,10 +33,20 @@ use App\Models\Question;
                 <div class="p-4 relative overflow-x-auto rounded">
                     <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Personal Information</h2>
                     <div class="grid grid-cols-4">
-                        <div class="py-2 col-span-1 font-bold">Name</div>
-                        <div class="py-2 col-span-3">
-                            <p>{{$member->name}}</p>
+                        <div class="py-2 col-span-4 font-bold">
+                            <div class="flex items-center gap-4 mt-3 capitalize ">
+                                @if (isset($member->profile))
+                                <img class="w-20 h-20 rounded-full" src="{{ asset('uploads/'.$member->profile) }}" alt="">
+                                @endif
+                                <div class="font-medium">
+                                    <div>{{$member->name}}</div>
+                                    <div class="text-sm text-gray-500">{{$member->created_at}}</div>
+                                </div>
+                            </div>
                         </div>
+                        <!-- <div class="py-2 col-span-3">
+                            <p>{{$member->name}}</p>
+                        </div> -->
                         <div class="py-2 col-span-1 font-bold">Father Name</div>
                         <div class="py-2 col-span-3">{{$member->father_name}}</div>
                         <div class="py-2 col-span-1 font-bold">Status</div>
@@ -193,7 +203,7 @@ use App\Models\Question;
                             $key = "question_" . $question_ids[$i];
                             $question = Question::find($question_ids[$i]);
                             echo "<p class='text-lg font-medium py-3'>" . $question->question_title . "</p>";
-                            if(isset($answers[$i][$key])){
+                            if (isset($answers[$i][$key])) {
                                 if (!is_array($answers[$i][$key])) {
                                     echo "<p class='text-md ml-3'>" . $answers[$i][$key] . "</p>";
                                 } else {
@@ -203,10 +213,9 @@ use App\Models\Question;
                                         echo "</ul>";
                                     }
                                 }
-                            }else{
+                            } else {
                                 echo "no answer";
                             }
-                          
                         }
                         ?>
                     </div>

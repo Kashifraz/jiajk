@@ -10,6 +10,9 @@ Route::middleware('auth')->group(function () {
     Route::get('show/member/{id}', [MembersController::class, "show"])
         ->name('member.show');
 
+    Route::post('upload/image', [MembersController::class, "uploadImage"])
+        ->name('upload.image');
+
     Route::get('verify/member/{id}', [MembersController::class, "verify"])
         ->name('member.verify');
 

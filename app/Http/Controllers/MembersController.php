@@ -10,6 +10,7 @@ use App\Models\Question;
 use App\Models\UnionCouncil;
 use App\Models\User;
 use App\Models\Ward;
+use Faker\Core\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -32,8 +33,8 @@ class MembersController extends Controller
       $union_val = $request->ward_status != 0 ? ['required', "not_in:0"] : [];
       $request->validate([
          'username' => ['string', 'max:255'],
-         // 'email' => ['string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-         // 'password' => ['confirmed'],
+         'email' => ['nullable','string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+         'password' => ['confirmed'],
          'name' => ['required', 'string', 'max:255'],
          'father_name' => ['required', 'string', 'max:255'],
          'cnic' => ['nullable', "digits:13", "numeric"],
@@ -229,7 +230,7 @@ class MembersController extends Controller
       if (Auth::user()->type == 3) {
          $destrict_auth = Auth::user()->affiliations;
          $members = $members->where("affiliations", "=", $destrict_auth)
-            ->where(["type" => 1])->latest();
+            ->latest();
       }
 
       if (request('destrict') && request('destrict') != null) {
@@ -274,18 +275,18 @@ class MembersController extends Controller
       }
 
       $member = User::find($id);
-      if($request->role == 1){
+      if ($request->role == 1) {
          $member->assignRole('member');
-      }else if($request->role == 2){
+      } else if ($request->role == 2) {
          $member->assignRole('admin');
-      }else if($request->role == 3){
+      } else if ($request->role == 3) {
          $member->assignRole('moderator');
       }
       User::whereId($id)->update([
          "type" => $request->role
       ]);
 
-      
+
       return redirect()->back()->with('message', "Role updated successfully");
    }
 
@@ -338,5 +339,30 @@ class MembersController extends Controller
       $destrict = request('destrict');
 
       return Excel::download(new UsersExport($destrict, $search), 'users.xlsx');
+   }
+
+   public function uploadImage(Request $request)
+   {
+      $request->validate([
+         'file' => 'required',
+         'file.*' => 'required|mimes:jpeg,jpg|max:2048',
+      ]);
+
+      $file = [];
+      $file_path = null;
+      if ($request->file('file')) {
+         $file_name = time() . rand(1, 99) . '.' . $request->file('file')->extension();
+         $request->file('file')->move(public_path('uploads'), $file_name);
+         $files[]['name'] = $file_name;
+         $file_path = $file_name;
+         $user = User::find(Auth::user()->id);
+         if ($user->profile != null) {
+            unlink(public_path('uploads') .'/'. $user->profile);
+         }
+         $user->profile = $file_path;
+         $user->save();
+      }
+
+      return back()->with('message', 'profile photo uploaded successfully');
    }
 }

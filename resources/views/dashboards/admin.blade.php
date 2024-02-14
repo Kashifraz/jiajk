@@ -2,6 +2,8 @@
 use App\Models\User;
 $cities = User::select('city')->distinct()->get();
 $total_users = User::count();
+$first_day_this_month = date('m-01-Y');
+$last_day_this_month = date('m-t-Y');
 @endphp
 <x-app-layout>
     <x-slot name="header">
@@ -15,7 +17,7 @@ $total_users = User::count();
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h2 class="text-lg font-medium text-gray-900">
-                        {{ __('Members Statistics') }} <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$total_users}} registered members</span>  
+                        {{ __('Members Statistics') }} <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$total_users}} registered members</span>
                     </h2>
                     <div class="grid grid-cols-1 gap-4 px-4 mt-8 lg:grid-cols-4 sm:px-8">
                         @foreach ($affiliations as $affiliation)

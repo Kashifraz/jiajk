@@ -33,7 +33,7 @@ class MembersController extends Controller
       $union_val = $request->ward_status != 0 ? ['required', "not_in:0"] : [];
       $request->validate([
          'username' => ['string', 'max:255'],
-         'email' => ['nullable','string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+         'email' => ['nullable', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
          'password' => ['confirmed'],
          'name' => ['required', 'string', 'max:255'],
          'father_name' => ['required', 'string', 'max:255'],
@@ -297,6 +297,10 @@ class MembersController extends Controller
          die("Warning! you are not authorized to perform this action.");
       }
       $member = User::find($id);
+      if ($request->designation == 1)
+         $member->assignRole('sg');
+      else if ($request->designation == 2)
+         $member->assignRole('president');
 
       User::whereId($id)->update([
          "designation" => $request->designation,
@@ -357,7 +361,7 @@ class MembersController extends Controller
          $file_path = $file_name;
          $user = User::find(Auth::user()->id);
          if ($user->profile != null) {
-            unlink(public_path('uploads') .'/'. $user->profile);
+            unlink(public_path('uploads') . '/' . $user->profile);
          }
          $user->profile = $file_path;
          $user->save();

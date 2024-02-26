@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FormA;
 use App\Models\Question;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,6 +13,57 @@ class QuestionController extends Controller
     /**
      * Show the Question for creating a new resource.
      */
+    public function updateApprovalPresident(Request $request, $id)
+    {
+        $formA = FormA::find($id);
+        $formA->president_approval = $request->approval;
+        $formA->president_comment = $request->comments;
+        $formA->president_approval_date = date("Y/m/d");
+        $formA->president_id = Auth::user()->id;
+        $formA->save();
+
+        return redirect()->back()->with('message', 'approval submitted successfully');
+    }
+
+    public function updateApprovalSG(Request $request, $id)
+    {
+        $formA = FormA::find($id);
+        $formA->sg_approval = $request->approval;
+        $formA->sg_comment = $request->comments;
+        $formA->sg_approval_date = date("Y/m/d");
+        $formA->sg_id = Auth::user()->id;
+        $formA->save();
+
+        return redirect()->back()->with('message', 'approval submitted successfully');
+    }
+    public function approval()
+    {
+        $users = User::with('forma')->get();
+
+        $users = User::with('forma')->whereHas('forma', function ($query) {
+            $query->whereNotNull(['form_a']);
+        })->get();
+
+        return view('forms.approval', [
+            "users" => $users
+        ]);
+    }
+
+    public function showForm($id)
+    {
+        $formA = FormA::find($id);
+        $questions = Question::where("form_type", 1)->orderBy('question_order', 'ASC')->get();
+        $ids = array();
+
+        foreach ($questions as $question) {
+            array_push($ids, $question->id);
+        }
+        return view('forms.show', [
+            'formA' => $formA,
+            'ids' => json_encode($ids)
+        ]);
+    }
+
     public function create()
     {
         $auth_user = Auth::user();
@@ -82,11 +134,19 @@ class QuestionController extends Controller
         }
 
         if (Auth::user()->type != 2) {
-            $user = User::whereId(Auth::user()->id)->update([
+            // $user = User::whereId(Auth::user()->id)->update([
+            //     "form_a" => json_encode($answers)
+            // ]);
+            FormA::create([
+                "user_id" => Auth::user()->id,
                 "form_a" => json_encode($answers)
             ]);
         } else {
-            $user = User::whereId($user->id)->update([
+            // $user = User::whereId($user->id)->update([
+            //     "form_a" => json_encode($answers)
+            // ]);
+            FormA::create([
+                "user_id" => $user->id,
                 "form_a" => json_encode($answers)
             ]);
         }

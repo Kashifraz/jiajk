@@ -33,5 +33,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post("form/b/submit/{user?}", [QuestionController::class, "submitFormB"])
         ->name('form.b.submit');
-});
 
+    Route::get("form/approval", [QuestionController::class, "approval"])->name('form.a.approval');
+    ROute::get("form/show/{id}", [QuestionController::class, "showForm"])->name('form.show');
+    ROute::post("form/updateapprovalpresident/{id}", [QuestionController::class, "updateApprovalPresident"])->name('form.approval.president');
+    ROute::post("form/updateapprovalsg/{id}", [QuestionController::class, "updateApprovalSG"])->name('form.approval.sg');
+});

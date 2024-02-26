@@ -90,6 +90,14 @@
                 </div>
                 @endif
 
+                @if (Auth::user()->can('initial approval forma') || Auth::user()->can('final approval forma'))
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('form.a.approval')" :active="request()->routeIs('form.a.approval')">
+                        {{ __('FormA Approvals') }}
+                    </x-nav-link>
+                </div>
+                @endif
+
                 @endif
             </div>
 

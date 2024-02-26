@@ -58,6 +58,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function forma()
+    {
+        return $this->hasOne(FormA::class);
+    }
+
     /**
      * The attributes that should be cast.
      *

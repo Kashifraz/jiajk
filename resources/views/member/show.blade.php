@@ -1,6 +1,7 @@
 @php
 use App\Models\Affiliation;
 use App\Models\Question;
+use App\Models\User;
 @endphp
 <x-app-layout>
     <x-slot name="header">
@@ -99,9 +100,12 @@ use App\Models\Question;
                                     @csrf
                                     <div class=" col-span-3">
                                         <select id="designation" name="designation" class="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                            @foreach ($designations as $designation )
+                                            <option value="1" {{$member->designation == 1 ? "selected": ""}}>SG</option>
+                                            <option value="2" {{$member->designation == 2 ? "selected": ""}}>President</option>
+
+                                            <!-- @foreach ($designations as $designation )
                                             <option value="{{$designation->id}}" {{$member->type == 1 ? "selected": ""}}>{{$designation->designation_title}}</option>
-                                            @endforeach
+                                            @endforeach -->
                                         </select>
                                     </div>
                                     <div class=" col-span-3">
@@ -191,33 +195,51 @@ use App\Models\Question;
                 </div>
             </div>
 
-            @if (isset($member->form_a))
+            @if (isset($member->forma->form_a))
             <div class=" sm:rounded-lg bg-white shadow">
                 <div class="p-4 relative overflow-x-auto rounded ">
-                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Form A Answers</h2>
+                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Form A Status</h2>
                     <div class="mb-5 pl-3">
-                        <?php
-                        $answers = json_decode($member->form_a, true);
-                        $question_ids = json_decode($ids);
-                        for ($i = 0; $i < count($question_ids); $i++) {
-                            $key = "question_" . $question_ids[$i];
-                            $question = Question::find($question_ids[$i]);
-                            echo "<p class='text-lg font-medium py-3'>" . $question->question_title . "</p>";
-                            if (isset($answers[$i][$key])) {
-                                if (!is_array($answers[$i][$key])) {
-                                    echo "<p class='text-md ml-3'>" . $answers[$i][$key] . "</p>";
-                                } else {
-                                    foreach ($answers[$i][$key] as $option) {
-                                        echo "<ul class='ml-3'>";
-                                        echo "<li>" . $option . "</li>";
-                                        echo "</ul>";
-                                    }
-                                }
-                            } else {
-                                echo "no answer";
-                            }
-                        }
-                        ?>
+                        <ul class="space-y-4 text-left text-gray-500 ">
+                            @php
+                            $sg = User::find($member->forma->sg_id);
+                            @endphp
+                            @if ($member->forma->sg_approval == "approve")
+                            <li class="flex items-center space-x-3 rtl:space-x-reverse">
+                                <i class="fa-solid fa-square-check text-green-500 text-xl"></i>
+                                <span>The Form A is approved by secretery general <b class="capitalize">Mr/Ms {{$sg->name}}</b> on {{$member->forma->sg_approval_date}}</span>
+                            </li>
+                            @elseif($member->forma->sg_approval == "disapprove")
+                            <li class="flex items-center space-x-3 rtl:space-x-reverse">
+                                <i class="fa-solid fa-square-xmark text-red-500 text-xl"></i>
+                                <span>The Form A is by secretery general <b class="capitalize">Mr/Ms {{$sg->name}}</b> on {{$member->forma->sg_approval_date}}</span>
+                            </li>
+                            @else
+                            <li class="flex items-center space-x-3 rtl:space-x-reverse">
+                                <i class="fa-solid fa-bars-progress text-orange-500 text-xl"></i>
+                                <span>The Form A approval by secretery general is pending</span>
+                            </li>
+                            @endif
+                            @php
+                            $president = User::find($member->forma->president_id);
+                            @endphp
+                            @if ($member->forma->president_approval == "approve")
+                            <li class="flex items-center space-x-3 rtl:space-x-reverse">
+                                <i class="fa-solid fa-square-check text-green-500 text-xl"></i>
+                                <span>The Form A is approved by president <b class="capitalize">Mr/Ms {{$president->name}}</b> on {{$member->forma->president_approval_date}}</span>
+                            </li>
+                            @elseif($member->forma->president_approval == "disapprove")
+                            <li class="flex items-center space-x-3 rtl:space-x-reverse">
+                                <i class="fa-solid fa-square-xmark text-red-500 text-xl"></i>
+                                <span>The Form A is disapproved by president <b class="capitalize">Mr/Ms {{$president->name}}</b> on {{$member->forma->president_approval_date}}</span>
+                            </li>
+                            @else
+                            <li class="flex items-center space-x-3 rtl:space-x-reverse">
+                                <i class="fa-solid fa-bars-progress text-orange-500 text-xl"></i>
+                                <span>The Form A approval by president is pending</span>
+                            </li>
+                            @endif
+                        </ul>
                     </div>
 
                     <form action="{{route('member.level.update', $member->id)}}" method="post">

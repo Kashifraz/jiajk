@@ -3,6 +3,7 @@
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Affiliation;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Spatie\Backup\BackupDestination\BackupDestinationFactory;
 use Spatie\Backup\BackupDestination\BackupDestinationStatus;
@@ -34,8 +35,23 @@ Route::get('/member/dashboard', function () {
 Route::get('/admin/dashboard', function () {
     $affiliations = Affiliation::latest()->get();
 
+    $entries = array();
+    $records = DB::table('users')
+        ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
+        ->groupBy('date')
+        ->get();
+    foreach ($records as $record) {
+        $entries[] = array(
+            "title" => $record->count . " members added",
+            "start" => $record->date,
+            "backgroundColor" => 'green',
+            "borderColor" => 'green'
+        );
+    }
+
     return view('dashboards.admin', [
         "affiliations" => $affiliations,
+        "entries" => $entries
     ]);
 })->name('admin.dashboard');
 
@@ -58,7 +74,6 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('designation/destroy/{designation}', [DesignationController::class, 'destroy'])
         ->name('designation.destroy');
-
 });
 
 Route::get('/backupdb', function () {

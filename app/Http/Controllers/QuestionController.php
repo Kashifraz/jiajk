@@ -13,13 +13,13 @@ class QuestionController extends Controller
     /**
      * Show the Question for creating a new resource.
      */
-    public function updateApprovalPresident(Request $request, $id)
+    public function updateApprovalDPD(Request $request, $id)
     {
         $formA = FormA::find($id);
-        $formA->president_approval = $request->approval;
-        $formA->president_comment = $request->comments;
-        $formA->president_approval_date = date("Y/m/d");
-        $formA->president_id = Auth::user()->id;
+        $formA->dpd_approval = $request->approval;
+        $formA->dpd_comment = $request->comments;
+        $formA->dpd_approval_date = date("Y/m/d");
+        $formA->dpd_id = Auth::user()->id;
         $formA->save();
 
         return redirect()->back()->with('message', 'approval submitted successfully');
@@ -33,6 +33,11 @@ class QuestionController extends Controller
         $formA->sg_approval_date = date("Y/m/d");
         $formA->sg_id = Auth::user()->id;
         $formA->save();
+        $user = User::find($formA->user->id);
+        $user->member_level = "applicant";
+        $user->save();
+        $user->assignRole('applicant');
+        $user->removeRole('member');
 
         return redirect()->back()->with('message', 'approval submitted successfully');
     }

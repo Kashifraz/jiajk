@@ -14,25 +14,30 @@ class DesignationRolesSeeder extends Seeder
      */
     public function run(): void
     {
-        $designation_sg = Role::create(['name' => 'sg']);
-        $designation_president = Role::create(['name' => 'president']);
+        $designation_sg = Role::create(['name' => 'sg']); //sg for scretery general
+        $designation_pd = Role::create(['name' => 'pd']); //pd for president
+        $designation_dpd = Role::create(['name' => 'dpd']); //dpd for district president
 
         //creating permissions to resources 
-        $permission = Permission::create(['name' => 'initial approval forma']);
-        $permission = Permission::create(['name' => 'final approval forma']);
-        $permission = Permission::create(['name' => 'initial approval formb']);
-        $permission = Permission::create(['name' => 'final approval formb']);
-        
+        $permission = Permission::create(['name' => 'first approval forma']);
+        $permission = Permission::create(['name' => 'second approval forma']);
+        $permission = Permission::create(['name' => 'first approval formb']);
+        $permission = Permission::create(['name' => 'second approval formb']);
+        $permission = Permission::create(['name' => 'third approval formb']);
+
         //assigning permissions to roles
+        $designation_dpd->syncPermissions([
+            'first approval forma',
+            'first approval formb',
+        ]);
+
         $designation_sg->syncPermissions([
-            'initial approval forma',
-            'initial approval formb',
+            'second approval forma',
+            'second approval formb',
         ]);
 
-        $designation_president->syncPermissions([
-            'final approval forma',
-            'final approval formb',
+        $designation_pd->syncPermissions([
+            'third approval formb',
         ]);
-
     }
 }

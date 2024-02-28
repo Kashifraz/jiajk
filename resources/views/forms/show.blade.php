@@ -3,6 +3,7 @@
 use App\Models\Question;
 use App\Models\User;
 
+$member = $formA->user;
 ?>
 <x-app-layout>
     <x-slot name="header">
@@ -27,8 +28,91 @@ use App\Models\User;
         @endif
 
         <div class="py-5  gap-4 max-w-7xl mx-auto sm:px-6 lg:px-8 ">
-            <div class=" p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+            <div class=" p-4 sm:p-8 bg-white shadow sm:rounded-lg mb-4">
+                <div class="md:col-span-3">
+                    <h2 class="text-lg font-medium text-gray-900 mb-4">
+                        Showing Member information for <b class="capitalize">{{$formA->user->name}}</b>
+                    </h2>
+                    <div class="grid grid-cols-4">
+                        <div class="py-2 col-span-4 font-bold">
+                            <div class="flex items-center gap-4 mt-3 capitalize ">
+                                @if (isset($member->profile))
+                                <img class="w-20 h-20 rounded-full" src="{{ asset('uploads/'.$member->profile) }}" alt="">
+                                @endif
+                                <div class="font-medium">
+                                    <div>{{$member->name}}</div>
+                                    <div class="text-sm text-gray-500">{{$member->created_at}}</div>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="py-2 col-span-1 font-bold">Father Name</div>
+                        <div class="py-2 col-span-3">{{$member->father_name}}</div>
+                        <div class="py-2 col-span-1 font-bold">Status</div>
+                        <div class="py-2 col-span-3">{{$member->verified == 1? "Verified": "Not Verified" }}</div>
+                        <div class="py-2 col-span-1 font-bold">Email</div>
+                        <div class="py-2 col-span-3">{{$member->email}}</div>
+                    </div>
+                </div>
+                <div class="p-4 relative overflow-x-auto rounded">
+                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Location Information</h2>
+                    <div class="grid grid-cols-4">
+                        <div class="py-2 col-span-1 font-bold">Geographical Address</div>
+                        <div class="py-2 col-span-3">
+                            <p>{{$member->geographical_address}}</p>
+                        </div>
+                        <div class="py-2 col-span-1 font-bold">Local Jamat</div>
+                        <div class="py-2 col-span-3">{{$member->local_jamat}}</div>
+                        <div class="py-2 col-span-1 font-bold">City</div>
+                        <div class="py-2 col-span-3">{{$member->city}}</div>
+                        <div class="py-2 col-span-1 font-bold">Village</div>
+                        <div class="py-2 col-span-3">{{$member->village}}</div>
+                        <div class="py-2 col-span-1 font-bold">Mailing Address</div>
+                        <div class="py-2 col-span-3">{{$member->mailing_address}}</div>
+                    </div>
+                </div>
+
+                <div class="p-4 relative overflow-x-auto rounded">
+                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Occupation Information</h2>
+                    <div class="grid grid-cols-4">
+                        <div class="py-2 col-span-1 font-bold">Occupation</div>
+                        <div class="py-2 col-span-3">
+                            <p>{{$member->occupation}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-4 relative overflow-x-auto rounded">
+                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Academic Information</h2>
+                    <div class="grid grid-cols-4">
+                        <div class="py-2 col-span-1 font-bold">Education</div>
+                        <div class="py-2 col-span-3">
+                            <p>{{$member->education}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-4 relative overflow-x-auto rounded">
+                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Contact Information</h2>
+                    <div class="grid grid-cols-4">
+                        <div class="py-2 col-span-1 font-bold">Office Phone</div>
+                        <div class="py-2 col-span-3">
+                            <p>{{$member->office_phone}}</p>
+                        </div>
+                        <div class="py-2 col-span-1 font-bold">Home Phone</div>
+                        <div class="py-2 col-span-3">
+                            <p>{{$member->home_phone}}</p>
+                        </div>
+                        <div class="py-2 col-span-1 font-bold">Mobile Phone</div>
+                        <div class="py-2 col-span-3">
+                            <p>{{$member->mobile_phone}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class=" p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div class="md:col-span-3">
                     <h2 class="text-lg font-medium text-gray-900 mb-4">
                         Showing Form A for <b class="capitalize">{{$formA->user->name}}</b>
@@ -65,13 +149,14 @@ use App\Models\User;
                     @endif
                 </div>
             </div>
-            @if($formA->sg_approval == null || $formA->president_approval == null )
+            @if($formA->sg_approval == null || $formA->dpd_approval == null )
+            @if (($formA->dpd_approval != null && $formA->dpd_approval != "disapprove" && Auth::user()->can('second approval forma'))
+            ||($formA->dpd_approval == null && Auth::user()->can('first approval forma')))
             <div class="p-4 mt-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                @if (($formA->sg_approval != null && Auth::user()->can('final approval forma')) ||($formA->sg_approval == null && Auth::user()->can('initial approval forma')))
                 <h2 class="text-lg font-medium text-gray-900 mb-4">
                     Submit your aprroval
                 </h2>
-                <form method="post" action="{{ Auth::user()->can('initial approval forma') ? route('form.approval.sg', $formA->id):route('form.approval.president', $formA->id) }}" class="mt-6 space-y-6">
+                <form method="post" action="{{ Auth::user()->can('first approval forma') ? route('form.approval.dpd', $formA->id):route('form.approval.sg', $formA->id) }}" class="mt-6 space-y-6">
                     @csrf
                     <div class="mb-5 w-1/2 ">
                         <label for="approval" class="block mb-2 text-sm font-medium text-gray-900 ">Your Approval</label>
@@ -88,22 +173,46 @@ use App\Models\User;
                     </div>
                     <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Submit</button>
                 </form>
-                @elseif($formA->sg_approval == null)
+            </div>
+            @elseif($formA->dpd_approval == null)
+            <div class="p-4 mt-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <h2 class="text-lg font-medium text-blue-600 text-center my-4">
-                    Note: Awaiting secretery general's approval.
+                    Note: Awaiting District president's approval.
                 </h2>
-                @endif
-
             </div>
             @endif
+            @endif
 
-            @if($formA->sg_approval != null)
+            @if($formA->dpd_approval != null)
             <div class="p-4 mt-4 sm:p-8 bg-white shadow sm:rounded-lg  antialiased">
                 <div class="max-w-full mx-auto px-4">
                     <h2 class="text-lg font-medium text-gray-900 mb-4">
                         Comments by Approvers
                     </h2>
-
+                    @php
+                    $dpd = User::find($formA->dpd_id);
+                    @endphp
+                    <article class="p-6 text-base bg-white rounded-lg">
+                        <footer class="flex justify-start items-center mb-2">
+                            <div class="flex items-center">
+                                <p class="inline-flex items-center mr-3 text-sm text-gray-900  font-semibold">
+                                    @if ($dpd->profile)
+                                    <img class="mr-2 w-6 h-6 rounded-full" src="{{ asset('uploads/'.$dpd->profile) }}" alt="Michael Gough">
+                                    @endif
+                                    <span class="capitalize">{{"Mr/Ms ".$dpd->name}} - (DPD)</span>
+                                </p>
+                                <p class="text-sm text-gray-600 ">{{date("F d, Y", strtotime($formA->dpd_approval_date))}}
+                                    @if ($formA->dpd_approval == "approve")
+                                    <span class="bg-green-200 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded mx-3">Approved</span>
+                                    @elseif($formA->dpd_approval == "disapprove")
+                                    <span class="bg-red-200 text-red-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded mx-3">Disapproved</span>
+                                    @endif
+                                </p>
+                            </div>
+                        </footer>
+                        <p class="text-gray-500">{{$formA->dpd_comment}}</p>
+                    </article>
+                    @if($formA->sg_approval != null)
                     @php
                     $sg = User::find($formA->sg_id);
                     @endphp
@@ -114,30 +223,18 @@ use App\Models\User;
                                     @if ($sg->profile)
                                     <img class="mr-2 w-6 h-6 rounded-full" src="{{ asset('uploads/'.$sg->profile) }}" alt="Michael Gough">
                                     @endif
-                                    <span class="capitalize">{{"Mr/Ms ".$sg->name}}</span>
+                                    <span class="capitalize">{{"Mr/Ms ".$sg->name}} - (SG)</span>
                                 </p>
-                                <p class="text-sm text-gray-600 ">{{date("F d, Y", strtotime($formA->sg_approval_date))}}</p>
+                                <p class="text-sm text-gray-600 ">{{date("F d, Y", strtotime($formA->sg_approval_date))}}
+                                    @if ($formA->sg_approval == "approve")
+                                    <span class="bg-green-200 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded mx-3">Approved</span>
+                                    @elseif($formA->sg_approval == "disapprove")
+                                    <span class="bg-red-200 text-red-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded mx-3">Disapproved</span>
+                                    @endif
+                                </p>
                             </div>
                         </footer>
                         <p class="text-gray-500">{{$formA->sg_comment}}</p>
-                    </article>
-                    @if($formA->president_approval != null)
-                    @php
-                    $president = User::find($formA->president_id);
-                    @endphp
-                    <article class="p-6 text-base bg-white rounded-lg">
-                        <footer class="flex justify-start items-center mb-2">
-                            <div class="flex items-center">
-                                <p class="inline-flex items-center mr-3 text-sm text-gray-900  font-semibold">
-                                    @if ($president->profile)
-                                    <img class="mr-2 w-6 h-6 rounded-full" src="{{ asset('uploads/'.$president->profile) }}" alt="Michael Gough">
-                                    @endif
-                                    <span class="capitalize">{{"Mr/Ms ".$president->name}}</span>
-                                </p>
-                                <p class="text-sm text-gray-600 ">{{date("F d, Y", strtotime($formA->president_approval_date))}}</p>
-                            </div>
-                        </footer>
-                        <p class="text-gray-500">{{$formA->president_comment}}</p>
                     </article>
 
                     @endif

@@ -100,8 +100,9 @@ use App\Models\User;
                                     @csrf
                                     <div class=" col-span-3">
                                         <select id="designation" name="designation" class="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                            <option value="1" {{$member->designation == 1 ? "selected": ""}}>SG</option>
-                                            <option value="2" {{$member->designation == 2 ? "selected": ""}}>President</option>
+                                            <option value="1" {{$member->designation == 1 ? "selected": ""}}>District President</option>
+                                            <option value="2" {{$member->designation == 2 ? "selected": ""}}>Secretary General</option>
+                                            <option value="3" {{$member->designation == 3 ? "selected": ""}}>President</option>
 
                                             <!-- @foreach ($designations as $designation )
                                             <option value="{{$designation->id}}" {{$member->type == 1 ? "selected": ""}}>{{$designation->designation_title}}</option>

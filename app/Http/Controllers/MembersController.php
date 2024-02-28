@@ -298,9 +298,11 @@ class MembersController extends Controller
       }
       $member = User::find($id);
       if ($request->designation == 1)
-         $member->assignRole('sg');
+         $member->assignRole('dpd');
       else if ($request->designation == 2)
-         $member->assignRole('president');
+         $member->assignRole('sg');
+      else if ($request->designation == 3)
+         $member->assignRole('pd');
 
       User::whereId($id)->update([
          "designation" => $request->designation,

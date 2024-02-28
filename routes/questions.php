@@ -36,6 +36,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get("form/approval", [QuestionController::class, "approval"])->name('form.a.approval');
     ROute::get("form/show/{id}", [QuestionController::class, "showForm"])->name('form.show');
-    ROute::post("form/updateapprovalpresident/{id}", [QuestionController::class, "updateApprovalPresident"])->name('form.approval.president');
+    ROute::post("form/updateapprovaldpd/{id}", [QuestionController::class, "updateApprovalDPD"])->name('form.approval.dpd');
     ROute::post("form/updateapprovalsg/{id}", [QuestionController::class, "updateApprovalSG"])->name('form.approval.sg');
 });

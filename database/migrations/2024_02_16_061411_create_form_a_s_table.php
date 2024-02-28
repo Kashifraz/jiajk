@@ -16,14 +16,14 @@ return new class extends Migration
             $table->id();
             $table->longText('form_a')->nullable();
             $table->foreignIdFor(User::class);
+            $table->integer('dpd_id')->nullable();
+            $table->string('dpd_approval')->nullable();
+            $table->text('dpd_comment')->nullable();
+            $table->date('dpd_approval_date')->nullable();
             $table->integer('sg_id')->nullable();
             $table->string('sg_approval')->nullable();
             $table->text('sg_comment')->nullable();
             $table->date('sg_approval_date')->nullable();
-            $table->integer('president_id')->nullable();
-            $table->string('president_approval')->nullable();
-            $table->text('president_comment')->nullable();
-            $table->date('president_approval_date')->nullable();
             $table->timestamps();
         });
     }

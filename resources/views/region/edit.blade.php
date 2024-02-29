@@ -77,6 +77,10 @@ use App\Models\Ward;
                             <ul class="pl-12  divide-y divide-gray-200 hidden" id="{{'body-a-'.$affiliation->id}}">
                                 @if (count($affiliation->constituency) > 0)
                                 @foreach ($affiliation->constituency as $constituency )
+
+                                @php
+                                    $ward_count = 0;
+                                @endphp
                                 <li class="py-3 sm:py-4">
                                     <div class="flex items-center space-x-4 rtl:space-x-reverse">
                                         <div class="flex-shrink-0">
@@ -171,6 +175,9 @@ use App\Models\Ward;
                                     <ul class="pl-12  divide-y divide-gray-200 hidden" id="{{'body-u-'.$unioncouncil->id}}">
                                         @if (count($unioncouncil->ward) > 0)
                                         @foreach ($unioncouncil->ward as $ward )
+                                        @php
+                                            $ward_count++;
+                                        @endphp
                                         <li class="py-3 sm:py-4">
                                             <div class="flex items-center space-x-4 rtl:space-x-reverse">
                                                 <div class="flex-shrink-0">
@@ -252,6 +259,7 @@ use App\Models\Ward;
                                     @endif
 
                                 </ul>
+                               <p class="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded"><b>{{$ward_count}} total wards </b> in the constituency <b>{{$constituency->constituency_title}}</b></p> 
                                 @endforeach
                                 @else
                                 <p class="p-5">No constituencies added in the destrict!</p>

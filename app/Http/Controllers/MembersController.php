@@ -297,12 +297,19 @@ class MembersController extends Controller
          die("Warning! you are not authorized to perform this action.");
       }
       $member = User::find($id);
-      if ($request->designation == 1)
+      if ($request->designation == 1) {
          $member->assignRole('dpd');
-      else if ($request->designation == 2)
+         $member->removeRole('sg');
+         $member->removeRole('pd');
+      } else if ($request->designation == 2) {
          $member->assignRole('sg');
-      else if ($request->designation == 3)
+         $member->removeRole('dpd');
+         $member->removeRole('pd');
+      } else if ($request->designation == 3) {
          $member->assignRole('pd');
+         $member->removeRole('dpd');
+         $member->removeRole('sg');
+      }
 
       User::whereId($id)->update([
          "designation" => $request->designation,

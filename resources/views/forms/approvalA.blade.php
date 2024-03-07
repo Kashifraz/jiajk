@@ -63,7 +63,7 @@
                                     {{$user->created_at}}
                                 </th>
                                 <td class="px-6 py-4">
-                                    <a href="{{route('form.show',$user->forma->id )}}"><i class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2 text-center inline-flex items-center me-2 fa-regular fa-eye"></i></a>
+                                    <a href="{{route('form.a.show',$user->forma->id )}}"><i class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2 text-center inline-flex items-center me-2 fa-regular fa-eye"></i></a>
                                 </td>
                             </tr>
                             @endforeach

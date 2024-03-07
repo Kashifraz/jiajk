@@ -97,6 +97,13 @@
                     </x-nav-link>
                 </div>
                 @endif
+                @if (Auth::user()->can('first approval formb') || Auth::user()->can('second approval formb') || Auth::user()->can('third approval formb'))
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('form.b.approval')" :active="request()->routeIs('form.b.approval')">
+                        {{ __('FormB Approvals') }}
+                    </x-nav-link>
+                </div>
+                @endif
 
                 @endif
             </div>
@@ -192,14 +199,24 @@
                 {{ __('Forms') }}
             </x-responsive-nav-link>
             @endif
-            @if (Auth::user()->member_level === "applicant")
+            @if (Auth::user()->member_level === "member")
             <x-responsive-nav-link :href="route('form.show.a')" :active="request()->routeIs('form.show.a')">
                 {{ __('Form A') }}
             </x-responsive-nav-link>
             @endif
-            @if (Auth::user()->member_level === "gc")
+            @if (Auth::user()->member_level === "applicant")
             <x-responsive-nav-link :href="route('form.show.b')" :active="request()->routeIs('form.show.b')">
                 {{ __('Form B') }}
+            </x-responsive-nav-link>
+            @endif
+            @if (Auth::user()->can('first approval forma') || Auth::user()->can('second approval forma') || Auth::user()->can('third approval forma'))
+            <x-responsive-nav-link :href="route('form.a.approval')" :active="request()->routeIs('form.a.approval')">
+                {{ __('FormA Approvals') }}
+            </x-responsive-nav-link>
+            @endif
+            @if (Auth::user()->can('first approval formb') || Auth::user()->can('second approval formb') || Auth::user()->can('third approval formb'))
+            <x-responsive-nav-link :href="route('form.b.approval')" :active="request()->routeIs('form.b.approval')">
+                {{ __('FormB Approvals') }}
             </x-responsive-nav-link>
             @endif
 

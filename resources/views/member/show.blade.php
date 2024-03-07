@@ -202,6 +202,29 @@ use App\Models\User;
                     <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Form A Status</h2>
                     <div class="mb-5 pl-3">
                         <ul class="space-y-4 text-left text-gray-500 ">
+
+                        <!-- form A district president approval  status-->
+                            @php
+                            $dpd = User::find($member->forma->dpd_id);
+                            @endphp
+                            @if ($member->forma->dpd_approval == "approve")
+                            <li class="flex items-center space-x-3 rtl:space-x-reverse">
+                                <i class="fa-solid fa-square-check text-green-500 text-xl"></i>
+                                <span>The Form A is approved by district president <b class="capitalize">Mr/Ms {{$dpd->name}}</b> on {{$member->forma->dpd_approval_date}}</span>
+                            </li>
+                            @elseif($member->forma->dpd_approval == "disapprove")
+                            <li class="flex items-center space-x-3 rtl:space-x-reverse">
+                                <i class="fa-solid fa-square-xmark text-red-500 text-xl"></i>
+                                <span>The Form A is disapproved by district president <b class="capitalize">Mr/Ms {{$dpd->name}}</b> on {{$member->forma->dpd_approval_date}}</span>
+                            </li>
+                            @else
+                            <li class="flex items-center space-x-3 rtl:space-x-reverse">
+                                <i class="fa-solid fa-bars-progress text-orange-500 text-xl"></i>
+                                <span>The Form A approval by district president is pending</span>
+                            </li>
+                            @endif
+
+                            <!-- Form A secretery general approval status -->
                             @php
                             $sg = User::find($member->forma->sg_id);
                             @endphp
@@ -219,25 +242,6 @@ use App\Models\User;
                             <li class="flex items-center space-x-3 rtl:space-x-reverse">
                                 <i class="fa-solid fa-bars-progress text-orange-500 text-xl"></i>
                                 <span>The Form A approval by secretery general is pending</span>
-                            </li>
-                            @endif
-                            @php
-                            $president = User::find($member->forma->president_id);
-                            @endphp
-                            @if ($member->forma->president_approval == "approve")
-                            <li class="flex items-center space-x-3 rtl:space-x-reverse">
-                                <i class="fa-solid fa-square-check text-green-500 text-xl"></i>
-                                <span>The Form A is approved by president <b class="capitalize">Mr/Ms {{$president->name}}</b> on {{$member->forma->president_approval_date}}</span>
-                            </li>
-                            @elseif($member->forma->president_approval == "disapprove")
-                            <li class="flex items-center space-x-3 rtl:space-x-reverse">
-                                <i class="fa-solid fa-square-xmark text-red-500 text-xl"></i>
-                                <span>The Form A is disapproved by president <b class="capitalize">Mr/Ms {{$president->name}}</b> on {{$member->forma->president_approval_date}}</span>
-                            </li>
-                            @else
-                            <li class="flex items-center space-x-3 rtl:space-x-reverse">
-                                <i class="fa-solid fa-bars-progress text-orange-500 text-xl"></i>
-                                <span>The Form A approval by president is pending</span>
                             </li>
                             @endif
                         </ul>
@@ -263,49 +267,89 @@ use App\Models\User;
             </div>
             @endif
 
-            @if (isset($member->form_b))
+
+            @if (isset($member->formb->form_b))
             <div class=" sm:rounded-lg bg-white shadow">
                 <div class="p-4 relative overflow-x-auto rounded ">
-                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Form B Answers</h2>
+                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Form A Status</h2>
                     <div class="mb-5 pl-3">
-                        <?php
-                        $answers = json_decode($member->form_b, true);
-                        $question_ids = json_decode($ids_b);
+                        <ul class="space-y-4 text-left text-gray-500 ">
+                            <!-- form B district president approval status -->
+                            @php
+                            $dpd = User::find($member->formb->dpd_id);
+                            @endphp
+                            @if ($member->formb->dpd_approval == "approve")
+                            <li class="flex items-center space-x-3 rtl:space-x-reverse">
+                                <i class="fa-solid fa-square-check text-green-500 text-xl"></i>
+                                <span>The Form B is approved by district president <b class="capitalize">Mr/Ms {{$dpd->name}}</b> on {{$member->formb->dpd_approval_date}}</span>
+                            </li>
+                            @elseif($member->forma->dpd_approval == "disapprove")
+                            <li class="flex items-center space-x-3 rtl:space-x-reverse">
+                                <i class="fa-solid fa-square-xmark text-red-500 text-xl"></i>
+                                <span>The Form B is by disapproved district president <b class="capitalize">Mr/Ms {{$dpd->name}}</b> on {{$member->formb->dpd_approval_date}}</span>
+                            </li>
+                            @else
+                            <li class="flex items-center space-x-3 rtl:space-x-reverse">
+                                <i class="fa-solid fa-bars-progress text-orange-500 text-xl"></i>
+                                <span>The Form B approval by District President is pending</span>
+                            </li>
+                            @endif
+                            
+                            <!-- form B secretery general approval status  -->
+                            @php
+                            $sg = User::find($member->formb->sg_id);
+                            @endphp
+                            @if ($member->formb->sg_approval == "approve")
+                            <li class="flex items-center space-x-3 rtl:space-x-reverse">
+                                <i class="fa-solid fa-square-check text-green-500 text-xl"></i>
+                                <span>The Form B is approved by secretery general <b class="capitalize">Mr/Ms {{$sg->name}}</b> on {{$member->formb->sg_approval_date}}</span>
+                            </li>
+                            @elseif($member->formb->sg_approval == "disapprove")
+                            <li class="flex items-center space-x-3 rtl:space-x-reverse">
+                                <i class="fa-solid fa-square-xmark text-red-500 text-xl"></i>
+                                <span>The Form B is by secretery general <b class="capitalize">Mr/Ms {{$sg->name}}</b> on {{$member->formb->sg_approval_date}}</span>
+                            </li>
+                            @else
+                            <li class="flex items-center space-x-3 rtl:space-x-reverse">
+                                <i class="fa-solid fa-bars-progress text-orange-500 text-xl"></i>
+                                <span>The Form B approval by secretery general is pending</span>
+                            </li>
+                            @endif
 
-                        for ($i = 0; $i < count($question_ids); $i++) {
-
-                            $key = "question_" . $question_ids[$i];
-                            $question = Question::find($question_ids[$i]);
-                            echo "<p class='text-lg font-medium py-3'>" . $question->question_title . "</p>";
-
-                            if (isset($answers[$i][$key])) {
-                                if (!is_array($answers[$i][$key])) {
-                                    echo "<p class='text-md ml-3'>" . $answers[$i][$key] . "</p>";
-                                } else {
-                                    foreach ($answers[$i][$key] as $option) {
-                                        echo "<ul class='ml-3'>";
-                                        echo "<li>" . $option . "</li>";
-                                        echo "</ul>";
-                                    }
-                                }
-                            } else {
-                                echo "no answer";
-                            }
-                        }
-                        ?>
+                            <!-- Form B president approval status -->
+                            @php
+                            $pd = User::find($member->formb->pd_id);
+                            @endphp
+                            @if ($member->formb->pd_approval == "approve")
+                            <li class="flex items-center space-x-3 rtl:space-x-reverse">
+                                <i class="fa-solid fa-square-check text-green-500 text-xl"></i>
+                                <span>The Form B is approved by president <b class="capitalize">Mr/Ms {{$pd->name}}</b> on {{$member->formb->pd_approval_date}}</span>
+                            </li>
+                            @elseif($member->formb->pd_approval == "disapprove")
+                            <li class="flex items-center space-x-3 rtl:space-x-reverse">
+                                <i class="fa-solid fa-square-xmark text-red-500 text-xl"></i>
+                                <span>The Form B is disapproved by president <b class="capitalize">Mr/Ms {{$pd->name}}</b> on {{$member->formb->pd_approval_date}}</span>
+                            </li>
+                            @else
+                            <li class="flex items-center space-x-3 rtl:space-x-reverse">
+                                <i class="fa-solid fa-bars-progress text-orange-500 text-xl"></i>
+                                <span>The Form B approval by president is pending</span>
+                            </li>
+                            @endif
+                        </ul>
                     </div>
 
                     <form action="{{route('member.level.update', $member->id)}}" method="post">
                         <div class="grid grid-cols-5">
                             @csrf
                             <div class="col-span-2">
-                                @if ($member->member_level === "applicant")
+                                @if ($member->member_level === "member")
                                 <button type="submit" class="ml-3 px-3 py-3 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     Promote Now
                                 </button>
                                 @else
                                 <div class="bg-green-100 text-green-800 text-xs w-1/2 font-medium me-2 px-2.5 py-2 rounded mb-5 ml-4">
-                                    Member promoted to GC
+                                    Member promoted to Applicant
                                 </div>
                                 @endif
                             </div>
@@ -314,6 +358,7 @@ use App\Models\User;
                 </div>
             </div>
             @endif
+
         </div>
     </div>
 </x-app-layout>

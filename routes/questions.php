@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FormBController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuestionController;
 
@@ -25,17 +26,39 @@ Route::middleware('auth')->group(function () {
     Route::get("form/show/a/{user?}", [QuestionController::class, "showFormA"])
         ->name("form.show.a");
 
-    Route::get("form/show/b/{user?}", [QuestionController::class, "showFormB"])
+    Route::get("form/show/b/{user?}", [FormBController::class, "showFormB"])
         ->name("form.show.b");
 
     Route::post("form/a/submit/{user?}", [QuestionController::class, "submitFormA"])
         ->name('form.a.submit');
 
-    Route::post("form/b/submit/{user?}", [QuestionController::class, "submitFormB"])
+    Route::post("form/b/submit/{user?}", [FormBController::class, "submitFormB"])
         ->name('form.b.submit');
 
-    Route::get("form/approval", [QuestionController::class, "approval"])->name('form.a.approval');
-    ROute::get("form/show/{id}", [QuestionController::class, "showForm"])->name('form.show');
-    ROute::post("form/updateapprovaldpd/{id}", [QuestionController::class, "updateApprovalDPD"])->name('form.approval.dpd');
-    ROute::post("form/updateapprovalsg/{id}", [QuestionController::class, "updateApprovalSG"])->name('form.approval.sg');
+    Route::get("form/a/approval", [QuestionController::class, "approvalFormA"])
+        ->name('form.a.approval');
+
+    Route::get("form/b/approval", [FormBController::class, "approvalFormB"])
+        ->name('form.b.approval');
+
+    Route::get("form/a/show/{id}", [QuestionController::class, "showFormADetails"])
+        ->name('form.a.show');
+
+    Route::get("form/b/show/{id}", [FormBController::class, "showFormBDetails"])
+        ->name('form.b.show');
+
+    Route::post("form/a/updateapprovaldpd/{id}", [QuestionController::class, "updateApprovalDPD"])
+        ->name('form.approval.dpd');
+
+    Route::post("form/a/updateapprovalsg/{id}", [QuestionController::class, "updateApprovalSG"])
+        ->name('form.approval.sg');
+
+    Route::post("form/b/updateapprovaldpd/{id}", [FormBController::class, "updateApprovalDPD"])
+        ->name('form.b.approval.dpd');
+
+    Route::post("form/b/updateapprovalsg/{id}", [FormBController::class, "updateApprovalSG"])
+        ->name('form.b.approval.sg');
+
+    Route::post("form/b/updateapprovalpd/{id}", [FormBController::class, "updateApprovalDP"])
+        ->name('form.b.approval.dp');
 });

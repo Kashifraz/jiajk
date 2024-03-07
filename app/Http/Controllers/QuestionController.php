@@ -41,20 +41,28 @@ class QuestionController extends Controller
 
         return redirect()->back()->with('message', 'approval submitted successfully');
     }
-    public function approval()
+
+    public function approvalFormA()
     {
         $users = User::with('forma')->get();
 
-        $users = User::with('forma')->whereHas('forma', function ($query) {
-            $query->whereNotNull(['form_a']);
-        })->get();
+        if (Auth::user()->can('first approval forma')) {
+            $users = User::with('forma')->where('affiliations', Auth::user()->affiliations)
+                ->whereHas('forma', function ($query) {
+                    $query->whereNotNull(['form_a']);
+                })->get();
+        } else {
+            $users = User::with('forma')->whereHas('forma', function ($query) {
+                $query->whereNotNull(['form_a']);
+            })->get();
+        }
 
-        return view('forms.approval', [
+        return view('forms.approvalA', [
             "users" => $users
         ]);
     }
 
-    public function showForm($id)
+    public function showFormADetails($id)
     {
         $formA = FormA::find($id);
         $questions = Question::where("form_type", 1)->orderBy('question_order', 'ASC')->get();
@@ -63,7 +71,7 @@ class QuestionController extends Controller
         foreach ($questions as $question) {
             array_push($ids, $question->id);
         }
-        return view('forms.show', [
+        return view('forms.showA', [
             'formA' => $formA,
             'ids' => json_encode($ids)
         ]);
@@ -159,18 +167,7 @@ class QuestionController extends Controller
         return redirect()->back()->with("message", "Form A submitted successfully");
     }
 
-    public function showFormB(User $user)
-    {
-        $auth_user = Auth::user();
-        if (!$auth_user->can('formb view')) {
-            die("Warning! Access to the resource is denied");
-        }
-        $questions = Question::where("form_type", 2)->orderBy('question_order', 'ASC')->get();
-        return view("forms.formB", [
-            "questions" => $questions,
-            "user" => $user
-        ]);
-    }
+
 
     public function submitFormB(Request $request, User $user = null)
     {

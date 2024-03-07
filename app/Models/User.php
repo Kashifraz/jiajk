@@ -63,6 +63,11 @@ class User extends Authenticatable
         return $this->hasOne(FormA::class);
     }
 
+    public function formb()
+    {
+        return $this->hasOne(FormB::class);
+    }
+
     /**
      * The attributes that should be cast.
      *

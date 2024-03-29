@@ -26,6 +26,7 @@
                         <h2 class="text-lg font-medium text-gray-900 mb-4">
                             Submit Answers to Form B
                         </h2>
+                        <hr>
                         <form method="post" action="{{route('form.b.submit', $user->id)}}" class="mt-6 space-y-6">
                             @csrf
                             @php

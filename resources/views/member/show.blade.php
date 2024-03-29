@@ -32,7 +32,7 @@ use App\Models\User;
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-5 pb-8 space-y-6">
             <div class=" sm:rounded-lg bg-white shadow">
                 <div class="p-4 relative overflow-x-auto rounded">
-                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Personal Information</h2>
+                    <h2 class="mb-2 text-xl font-semibold text-gray-900 "><i class="fa-solid fa-id-card mx-2"></i> Personal Information</h2>
                     <div class="grid grid-cols-4">
                         <div class="py-2 col-span-4 font-bold">
                             <div class="flex items-center gap-4 mt-3 capitalize ">
@@ -132,78 +132,83 @@ use App\Models\User;
                 </div>
             </div>
 
-            <div class=" sm:rounded-lg bg-white shadow">
-                <div class="p-4 relative overflow-x-auto rounded">
-                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Location Information</h2>
-                    <div class="grid grid-cols-4">
-                        <div class="py-2 col-span-1 font-bold">Geographical Address</div>
-                        <div class="py-2 col-span-3">
-                            <p>{{$member->geographical_address}}</p>
+
+            <div class="grid grid-cols-2 gap-4">
+
+                <div class="sm:rounded-lg bg-white shadow">
+                    <div class="p-4 relative overflow-x-auto rounded">
+                        <h2 class="mb-2 text-xl font-semibold text-gray-900 "><i class="fa-solid fa-location-crosshairs mx-2"></i>Location Information</h2>
+                        <div class="grid grid-cols-4">
+                            <div class="py-2 col-span-1 font-bold">Geographical Address</div>
+                            <div class="py-2 col-span-3">
+                                <p>{{$member->geographical_address}}</p>
+                            </div>
+                            <div class="py-2 col-span-1 font-bold">Local Jamat</div>
+                            <div class="py-2 col-span-3">{{$member->local_jamat}}</div>
+                            <div class="py-2 col-span-1 font-bold">City</div>
+                            <div class="py-2 col-span-3">{{$member->city}}</div>
+                            <div class="py-2 col-span-1 font-bold">Village</div>
+                            <div class="py-2 col-span-3">{{$member->village}}</div>
+                            <div class="py-2 col-span-1 font-bold">Mailing Address</div>
+                            <div class="py-2 col-span-3">{{$member->mailing_address}}</div>
                         </div>
-                        <div class="py-2 col-span-1 font-bold">Local Jamat</div>
-                        <div class="py-2 col-span-3">{{$member->local_jamat}}</div>
-                        <div class="py-2 col-span-1 font-bold">City</div>
-                        <div class="py-2 col-span-3">{{$member->city}}</div>
-                        <div class="py-2 col-span-1 font-bold">Village</div>
-                        <div class="py-2 col-span-3">{{$member->village}}</div>
-                        <div class="py-2 col-span-1 font-bold">Mailing Address</div>
-                        <div class="py-2 col-span-3">{{$member->mailing_address}}</div>
+                    </div>
+                </div>
+
+                <div class=" sm:rounded-lg bg-white shadow">
+                    <div class="p-4 relative overflow-x-auto rounded">
+                        <h2 class="mb-2 text-xl font-semibold text-gray-900"> <i class="fa-solid fa-briefcase mx-2"></i> Occupation Information</h2>
+                        <div class="grid grid-cols-4">
+                            <div class="py-2 col-span-1 font-bold">Occupation</div>
+                            <div class="py-2 col-span-3">
+                                <p>{{$member->occupation}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class=" sm:rounded-lg bg-white shadow">
+                    <div class="p-4 relative overflow-x-auto rounded">
+                        <h2 class="mb-2 text-xl font-semibold text-gray-900"><i class="fa-solid fa-user-graduate mx-2"></i> Academic Information</h2>
+                        <div class="grid grid-cols-4">
+                            <div class="py-2 col-span-1 font-bold">Education</div>
+                            <div class="py-2 col-span-3">
+                                <p>{{$member->education}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class=" sm:rounded-lg bg-white shadow">
+                    <div class="p-4 relative overflow-x-auto rounded">
+                        <h2 class="mb-2 text-xl font-semibold text-gray-900 "> <i class="fa-solid fa-square-phone mx-2 "></i> Contact Information</h2>
+                        <div class="grid grid-cols-4">
+                            <div class="py-2 col-span-1 font-bold">Office Phone</div>
+                            <div class="py-2 col-span-3">
+                                <p>{{$member->office_phone}}</p>
+                            </div>
+                            <div class="py-2 col-span-1 font-bold">Home Phone</div>
+                            <div class="py-2 col-span-3">
+                                <p>{{$member->home_phone}}</p>
+                            </div>
+                            <div class="py-2 col-span-1 font-bold">Mobile Phone</div>
+                            <div class="py-2 col-span-3">
+                                <p>{{$member->mobile_phone}}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class=" sm:rounded-lg bg-white shadow">
-                <div class="p-4 relative overflow-x-auto rounded">
-                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Occupation Information</h2>
-                    <div class="grid grid-cols-4">
-                        <div class="py-2 col-span-1 font-bold">Occupation</div>
-                        <div class="py-2 col-span-3">
-                            <p>{{$member->occupation}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class=" sm:rounded-lg bg-white shadow">
-                <div class="p-4 relative overflow-x-auto rounded">
-                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Academic Information</h2>
-                    <div class="grid grid-cols-4">
-                        <div class="py-2 col-span-1 font-bold">Education</div>
-                        <div class="py-2 col-span-3">
-                            <p>{{$member->education}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class=" sm:rounded-lg bg-white shadow">
-                <div class="p-4 relative overflow-x-auto rounded">
-                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Contact Information</h2>
-                    <div class="grid grid-cols-4">
-                        <div class="py-2 col-span-1 font-bold">Office Phone</div>
-                        <div class="py-2 col-span-3">
-                            <p>{{$member->office_phone}}</p>
-                        </div>
-                        <div class="py-2 col-span-1 font-bold">Home Phone</div>
-                        <div class="py-2 col-span-3">
-                            <p>{{$member->home_phone}}</p>
-                        </div>
-                        <div class="py-2 col-span-1 font-bold">Mobile Phone</div>
-                        <div class="py-2 col-span-3">
-                            <p>{{$member->mobile_phone}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             @if (isset($member->forma->form_a))
             <div class=" sm:rounded-lg bg-white shadow">
                 <div class="p-4 relative overflow-x-auto rounded ">
-                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Form A Status</h2>
+                    <h2 class="mb-2 text-xl font-semibold text-gray-900"> <i class="fa-solid fa-file-lines mx-2"></i> Form A Status</h2>
                     <div class="mb-5 pl-3">
-                        <ul class="space-y-4 text-left text-gray-500 ">
+                        <ul class="space-y-4 text-left text-gray-900 ">
 
-                        <!-- form A district president approval  status-->
+                            <!-- form A district president approval  status-->
                             @php
                             $dpd = User::find($member->forma->dpd_id);
                             @endphp
@@ -271,9 +276,9 @@ use App\Models\User;
             @if (isset($member->formb->form_b))
             <div class=" sm:rounded-lg bg-white shadow">
                 <div class="p-4 relative overflow-x-auto rounded ">
-                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Form A Status</h2>
+                    <h2 class="mb-2 text-xl font-semibold text-gray-900 "> <i class="fa-solid fa-file-lines mx-2"></i> Form B Status</h2>
                     <div class="mb-5 pl-3">
-                        <ul class="space-y-4 text-left text-gray-500 ">
+                        <ul class="space-y-4 text-left text-gray-900 ">
                             <!-- form B district president approval status -->
                             @php
                             $dpd = User::find($member->formb->dpd_id);
@@ -294,7 +299,7 @@ use App\Models\User;
                                 <span>The Form B approval by District President is pending</span>
                             </li>
                             @endif
-                            
+
                             <!-- form B secretery general approval status  -->
                             @php
                             $sg = User::find($member->formb->sg_id);
@@ -343,13 +348,13 @@ use App\Models\User;
                         <div class="grid grid-cols-5">
                             @csrf
                             <div class="col-span-2">
-                                @if ($member->member_level === "member")
+                                @if ($member->member_level === "applicant")
                                 <button type="submit" class="ml-3 px-3 py-3 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     Promote Now
                                 </button>
                                 @else
                                 <div class="bg-green-100 text-green-800 text-xs w-1/2 font-medium me-2 px-2.5 py-2 rounded mb-5 ml-4">
-                                    Member promoted to Applicant
+                                    Member promoted to gc
                                 </div>
                                 @endif
                             </div>

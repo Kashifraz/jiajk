@@ -87,15 +87,17 @@
                                 @endif
 
                                 @if ($question->question_type == 5)
-                                <div class="mb-2">
-                                    <label for="{{$question->id}}" class="block mb-2 text-lg font-medium text-gray-900 ">{{$question->question_title}}</label>
-                                    @foreach (json_decode($question->options) as $option )
-                                    <div class="flex items-center mb-3">
-                                        <input checked id="checkbox" type="checkbox" name="answer[{{$question->question_order-1}}][]" value="{{$option}}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
-                                        <label for="checked-checkbox" class="ms-2 text-sm font-medium text-gray-900">{{$option}}</label>
+                                <div class="md:col-span-2">
+                                    <div class="mb-2">
+                                        <label for="{{$question->id}}" class="block mb-2 text-lg font-medium text-gray-900 ">{{$question->question_title}}</label>
+                                        @foreach (json_decode($question->options) as $option )
+                                        <div class="flex items-center mb-3">
+                                            <input checked id="checkbox" type="checkbox" name="answer[{{$question->question_order-1}}][]" value="{{$option}}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                            <label for="checked-checkbox" class="ms-2 text-sm font-medium text-gray-900">{{$option}}</label>
+                                        </div>
+                                        @endforeach
+                                        <x-input-error class="mt-2" :messages="$errors->get('form_type')" />
                                     </div>
-                                    @endforeach
-                                    <x-input-error class="mt-2" :messages="$errors->get('form_type')" />
                                 </div>
                                 @endif
                                 @endforeach

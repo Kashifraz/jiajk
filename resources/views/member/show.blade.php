@@ -49,11 +49,11 @@ use App\Models\User;
                             <p>{{$member->name}}</p>
                         </div> -->
                         <div class="py-2 col-span-1 font-bold">Father Name</div>
-                        <div class="py-2 col-span-3">{{$member->father_name}}</div>
+                        <div class="py-2 col-span-3">{{$member->father_name? $member->father_name : "NA" }}</div>
                         <div class="py-2 col-span-1 font-bold">Status</div>
                         <div class="py-2 col-span-3">{{$member->verified == 1? "Verified": "Not Verified" }}</div>
                         <div class="py-2 col-span-1 font-bold">Email</div>
-                        <div class="py-2 col-span-3">{{$member->email}}</div>
+                        <div class="py-2 col-span-3">{{$member->email ? $member->email : "NA"}}</div>
                         @if (Auth::user()->type == 2)
                         <div class="py-2 col-span-1 font-bold">Member Level</div>
                         <div class="py-2 col-span-3">
@@ -68,7 +68,6 @@ use App\Models\User;
                                     Submit form A
                                 </a>
                                 @endif
-
                             </div>
 
                         </div>
@@ -133,7 +132,7 @@ use App\Models\User;
             </div>
 
 
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid md:grid-cols-2 gap-4">
 
                 <div class="sm:rounded-lg bg-white shadow">
                     <div class="p-4 relative overflow-x-auto rounded">
@@ -141,16 +140,16 @@ use App\Models\User;
                         <div class="grid grid-cols-4">
                             <div class="py-2 col-span-1 font-bold">Geographical Address</div>
                             <div class="py-2 col-span-3">
-                                <p>{{$member->geographical_address}}</p>
+                                <p>{{$member->geographical_address? $member->geographical_address : "NA"}}</p>
                             </div>
                             <div class="py-2 col-span-1 font-bold">Local Jamat</div>
-                            <div class="py-2 col-span-3">{{$member->local_jamat}}</div>
+                            <div class="py-2 col-span-3">{{$member->local_jamat ? $member->local_jamat : "NA"}}</div>
                             <div class="py-2 col-span-1 font-bold">City</div>
-                            <div class="py-2 col-span-3">{{$member->city}}</div>
+                            <div class="py-2 col-span-3">{{$member->city ? $member->city : "NA"}}</div>
                             <div class="py-2 col-span-1 font-bold">Village</div>
-                            <div class="py-2 col-span-3">{{$member->village}}</div>
+                            <div class="py-2 col-span-3">{{$member->village ? $member->village: "NA"}}</div>
                             <div class="py-2 col-span-1 font-bold">Mailing Address</div>
-                            <div class="py-2 col-span-3">{{$member->mailing_address}}</div>
+                            <div class="py-2 col-span-3">{{$member->mailing_address? $member->mailing_address:"NA"}}</div>
                         </div>
                     </div>
                 </div>
@@ -161,7 +160,7 @@ use App\Models\User;
                         <div class="grid grid-cols-4">
                             <div class="py-2 col-span-1 font-bold">Occupation</div>
                             <div class="py-2 col-span-3">
-                                <p>{{$member->occupation}}</p>
+                                <p>{{$member->occupation ? $member->occupation :"NA"}}</p>
                             </div>
                         </div>
                     </div>
@@ -173,7 +172,7 @@ use App\Models\User;
                         <div class="grid grid-cols-4">
                             <div class="py-2 col-span-1 font-bold">Education</div>
                             <div class="py-2 col-span-3">
-                                <p>{{$member->education}}</p>
+                                <p>{{$member->education ? $member->education : "NA"}}</p>
                             </div>
                         </div>
                     </div>
@@ -185,15 +184,15 @@ use App\Models\User;
                         <div class="grid grid-cols-4">
                             <div class="py-2 col-span-1 font-bold">Office Phone</div>
                             <div class="py-2 col-span-3">
-                                <p>{{$member->office_phone}}</p>
+                                <p>{{$member->office_phone ? $member->office_phone : "NA"}}</p>
                             </div>
                             <div class="py-2 col-span-1 font-bold">Home Phone</div>
                             <div class="py-2 col-span-3">
-                                <p>{{$member->home_phone}}</p>
+                                <p>{{$member->home_phone ? $member->home_phone: "NA"}}</p>
                             </div>
                             <div class="py-2 col-span-1 font-bold">Mobile Phone</div>
                             <div class="py-2 col-span-3">
-                                <p>{{$member->mobile_phone}}</p>
+                                <p>{{$member->mobile_phone ? $member->mobile_phone: "NA"}}</p>
                             </div>
                         </div>
                     </div>

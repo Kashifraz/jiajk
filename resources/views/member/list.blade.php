@@ -117,10 +117,10 @@ use App\Models\Affiliation;
                                     {{$member->name}}
                                 </th>
                                 <td class="px-6 py-4">
-                                    {{$member->father_name}}
+                                    {{$member->father_name ? $member->father_name : "NA" }}
                                 </td>
                                 <td class="px-6 py-4 ">
-                                    <p>{{$member->city}}</p>
+                                    <p>{{$member->city ? $member->father_name : "NA"}}</p>
                                 </td>
                                 <td class="px-6 py-4">
                                     @php
@@ -133,7 +133,7 @@ use App\Models\Affiliation;
                                     @endphp
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{$member->education}}
+                                    {{$member->education ? $member->education: "NA" }}
                                 </td>
                                 <td class="px-6 py-4">
                                     <a href="{{route('member.show',$member->id )}}" class="font-medium text-blue-600 hover:underline">show</a>

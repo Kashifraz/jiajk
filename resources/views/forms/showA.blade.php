@@ -29,88 +29,60 @@ $member = $formA->user;
 
         <div class="py-5  gap-4 max-w-7xl mx-auto sm:px-6 lg:px-8 ">
             <div class=" p-4 sm:p-8 bg-white shadow sm:rounded-lg mb-4">
-                <div class="md:col-span-3">
-                    <h2 class="text-lg font-medium text-gray-900 mb-4">
-                        Showing Member information for <b class="capitalize">{{$formA->user->name}}</b>
-                    </h2>
-                    <div class="grid grid-cols-4">
-                        <div class="py-2 col-span-4 font-bold">
-                            <div class="flex items-center gap-4 mt-3 capitalize ">
-                                @if (isset($member->profile))
-                                <img class="w-20 h-20 rounded-full" src="{{ asset('uploads/'.$member->profile) }}" alt="">
-                                @endif
-                                <div class="font-medium">
-                                    <div>{{$member->name}}</div>
-                                    <div class="text-sm text-gray-500">{{$member->created_at}}</div>
-                                </div>
+                <div class="grid grid-cols-4">
+                    <div class="py-2 col-span-4 font-bold">
+                        <div class="flex items-center gap-4 mt-3 capitalize ">
+                            @if (isset($member->profile))
+                            <img class="w-20 h-20 rounded-full" src="{{ asset('uploads/'.$member->profile) }}" alt="">
+                            @endif
+                            <div class="font-medium">
+                                <div>{{$member->name}}</div>
+                                <div class="text-sm text-gray-500">{{$member->created_at}}</div>
                             </div>
                         </div>
-
-                        <div class="py-2 col-span-1 font-bold">Father Name</div>
-                        <div class="py-2 col-span-3">{{$member->father_name}}</div>
-                        <div class="py-2 col-span-1 font-bold">Status</div>
-                        <div class="py-2 col-span-3">{{$member->verified == 1? "Verified": "Not Verified" }}</div>
-                        <div class="py-2 col-span-1 font-bold">Email</div>
-                        <div class="py-2 col-span-3">{{$member->email}}</div>
                     </div>
-                </div>
-                <div class="p-4 relative overflow-x-auto rounded">
-                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Location Information</h2>
-                    <div class="grid grid-cols-4">
-                        <div class="py-2 col-span-1 font-bold">Geographical Address</div>
-                        <div class="py-2 col-span-3">
-                            <p>{{$member->geographical_address}}</p>
-                        </div>
-                        <div class="py-2 col-span-1 font-bold">Local Jamat</div>
-                        <div class="py-2 col-span-3">{{$member->local_jamat}}</div>
-                        <div class="py-2 col-span-1 font-bold">City</div>
-                        <div class="py-2 col-span-3">{{$member->city}}</div>
-                        <div class="py-2 col-span-1 font-bold">Village</div>
-                        <div class="py-2 col-span-3">{{$member->village}}</div>
-                        <div class="py-2 col-span-1 font-bold">Mailing Address</div>
-                        <div class="py-2 col-span-3">{{$member->mailing_address}}</div>
-                    </div>
-                </div>
 
-                <div class="p-4 relative overflow-x-auto rounded">
-                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Occupation Information</h2>
-                    <div class="grid grid-cols-4">
-                        <div class="py-2 col-span-1 font-bold">Occupation</div>
-                        <div class="py-2 col-span-3">
-                            <p>{{$member->occupation}}</p>
-                        </div>
+                    <div class="py-2 col-span-1 font-bold">Father Name</div>
+                    <div class="py-2 col-span-3">{{$member->father_name}}</div>
+                    <div class="py-2 col-span-1 font-bold">Status</div>
+                    <div class="py-2 col-span-3">{{$member->verified == 1? "Verified": "Not Verified" }}</div>
+                    <div class="py-2 col-span-1 font-bold">Email</div>
+                    <div class="py-2 col-span-3">{{$member->email}}</div>
+                    <div class="py-4 col-span-4 text-lg font-semibold text-gray-900 underline">Location Information</div>
+                    <div class="py-2 col-span-1 font-bold">Geographical Address</div>
+                    <div class="py-2 col-span-3">{{$member->geographical_address ? $member->geographical_address : "NA"}}</div>
+                    <div class="py-2 col-span-1 font-bold">Local Jamat</div>
+                    <div class="py-2 col-span-3">{{$member->local_jamat ? $member->local_jamat : "NA" }}</div>
+                    <div class="py-2 col-span-1 font-bold">City</div>
+                    <div class="py-2 col-span-3">{{$member->city ? $member->city : "NA"}}</div>
+                    <div class="py-2 col-span-1 font-bold">Village</div>
+                    <div class="py-2 col-span-3">{{$member->village ? $member->village: "NA"}}</div>
+                    <div class="py-2 col-span-1 font-bold">Mailing Address</div>
+                    <div class="py-2 col-span-3">{{$member->mailing_address ? $member->mailing_address : "NA"}}</div>
+                    <div class="py-4 col-span-4 text-lg font-semibold text-gray-900 underline">Education and Occupation</div>
+                    <div class="py-2 col-span-1 font-bold">Occupation</div>
+                    <div class="py-2 col-span-3">
+                        <p>{{$member->occupation ? $member->occupation: "NA" }}</p>
                     </div>
-                </div>
-
-                <div class="p-4 relative overflow-x-auto rounded">
-                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Academic Information</h2>
-                    <div class="grid grid-cols-4">
-                        <div class="py-2 col-span-1 font-bold">Education</div>
-                        <div class="py-2 col-span-3">
-                            <p>{{$member->education}}</p>
-                        </div>
+                    <div class="py-2 col-span-1 font-bold">Education</div>
+                    <div class="py-2 col-span-3">
+                        <p>{{$member->education ? $member->education : "NA" }}</p>
                     </div>
-                </div>
-
-                <div class="p-4 relative overflow-x-auto rounded">
-                    <h2 class="mb-2 text-lg font-semibold text-gray-900 underline ">Contact Information</h2>
-                    <div class="grid grid-cols-4">
-                        <div class="py-2 col-span-1 font-bold">Office Phone</div>
-                        <div class="py-2 col-span-3">
-                            <p>{{$member->office_phone}}</p>
-                        </div>
-                        <div class="py-2 col-span-1 font-bold">Home Phone</div>
-                        <div class="py-2 col-span-3">
-                            <p>{{$member->home_phone}}</p>
-                        </div>
-                        <div class="py-2 col-span-1 font-bold">Mobile Phone</div>
-                        <div class="py-2 col-span-3">
-                            <p>{{$member->mobile_phone}}</p>
-                        </div>
+                    <div class="py-4 col-span-4 text-lg font-semibold text-gray-900 underline">Contact Information</div>
+                    <div class="py-2 col-span-1 font-bold">Office Phone</div>
+                    <div class="py-2 col-span-3">
+                        <p>{{$member->office_phone ? $member->office_phone : "NA"}}</p>
+                    </div>
+                    <div class="py-2 col-span-1 font-bold">Home Phone</div>
+                    <div class="py-2 col-span-3">
+                        <p>{{$member->home_phone ? $member->home_phone: "NA"}}</p>
+                    </div>
+                    <div class="py-2 col-span-1 font-bold">Mobile Phone</div>
+                    <div class="py-2 col-span-3">
+                        <p>{{$member->mobile_phone ? $member->mobile_phone: "NA"}}</p>
                     </div>
                 </div>
             </div>
-
 
             <div class=" p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div class="md:col-span-3">
@@ -119,7 +91,7 @@ $member = $formA->user;
                     </h2>
                     @if (isset($formA->form_a))
                     <div class="p-4 relative overflow-x-auto rounded ">
-                        <div class="mb-5 pl-3">
+                        <div class="mb-5 pl-3 border-l-4">
                             <?php
                             $answers = json_decode($formA->form_a, true);
                             $question_ids = json_decode($ids);
@@ -131,9 +103,15 @@ $member = $formA->user;
                                     if (!is_array($answers[$i][$key])) {
                                         echo "<p class='text-md ml-3 mb-3'>" . $answers[$i][$key] . "</p>";
                                     } else {
+                                        $difference = array_diff(json_decode($question->options), $answers[$i][$key]);
                                         foreach ($answers[$i][$key] as $option) {
                                             echo "<ul class='ml-3'>";
-                                            echo "<li class='mb-3'>" . $option . "</li>";
+                                            echo "<li class='mb-3'> <i class='fa-solid fa-circle-check text-green-600'></i> " . $option . "</li>";
+                                            echo "</ul>";
+                                        }
+                                        foreach ($difference as $option) {
+                                            echo "<ul class='ml-3'>";
+                                            echo "<li class='mb-3'> <i class='fa-solid fa-circle-xmark text-red-600'></i> " . $option . "</li>";
                                             echo "</ul>";
                                         }
                                     }
@@ -170,6 +148,9 @@ $member = $formA->user;
                         <label for="comments" class="block mb-2 text-sm font-medium text-gray-900 ">Your comments</label>
                         <textarea id="comments" name="comments" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
                         <x-input-error class="mt-2" :messages="$errors->get('comments')" />
+                        <div class="p-4 mt-4 text-sm text-blue-800 rounded-lg bg-blue-50" role="alert">
+                            <span class="font-medium">Note</span> Please write complete details of the comments
+                        </div>
                     </div>
                     <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Submit</button>
                 </form>

@@ -1,5 +1,8 @@
 @php
 use App\Models\Affiliation;
+use App\Models\Constituency;
+use App\Models\UnionCouncil;
+use App\Models\Ward;
 use App\Models\Question;
 use App\Models\User;
 @endphp
@@ -133,7 +136,7 @@ use App\Models\User;
 
 
             <div class="grid md:grid-cols-2 gap-4">
-
+                <!-- grid columns: Personal information -->
                 <div class="sm:rounded-lg bg-white shadow">
                     <div class="p-4 relative overflow-x-auto rounded">
                         <h2 class="mb-2 text-xl font-semibold text-gray-900 "><i class="fa-solid fa-location-crosshairs mx-2"></i>Location Information</h2>
@@ -154,22 +157,38 @@ use App\Models\User;
                     </div>
                 </div>
 
+                <!-- grid column: Location information -->
+                <div class="sm:rounded-lg bg-white shadow">
+                    <div class="p-4 relative overflow-x-auto rounded">
+                        <h2 class="mb-2 text-xl font-semibold text-gray-900 "><i class="fa-solid fa-earth-asia mx-2"></i> Regional Affiliation</h2>
+                        <div class="grid grid-cols-4">
+                            @php
+                            $destrict = Affiliation::find($member->affiliations);
+                            $constituency = Constituency::find($member->constituency);
+                            $union_council = UnionCouncil::find($member->union_council);
+                            $ward = Ward::find($member->ward);
+                            @endphp
+                            <div class="py-2 col-span-1 font-bold">Destrict</div>
+                            <div class="py-2 col-span-3">{{$destrict ? $destrict->affiliation_title : "NA"}}</div>
+                            <div class="py-2 col-span-1 font-bold">Constituenties</div>
+                            <div class="py-2 col-span-3">{{$constituency ? $constituency->constituency_title : "NA"}}</div>
+                            <div class="py-2 col-span-1 font-bold">Union Council</div>
+                            <div class="py-2 col-span-3">{{$union_council ? $union_council->union_council_title : "NA"}}</div>
+                            <div class="py-2 col-span-1 font-bold">Ward</div>
+                            <div class="py-2 col-span-3">{{$ward ? $ward->ward_title :"NA"}}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- grid column: Education and Occupation -->
                 <div class=" sm:rounded-lg bg-white shadow">
                     <div class="p-4 relative overflow-x-auto rounded">
-                        <h2 class="mb-2 text-xl font-semibold text-gray-900"> <i class="fa-solid fa-briefcase mx-2"></i> Occupation Information</h2>
+                        <h2 class="mb-2 text-xl font-semibold text-gray-900"> <i class="fa-solid fa-briefcase mx-2"></i> Occupation and Education</h2>
                         <div class="grid grid-cols-4">
                             <div class="py-2 col-span-1 font-bold">Occupation</div>
                             <div class="py-2 col-span-3">
                                 <p>{{$member->occupation ? $member->occupation :"NA"}}</p>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class=" sm:rounded-lg bg-white shadow">
-                    <div class="p-4 relative overflow-x-auto rounded">
-                        <h2 class="mb-2 text-xl font-semibold text-gray-900"><i class="fa-solid fa-user-graduate mx-2"></i> Academic Information</h2>
-                        <div class="grid grid-cols-4">
                             <div class="py-2 col-span-1 font-bold">Education</div>
                             <div class="py-2 col-span-3">
                                 <p>{{$member->education ? $member->education : "NA"}}</p>
@@ -178,9 +197,10 @@ use App\Models\User;
                     </div>
                 </div>
 
+                <!-- grid column: Contact details -->
                 <div class=" sm:rounded-lg bg-white shadow">
                     <div class="p-4 relative overflow-x-auto rounded">
-                        <h2 class="mb-2 text-xl font-semibold text-gray-900 "> <i class="fa-solid fa-square-phone mx-2 "></i> Contact Information</h2>
+                        <h2 class="mb-2 text-xl font-semibold text-gray-900 "> <i class="fa-solid fa-square-phone mx-2 "></i> Contact Details</h2>
                         <div class="grid grid-cols-4">
                             <div class="py-2 col-span-1 font-bold">Office Phone</div>
                             <div class="py-2 col-span-3">

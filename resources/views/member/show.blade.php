@@ -27,14 +27,11 @@ use App\Models\User;
                 <h3 class="text-lg font-medium">Promoting members with Admin rights</h3>
             </div>
             <div class="mt-2 mb-4 text-sm">
-                This right should only be excercised in exceptional case such as to promote old members having no form A and B records. Please avoid promoting new members as it should be done through the complete process (district president approval, president approval, secretary general approval).
+                This right should only be excercised in exceptional cases such as to promote old members having no form A and B records. Please avoid promoting new members as it should be done through the complete process (district president approval, president approval, secretary general approval).
             </div>
             <div class="flex">
                 <button type="button" class="text-white bg-yellow-800 hover:bg-yellow-900 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center ">
-                    <svg class="me-2 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14">
-                        <path d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
-                    </svg>
-                    View more
+                    Promote now
                 </button>
                 <button type="button" id="dismiss" class="text-yellow-800 bg-transparent border border-yellow-800 hover:bg-yellow-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center" data-dismiss-target="#alert-additional-content-4" aria-label="Close">
                     Dismiss
@@ -121,9 +118,9 @@ use App\Models\User;
                         <div class="py-2 col-span-1 font-bold">Member Designation</div>
                         <div class="py-2 col-span-3">
                             <form action="{{route('member.designation.update', $member->id)}}" method="post">
-                                <div class="grid grid-cols-8">
+                                <div class="grid grid-cols-5">
                                     @csrf
-                                    <div class=" col-span-3">
+                                    <div class=" col-span-2">
                                         <select id="designation" name="designation" class="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                             <option value="1" {{$member->designation == 1 ? "selected": ""}}>District President</option>
                                             <option value="2" {{$member->designation == 2 ? "selected": ""}}>Secretary General</option>
@@ -134,7 +131,7 @@ use App\Models\User;
                                             @endforeach -->
                                         </select>
                                     </div>
-                                    <div class=" col-span-3">
+                                    <!-- <div class=" col-span-3">
                                         <select id="designation_level" name="designation_level" class=" mx-3 bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                             <option value="1" {{$member->designation_level == 1 ? "selected": ""}}>Central</option>
                                             <option value="2" {{$member->designation_level == 2 ? "selected": ""}}>Destrict</option>
@@ -142,9 +139,9 @@ use App\Models\User;
                                             <option value="4" {{$member->designation_level == 4 ? "selected": ""}}>Unioncouncil</option>
                                             <option value="5" {{$member->designation_level == 5 ? "selected": ""}}>Ward</option>
                                         </select>
-                                    </div>
+                                    </div> -->
                                     <div class="ml-3 col-span-2">
-                                        <button type="submit" class="mx-3 px-3 py-3 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        <button type="submit" class=" px-3 py-3 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                             update
                                         </button>
                                     </div>

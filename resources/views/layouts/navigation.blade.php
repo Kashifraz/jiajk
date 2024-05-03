@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-blue-700 text-white  shadow-lg">
+<nav x-data="{ open: false }" class=" bg-gradient-to-r from-cyan-500 from-5% via-blue-600 via-60% to-indigo-600 to-90% text-white  shadow-lg">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -19,65 +19,67 @@
                 @if (!Auth::guest())
 
                 <!-- Navigation Links -->
+                @if (Auth::user()->type == 2)
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    @if (Auth::user()->type == 2)
                     <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                        {{ __('Dashboard') }}
+                        <i class="fa-solid fa-chart-pie mr-2"></i> {{ __('Dashboard') }}
                     </x-nav-link>
-                    @else
-                    <x-nav-link :href="route('member.dashboard')" :active="request()->routeIs('member.dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                    @endif
                 </div>
+                @else
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('member.dashboard')" :active="request()->routeIs('member.dashboard')">
+                    <i class="fa-solid fa-chart-pie mr-2"></i>{{ __('Dashboard') }}
+                    </x-nav-link>
+                </div>
+                @endif
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('members.add')" :active="request()->routeIs('members.add')">
-                        {{ __('Register Member') }}
+                        <i class="fa-solid fa-user-tie mr-2"></i> {{ __('Register Member') }}
                     </x-nav-link>
                 </div>
 
                 @if (Auth::user()->type == 1 || Auth::user()->type == 3)
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('member.edit',Auth::user()->id)" :active="request()->routeIs('member.edit')">
-                        {{ __('Edit Info') }}
+                        <i class="fa-solid fa-pen mr-2"></i> {{ __('Edit Info') }}
                     </x-nav-link>
                 </div>
                 @endif
                 @if (Auth::user()->type == 2 || Auth::user()->type == 3)
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('members.show')" :active="request()->routeIs('members.show')">
-                        {{ __('Members List') }}
+                        <i class="fa-solid fa-list mr-2"></i> {{ __('Members List') }}
                     </x-nav-link>
                 </div>
                 @endif
                 @if (Auth::user()->type == 2 )
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('affiliation.create')" :active="request()->routeIs('affiliation.create')">
-                        {{ __('Add Region') }}
+                        <i class="fa-solid fa-plus mr-2"></i> {{ __('Add Region') }}
                     </x-nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('region.list')" :active="request()->routeIs('region.list')">
-                        {{ __('Regions') }}
+                        <i class="fa-solid fa-location-dot mr-2"></i> {{ __('Regions') }}
                     </x-nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('designation.create')" :active="request()->routeIs('designation.create')">
-                        {{ __('Designations') }}
+                        <i class="fa-solid fa-ranking-star mr-2"></i> {{ __('Designations') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('form.create')" :active="request()->routeIs('form.create')">
-                        {{ __('Forms') }}
+                        <i class="fa-regular fa-rectangle-list mr-2"></i> {{ __('Forms') }}
                     </x-nav-link>
                 </div>
                 @endif
                 @if (Auth::user()->member_level == "member" && Auth::user()->type != 2)
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('form.show.a')" :active="request()->routeIs('form.show.a')">
-                        {{ __('Form A') }}
+                        <i class="fa-regular fa-rectangle-list mr-2"></i> {{ __('Form A') }}
                     </x-nav-link>
                 </div>
                 @endif
@@ -85,7 +87,7 @@
                 @if (Auth::user()->member_level =="applicant" && Auth::user()->type != 2)
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('form.show.b')" :active="request()->routeIs('form.show.b')">
-                        {{ __('Form B') }}
+                        <i class="fa-regular fa-rectangle-list mr-2"></i> {{ __('Form B') }}
                     </x-nav-link>
                 </div>
                 @endif
@@ -93,14 +95,14 @@
                 @if (Auth::user()->can('first approval forma') || Auth::user()->can('second approval forma'))
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('form.a.approval')" :active="request()->routeIs('form.a.approval')">
-                        {{ __('FormA Approvals') }}
+                        <i class="fa-solid fa-check mr-2"></i> {{ __('FormA Approvals') }}
                     </x-nav-link>
                 </div>
                 @endif
                 @if (Auth::user()->can('first approval formb') || Auth::user()->can('second approval formb') || Auth::user()->can('third approval formb'))
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('form.b.approval')" :active="request()->routeIs('form.b.approval')">
-                        {{ __('FormB Approvals') }}
+                        <i class="fa-solid fa-check mr-2"></i> {{ __('FormB Approvals') }}
                     </x-nav-link>
                 </div>
                 @endif

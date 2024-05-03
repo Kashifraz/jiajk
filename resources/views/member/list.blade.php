@@ -99,7 +99,7 @@ use App\Models\Affiliation;
                                 <th scope="col" class="px-6 py-3">
                                     education
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-6 py-3" style="min-width: 150px;">
                                     action
                                 </th>
                             </tr>

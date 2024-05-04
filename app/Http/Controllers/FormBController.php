@@ -86,9 +86,9 @@ class FormBController extends Controller
                 "form_b" => json_encode($answers)
             ]);
         } else {
-            FormA::create([
+            FormB::create([
                 "user_id" => $user->id,
-                "form_a" => json_encode($answers)
+                "form_b" => json_encode($answers)
             ]);
         }
 

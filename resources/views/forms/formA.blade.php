@@ -85,7 +85,7 @@
                                     </div>
                                 </div>
                                 @endif
-
+ 
                                 @if ($question->question_type == 5)
                                 <div class="md:col-span-2">
                                     <div class="mb-2">

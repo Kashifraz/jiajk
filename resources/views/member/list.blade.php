@@ -120,7 +120,7 @@ use App\Models\Affiliation;
                                     {{$member->father_name ? $member->father_name : "NA" }}
                                 </td>
                                 <td class="px-6 py-4 ">
-                                    <p>{{$member->city ? $member->father_name : "NA"}}</p>
+                                    <p>{{$member->city ? $member->city : "NA"}}</p>
                                 </td>
                                 <td class="px-6 py-4">
                                     @php

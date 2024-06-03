@@ -38,10 +38,10 @@ $total_unioncouncils = $constituency->unioncouncil->count();
                         @php
                         $user_count = User::where("union_council","=",$unioncouncil->id)->count();
                         @endphp
-                        <div class="bg-gradient-to-r from-cyan-500 from-5% via-blue-500 via-40% to-indigo-500 to-90% flex items-center  justify-center bg-white rounded-lg overflow-hidden shadow-md">
+                        <div class="bg-gradient-to-r from-cyan-100 from-5% via-cyan-50 via-40% to-white to-90% flex items-center  justify-center bg-white rounded-lg overflow-hidden shadow-md">
                            
-                            <div class="p-3 text-gray-50 text-center">
-                                <h3 class="text-md tracking-wider hover:underline"><a href="{{route('unioncouncil.show',$unioncouncil->id)}}"> {{$unioncouncil->union_council_title}}</a> <button data-popover-target="popover-{{$unioncouncil->id}}" data-popover-placement="bottom" type="button"><span class="sr-only">Show information</span><i class="fa-solid fa-circle-question"></i></button></h3>
+                            <div class="p-3 text-gray-700 text-center">
+                                <h3 class="text-md tracking-wider hover:underline"><a href="{{route('unioncouncil.show',$unioncouncil->id)}}"> {{$unioncouncil->union_council_title}}</a></h3>
                                 <p class="text-2xl">{{$user_count == 1? $user_count." member" :$user_count." members"  }} </p>
                                 
                             </div>

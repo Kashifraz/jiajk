@@ -38,10 +38,10 @@ $total_wards = $UnionCouncil->ward->count();
                         @php
                         $user_count = User::where("ward","=",$ward->id)->count();
                         @endphp
-                        <div class="bg-gradient-to-r from-cyan-500 from-5% via-blue-500 via-40% to-indigo-500 to-90% flex items-center  justify-center bg-white rounded-lg overflow-hidden shadow-md">
+                        <div class="bg-gradient-to-r from-indigo-100 from-5% via-indigo-50 via-40% to-white to-90% flex items-center  justify-center bg-white rounded-lg overflow-hidden shadow-md">
                            
-                            <div class="p-3 text-gray-50 text-center">
-                                <h3 class="text-md tracking-wider hover:underline"><a href="#"> {{$ward->ward_title}}</a> <button data-popover-target="popover-{{$ward->id}}" data-popover-placement="bottom" type="button"><span class="sr-only">Show information</span><i class="fa-solid fa-circle-question"></i></button></h3>
+                            <div class="p-3 text-gray-700 text-center">
+                                <h3 class="text-md tracking-wider hover:underline"><a href="#"> {{$ward->ward_title}}</a></button></h3>
                                 <p class="text-2xl">{{$user_count == 1? $user_count." member" :$user_count." members"  }} </p>
                             </div>
                         </div>

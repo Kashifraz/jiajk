@@ -7,7 +7,7 @@ $total_wards = $UnionCouncil->ward->count();
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Showing UnionCouncil') }}
+            {{ __('Showing UnionCouncil')." ".$UnionCouncil->union_council_title }}
         </h2>
     </x-slot>
 

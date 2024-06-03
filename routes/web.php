@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\AffiliationController;
+use App\Http\Controllers\ConstituencyController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UnionCouncilController;
 use App\Models\Affiliation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -123,6 +126,14 @@ Route::get('/stats', function () {
     return view("stats");
 })->name('jiajk.stats');
 
+Route::get('/destrict/show/{id}', [AffiliationController::class,"show"])
+->name('affiliation.show');
+
+Route::get('/constituency/show/{id}', [ConstituencyController::class,"show"])
+->name('constituency.show');
+
+Route::get('/unioncouncil/show/{id}', [UnionCouncilController::class,"show"])
+->name('unioncouncil.show');
 
 require __DIR__ . '/member.php';
 require __DIR__ . '/region.php';

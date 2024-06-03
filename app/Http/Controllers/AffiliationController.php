@@ -56,9 +56,12 @@ class AffiliationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Affiliation $affiliation)
+    public function show($id)
     {
-        //
+        $affiliation = Affiliation::with('constituency')->findOrFail($id);
+        return view('region.destrict', [
+            "affiliation" => $affiliation,
+        ]);
     }
 
     /**

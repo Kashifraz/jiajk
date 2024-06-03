@@ -41,4 +41,16 @@ class ConstituencyController extends Controller
         ]);
         return redirect()->back()->with("message", "Constituency updated successfully!");
     }
+
+
+        /**
+     * Display the specified resource.
+     */
+    public function show($id)
+    {
+        $constituency = Constituency::with('unioncouncil')->findOrFail($id);
+        return view('region.constituency', [
+            "constituency" => $constituency,
+        ]);
+    }
 }

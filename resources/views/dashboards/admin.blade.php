@@ -35,12 +35,27 @@ $data = json_encode($entries);
                     <h2 class="text-lg font-medium text-gray-900">
                         {{ __('Members Statistics') }} <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$total_users}} registered members</span>
                     </h2>
-                    <div class="grid grid-cols-1 gap-4 px-4 mt-8 lg:grid-cols-4 sm:px-8">
+                    <div class="grid grid-cols-1 gap-4 px-4  mt-8 lg:grid-cols-4 sm:px-8">
                         @foreach ($affiliations as $affiliation)
                         @php
+                        $gradient_no = rand(1,5);
                         $user_count = User::where("affiliations","=",$affiliation->id)->count();
                         @endphp
-                        <div class="bg-gradient-to-r from-cyan-500 from-5% via-blue-500 via-40% to-indigo-500 to-90% flex items-center  justify-center bg-white rounded-lg overflow-hidden shadow-md">
+                        <div class="
+                        <?php
+                        if($gradient_no == 1)
+                        echo 'bg-gradient-to-r from-emerald-400 to-cyan-400';
+                        else if($gradient_no == 2)
+                        echo 'bg-gradient-to-l from-orange-500 via-rose-600 to-red-500';
+                        else if($gradient_no == 3)
+                        echo 'bg-gradient-to-r from-cyan-500 from-5% via-blue-500 via-40% to-indigo-500 to-90%';
+                        else if($gradient_no == 4)
+                        echo 'bg-gradient-to-r from-fuchsia-500 to-pink-500';
+                        else if($gradient_no == 5)
+                        echo 'bg-gradient-to-bl from-lime-400 via-emerald-500 to-green-600
+                        ';
+
+                        ?> p-5 flex items-center  justify-center bg-white rounded-lg overflow-hidden shadow-md">
                            
                             <div class="p-3 text-gray-50 text-center">
                                 <h3 class="text-md tracking-wider hover:underline"><a href="{{route('affiliation.show', $affiliation->id)}}"> {{$affiliation->affiliation_title}}</a> <button data-popover-target="popover-{{$affiliation->id}}" data-popover-placement="bottom" type="button"><span class="sr-only">Show information</span><i class="fa-solid fa-circle-question"></i></button></h3>

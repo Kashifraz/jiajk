@@ -36,11 +36,24 @@ $total_unioncouncils = $constituency->unioncouncil->count();
                     <div class="grid grid-cols-1 gap-4 px-4 mt-8 lg:grid-cols-4 sm:px-8">
                         @foreach ($constituency->unioncouncil as $unioncouncil)
                         @php
+                        $gradient_no = rand(1,5);
                         $user_count = User::where("union_council","=",$unioncouncil->id)->count();
                         @endphp
-                        <div class="bg-gradient-to-r from-cyan-100 from-5% via-cyan-50 via-40% to-white to-90% flex items-center  justify-center bg-white rounded-lg overflow-hidden shadow-md">
+                        <div class="<?php
+                        if($gradient_no == 1)
+                        echo 'bg-gradient-to-r from-emerald-400 to-cyan-400';
+                        else if($gradient_no == 2)
+                        echo 'bg-gradient-to-l from-orange-500 via-rose-600 to-red-500';
+                        else if($gradient_no == 3)
+                        echo 'bg-gradient-to-r from-cyan-500 from-5% via-blue-500 via-40% to-indigo-500 to-90%';
+                        else if($gradient_no == 4)
+                        echo 'bg-gradient-to-r from-fuchsia-500 to-pink-500';
+                        else if($gradient_no == 5)
+                        echo 'bg-gradient-to-bl from-lime-400 via-emerald-500 to-green-600
+                        ';
+                        ?> p-5 flex items-center  justify-center bg-white rounded-lg overflow-hidden shadow-md">
                            
-                            <div class="p-3 text-gray-700 text-center">
+                            <div class="p-3 text-gray-100 text-center">
                                 <h3 class="text-md tracking-wider hover:underline"><a href="{{route('unioncouncil.show',$unioncouncil->id)}}"> {{$unioncouncil->union_council_title}}</a></h3>
                                 <p class="text-2xl">{{$user_count == 1? $user_count." member" :$user_count." members"  }} </p>
                                 

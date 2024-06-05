@@ -44,20 +44,19 @@ $data = json_encode($entries);
                         <div class="
                         <?php
                         if($gradient_no == 1)
-                        echo 'bg-gradient-to-r from-emerald-400 to-cyan-400';
+                        echo 'bg-gradient-to-r from-emerald-100 to-cyan-50';
                         else if($gradient_no == 2)
-                        echo 'bg-gradient-to-l from-orange-500 via-rose-600 to-red-500';
+                        echo 'bg-gradient-to-r from-orange-100 via-rose-100 to-red-50';
                         else if($gradient_no == 3)
-                        echo 'bg-gradient-to-r from-cyan-500 from-5% via-blue-500 via-40% to-indigo-500 to-90%';
+                        echo 'bg-gradient-to-r from-cyan-100 from-5% via-blue-100 via-40% to-indigo-50 to-90%';
                         else if($gradient_no == 4)
-                        echo 'bg-gradient-to-r from-fuchsia-500 to-pink-500';
+                        echo 'bg-gradient-to-r from-fuchsia-100 to-pink-50';
                         else if($gradient_no == 5)
-                        echo 'bg-gradient-to-bl from-lime-400 via-emerald-500 to-green-600
+                        echo 'bg-gradient-to-r from-lime-100 via-emerald-100 to-green-50
                         ';
-
                         ?> p-5 flex items-center  justify-center bg-white rounded-lg overflow-hidden shadow-md">
                            
-                            <div class="p-3 text-gray-50 text-center">
+                            <div class="p-3 text-gray-700 text-center">
                                 <h3 class="text-md tracking-wider hover:underline"><a href="{{route('affiliation.show', $affiliation->id)}}"> {{$affiliation->affiliation_title}}</a> <button data-popover-target="popover-{{$affiliation->id}}" data-popover-placement="bottom" type="button"><span class="sr-only">Show information</span><i class="fa-solid fa-circle-question"></i></button></h3>
                                 <p class="text-2xl">{{$user_count == 1? $user_count." member" :$user_count." members"  }} </p>
                                 <div data-popover id="popover-{{$affiliation->id}}" role="tooltip" class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 ">

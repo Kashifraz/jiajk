@@ -7,7 +7,7 @@ $total_unioncouncils = $constituency->unioncouncil->count();
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Showing Constituency'." ".$constituency->constituency_title) }} 
+            {{ __('Showing Constituency'." ".$constituency->constituency_title) }}
         </h2>
     </x-slot>
 
@@ -27,45 +27,45 @@ $total_unioncouncils = $constituency->unioncouncil->count();
         @endif
 
         <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <h2 class="text-lg font-medium text-gray-900">
-                        {{ __('Statistics') }} <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$total_unioncouncils}} total union councils</span>  
-                    </h2>
-                    <div class="grid grid-cols-1 gap-4 px-4 mt-8 lg:grid-cols-4 sm:px-8">
-                        @foreach ($constituency->unioncouncil as $unioncouncil)
-                        @php
-                        $gradient_no = rand(1,5);
-                        $user_count = User::where("union_council","=",$unioncouncil->id)->count();
-                        @endphp
-                        <div class="<?php
-                        if($gradient_no == 1)
-                        echo 'bg-gradient-to-r from-emerald-400 to-cyan-400';
-                        else if($gradient_no == 2)
-                        echo 'bg-gradient-to-l from-orange-500 via-rose-600 to-red-500';
-                        else if($gradient_no == 3)
-                        echo 'bg-gradient-to-r from-cyan-500 from-5% via-blue-500 via-40% to-indigo-500 to-90%';
-                        else if($gradient_no == 4)
-                        echo 'bg-gradient-to-r from-fuchsia-500 to-pink-500';
-                        else if($gradient_no == 5)
-                        echo 'bg-gradient-to-bl from-lime-400 via-emerald-500 to-green-600
-                        ';
-                        ?> p-5 flex items-center  justify-center bg-white rounded-lg overflow-hidden shadow-md">
-                           
-                            <div class="p-3 text-gray-100 text-center">
-                                <h3 class="text-md tracking-wider hover:underline"><a href="{{route('unioncouncil.show',$unioncouncil->id)}}"> {{$unioncouncil->union_council_title}}</a></h3>
-                                <p class="text-2xl">{{$user_count == 1? $user_count." member" :$user_count." members"  }} </p>
-                                
-                            </div>
-                        </div>
-                        @endforeach
-                        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            {{ __('Statistics') }} <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$total_unioncouncils}} total union councils</span>
+                        </h2>
+                        <div class="grid grid-cols-1 gap-4 px-4 mt-8 lg:grid-cols-4 sm:px-8">
+                            @foreach ($constituency->unioncouncil as $unioncouncil)
+                            @php
+                            $gradient_no = rand(1,5);
+                            $user_count = User::where("union_council","=",$unioncouncil->id)->count();
+                            @endphp
+                            <div class="<?php
+                                        if ($gradient_no == 1)
+                                            echo 'bg-gradient-to-r from-emerald-100 to-cyan-50';
+                                        else if ($gradient_no == 2)
+                                            echo 'bg-gradient-to-r from-orange-100 via-rose-100 to-red-50';
+                                        else if ($gradient_no == 3)
+                                            echo 'bg-gradient-to-r from-cyan-100 from-5% via-blue-100 via-40% to-indigo-50 to-90%';
+                                        else if ($gradient_no == 4)
+                                            echo 'bg-gradient-to-r from-fuchsia-100 to-pink-50';
+                                        else if ($gradient_no == 5)
+                                            echo 'bg-gradient-to-r from-lime-100 via-emerald-100 to-green-50
+                         ';
+                                        ?> p-5 flex items-center  justify-center bg-white rounded-lg overflow-hidden shadow-md">
 
+                                <div class="p-3 text-gray-700 text-center">
+                                    <h3 class="text-md tracking-wider hover:underline"><a href="{{route('unioncouncil.show',$unioncouncil->id)}}"> {{$unioncouncil->union_council_title}}</a></h3>
+                                    <p class="text-2xl">{{$user_count == 1? $user_count." member" :$user_count." members"  }} </p>
+
+                                </div>
+                            </div>
+                            @endforeach
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </x-app-layout>

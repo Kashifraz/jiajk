@@ -38,6 +38,12 @@ $total_constituency = $affiliation->constituency->count();
                         @php
                         $gradient_no = rand(1,5);
                         $user_count = User::where("constituency","=",$constituency->id)->count();
+                        $member_count = User::where("constituency","=",$constituency->id)
+                        ->where("member_level","member")->count();
+                        $applicant_count = User::where("constituency","=",$constituency->id)
+                        ->where("member_level","applicant")->count();
+                        $gc_count = User::where("constituency","=",$constituency->id)
+                        ->where("member_level","gc")->count();
                         @endphp
                         <div class="<?php
                          if($gradient_no == 1)
@@ -51,10 +57,13 @@ $total_constituency = $affiliation->constituency->count();
                          else if($gradient_no == 5)
                          echo 'bg-gradient-to-r from-lime-100 via-emerald-100 to-green-50
                          ';
-                        ?> p-5 flex items-center  justify-center bg-white rounded-lg overflow-hidden shadow-md">
-                            <div class="p-3 text-gray-700 text-center">
+                        ?> p-1 flex items-center  justify-center bg-white rounded-lg overflow-hidden shadow-md">
+                            <div class="p-2 text-gray-700 text-center">
                                 <h3 class="text-md tracking-wider hover:underline"><a href="{{route('constituency.show', $constituency->id)}}"> {{$constituency->constituency_title}}</a> </h3>
                                 <p class="text-2xl">{{$user_count == 1? $user_count." member" :$user_count." members"  }} </p>
+                                <p class="text-xl">{{$member_count == 1? $member_count." member" :$member_count." members"  }} </p>
+                                <p class="text-xl">{{$applicant_count == 1? $applicant_count." applicant" :$applicant_count." applicants"  }} </p>
+                                <p class="text-xl">{{$gc_count == 1? $gc_count." gc" :$gc_count." gcs"  }} </p>
                             </div>
                         </div>
                         @endforeach

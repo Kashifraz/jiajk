@@ -34,7 +34,7 @@ $data = json_encode($entries);
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6 text-gray-900">
           <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Members Statistics') }}
+            {{ __('Members Statistics:') }}
             <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$total_users}} registered members</span>
             <div class="inline-flex text-sm" style="float:right">
               <span class="text-orange-600 mx-2"><i class="fa-solid fa-user text-lg inline-flex"></i> = Member</span>
@@ -73,7 +73,7 @@ $data = json_encode($entries);
               <div class="p-2 text-gray-700 text-center">
                 <h3 class="text-md font-bold tracking-wider hover:underline mb-1"><a href="{{route('affiliation.show', $affiliation->id)}}"> {{$affiliation->affiliation_title}}</a> <button data-popover-target="popover-{{$affiliation->id}}" data-popover-placement="bottom" type="button"><span class="sr-only">Show information</span><i class="fa-solid fa-circle-question"></i></button></h3>
                 <div class="bg-white  rounded-lg text-gray-700">
-                  <p class=" p-2 "> <b>Total Profiles </b> {{1000 }}  </p>
+                  <p class=" p-2 "> <b>Total Profiles: </b> {{1000 }}  </p>
                 </div>
 
                 <div class="grid grid-cols-3 gap-3 mt-2">

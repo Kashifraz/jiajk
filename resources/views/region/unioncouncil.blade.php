@@ -32,6 +32,11 @@ $total_wards = $UnionCouncil->ward->count();
                     <div class="p-6 text-gray-900">
                         <h2 class="text-lg font-medium text-gray-900">
                             {{ __('Statistics') }} <span class="bg-green-100 text-green-800 ml-2 text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{$total_wards}} total Wards</span>
+                            <div class="inline-flex text-sm" style="float:right">
+                                <span class="text-orange-600 mx-2"><i class="fa-solid fa-user text-lg inline-flex"></i> = Member</span>
+                                <span class="text-teal-600 mx-2"><i class="fa-solid fa-id-card text-lg inline-flex"></i> = Applicant</span>
+                                <span class="text-blue-600 mx-2"><i class="fa-solid fa-user-graduate text-lg inline-flex"></i> = GC</span>
+                            </div>
                         </h2>
                         <div class="grid grid-cols-1 gap-4 px-4 mt-8 lg:grid-cols-4 sm:px-8">
                             @foreach ($UnionCouncil->ward as $ward)
@@ -45,27 +50,54 @@ $total_wards = $UnionCouncil->ward->count();
                             $gc_count = User::where("ward","=",$ward->id)
                             ->where("member_level","gc")->count();
                             @endphp
-                            <div class="<?php
-                                        if ($gradient_no == 1)
-                                            echo 'bg-gradient-to-r from-emerald-100 to-cyan-50';
-                                        else if ($gradient_no == 2)
-                                            echo 'bg-gradient-to-r from-orange-100 via-rose-100 to-red-50';
-                                        else if ($gradient_no == 3)
-                                            echo 'bg-gradient-to-r from-cyan-100 from-5% via-blue-100 via-40% to-indigo-50 to-90%';
-                                        else if ($gradient_no == 4)
-                                            echo 'bg-gradient-to-r from-fuchsia-100 to-pink-50';
-                                        else if ($gradient_no == 5)
-                                            echo 'bg-gradient-to-r from-lime-100 via-emerald-100 to-green-50
-                           '; ?> p-1 flex items-center  justify-center bg-white rounded-lg overflow-hidden shadow-md">
+                            <div class="
+                        <?php
+                        if ($gradient_no == 1) {
+                            echo 'bg-gradient-to-r from-emerald-50 to-cyan-50';
+                        } else if ($gradient_no == 2) {
+                            echo 'bg-gradient-to-r from-orange-50 via-rose-100 to-yellow-50';
+                        } else if ($gradient_no == 3) {
+                            echo 'bg-gradient-to-r from-cyan-50 from-5% via-blue-100 via-40% to-indigo-50 to-90%';
+                        } else if ($gradient_no == 4) {
+                            echo 'bg-gradient-to-r from-fuchsia-50 to-pink-50';
+                        } else if ($gradient_no == 5) {
+                            echo 'bg-gradient-to-r from-lime-50 via-emerald-50 to-green-50
+                        ';
+                        }
 
+                        ?> flex items-center  justify-center bg-white rounded-lg overflow-hidden shadow-md">
                                 <div class="p-2 text-gray-700 text-center">
-                                    <h3 class="text-md tracking-wider hover:underline"><a href="#"> {{$ward->ward_title}}</a></button></h3>
-                                    <p class="text-2xl">{{$user_count == 1? $user_count." member" :$user_count." members"  }} </p>
-                                    <p class="text-xl">{{$member_count == 1? $member_count." member" :$member_count." members"  }} </p>
-                                    <p class="text-xl">{{$applicant_count == 1? $applicant_count." applicant" :$applicant_count." applicants"  }} </p>
-                                    <p class="text-xl">{{$gc_count == 1? $gc_count." gc" :$gc_count." gcs"  }} </p>
+                                    <h3 class="text-md font-bold tracking-wider hover:underline mb-1"><a href="#"> {{$ward->ward_title}}</a> </h3>
+                                    <div class="bg-white  rounded-lg text-gray-700">
+                                        <p class=" p-2 "> <b>Total Profiles: </b> {{$user_count }} </p>
+                                    </div>
+
+                                    <div class="grid grid-cols-3 gap-3 mt-2">
+                                        <div class=" bg-white rounded-lg flex flex-col items-center justify-center h-[40px] w-[65px]">
+                                            <p class="text-orange-600  text-sm font-medium">
+                                                <i class="fa-solid fa-user text-lg"></i>
+                                                <span class=" rounded-full  text-sm font-medium inline-flex items-center justify-center ">{{$member_count}}</span>
+                                            </p>
+
+                                        </div>
+                                        <div class="bg-white  rounded-lg inline-flex flex-col items-center justify-center h-[40px] w-[65px]">
+                                            <p class="text-teal-600  text-sm font-medium">
+                                                <i class="fa-solid fa-id-card text-lg"></i>
+                                                <span class=" rounded-full text-teal-600 text-sm font-medium inline-flex items-center justify-center mb-1">{{$applicant_count}}</span>
+                                            </p>
+                                        </div>
+                                        <div class="bg-white  rounded-lg flex flex-col items-center justify-center h-[40px] w-[65px]">
+                                            <p class="text-blue-600 text-sm font-medium">
+                                                <i class="fa-solid fa-user-graduate text-lg"></i>
+                                                <span class=" rounded-full  text-blue-600 text-sm font-medium inline-flex items-center justify-center mb-1">{{$gc_count}} <span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+
                                 </div>
                             </div>
+
                             @endforeach
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
 

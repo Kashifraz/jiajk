@@ -15,6 +15,7 @@ use App\Models\Ward;
             <th><b>Cnic</b></th>
             <th><b>Gender</b></th>
             <th><b>Membership Date</b></th>
+            <th><b>Member Level</b></th>
             <th><b>District</b></th>
             <th><b>Constituency</b></th>
             <th><b>Union Council</b></th>
@@ -49,6 +50,7 @@ use App\Models\Ward;
             <td>{{ $user->cnic }}</td>
             <td>{{ $user->gender }}</td>
             <td>{{ $user->membership_date }}</td>
+            <td>{{ $user->member_level }}</td>
             <td>{{$District != Null ? $District->affiliation_title: "no data" }}</td>
             <td>{{ $Constituency !=null ? $Constituency->constituency_title: "no data" }}</td>
             <td>{{ $UnionCouncil != null ? $UnionCouncil->union_council_title : "no data" }}</td>

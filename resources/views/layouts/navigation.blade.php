@@ -65,11 +65,11 @@
                     </x-nav-link>
                 </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <!-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('designation.create')" :active="request()->routeIs('designation.create')">
                         <i class="fa-solid fa-ranking-star mr-2"></i> {{ __('Designations') }}
                     </x-nav-link>
-                </div>
+                </div> -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('form.create')" :active="request()->routeIs('form.create')">
                         <i class="fa-regular fa-rectangle-list mr-2"></i> {{ __('Forms') }}
@@ -99,6 +99,7 @@
                     </x-nav-link>
                 </div>
                 @endif
+                
                 @if (Auth::user()->can('first approval formb') || Auth::user()->can('second approval formb') || Auth::user()->can('third approval formb'))
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('form.b.approval')" :active="request()->routeIs('form.b.approval')">

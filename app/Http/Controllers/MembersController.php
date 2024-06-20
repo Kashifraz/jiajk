@@ -225,6 +225,9 @@ class MembersController extends Controller
       $records = request('records');
       $level = request('level');
       $destrict = request('destrict');
+      $constituency = request('constituency');
+      $unioncouncil = request('unioncouncil');
+      $ward = request('ward');
       $members = User::query();
       $affiliations = Affiliation::all();
       if (Auth::user()->type == 3) {
@@ -235,6 +238,15 @@ class MembersController extends Controller
 
       if (request('destrict') && request('destrict') != null) {
          $members = $members->where("affiliations", "=", $destrict);
+      }
+      if (request('constituency') && request('constituency') != null) {
+         $members = $members->where("constituency", "=", $constituency);
+      }
+      if (request('unioncouncil') && request('unioncouncil') != null) {
+         $members = $members->where("union_council", "=", $unioncouncil);
+      }
+      if (request('ward') && request('ward') != null) {
+         $members = $members->where("ward", "=", $ward);
       }
 
       if (request('level') && request('level') != null) {

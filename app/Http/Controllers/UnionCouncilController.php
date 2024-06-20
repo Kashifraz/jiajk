@@ -39,12 +39,12 @@ class UnionCouncilController extends Controller
         return redirect()->back()->with("message", "Union Council updated successfully!");
     }
 
-        /**
+    /**
      * Display the specified resource.
      */
     public function show($id)
     {
-        $UnionCouncil = UnionCouncil::with('ward')->findOrFail($id);
+        $UnionCouncil = UnionCouncil::with('ward','Constituency.affiliation')->findOrFail($id);
         return view('region.unioncouncil', [
             "UnionCouncil" => $UnionCouncil,
         ]);

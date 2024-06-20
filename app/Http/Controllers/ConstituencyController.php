@@ -48,7 +48,7 @@ class ConstituencyController extends Controller
      */
     public function show($id)
     {
-        $constituency = Constituency::with('unioncouncil')->findOrFail($id);
+        $constituency = Constituency::with('unioncouncil','affiliation')->findOrFail($id);
         return view('region.constituency', [
             "constituency" => $constituency,
         ]);

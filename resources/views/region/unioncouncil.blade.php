@@ -69,7 +69,8 @@ $total_wards = $UnionCouncil->ward->count();
                                 <div class="p-2 text-gray-700 text-center">
                                     <h3 class="text-md font-bold tracking-wider hover:underline mb-1"><a href="#"> {{$ward->ward_title}}</a> </h3>
                                     <div class="bg-white  rounded-lg text-gray-700">
-                                        <p class=" p-2 "> <b>Total Profiles: </b> {{$user_count }} </p>
+                                        <p class=" p-2 "> <b>Total Profiles: </b> {{$user_count }}  
+                                        <a href="<?php echo url('/show/members?destrict='.$UnionCouncil->Constituency->affiliation->id.'&constituency='.$UnionCouncil->Constituency->id.'&unioncouncil='.$UnionCouncil->id.'&ward='.$ward->id.'') ?>"><i class="fa-solid fa-eye mx-2"></i></a> </p>
                                     </div>
 
                                     <div class="grid grid-cols-3 gap-3 mt-2">

@@ -232,8 +232,7 @@ class MembersController extends Controller
       $affiliations = Affiliation::all();
       if (Auth::user()->type == 3) {
          $destrict_auth = Auth::user()->affiliations;
-         $members = $members->where("affiliations", "=", $destrict_auth)
-            ->latest();
+         $members = $members->where("affiliations", "=", $destrict_auth);
       }
 
       if (request('destrict') && request('destrict') != null) {
@@ -254,9 +253,11 @@ class MembersController extends Controller
       }
 
       if (request('search')) {
-         $members = $members->where('name', 'LIKE', "%{$search}%")
-            ->orWhere('father_name', 'LIKE', "%{$search}%")
-            ->orWhere('city', 'LIKE', "%{$search}%");
+            $members->where(function ($q) use ($search) {
+               $q->where('name', 'LIKE', '%' . $search . '%')
+                 ->orWhere('father_name', 'LIKE', '%' . $search . '%')
+                 ->orWhere('city', 'LIKE', '%' . $search . '%');
+           });
       }
 
       return view('member.list', [

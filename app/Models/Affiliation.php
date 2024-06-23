@@ -10,7 +10,8 @@ class Affiliation extends Model
     use HasFactory;
 
     protected $fillable = [
-        'affiliation_title'
+        'affiliation_title',
+        'region'
     ];
     
 

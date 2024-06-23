@@ -44,10 +44,12 @@ class AffiliationController extends Controller
     {
         $request->validate([
             'affiliation_title' => ['required', 'string', 'max:255'],
+            'region' => ['required'],
         ]);
 
         $affiliation = Affiliation::create([
             'affiliation_title' => $request->affiliation_title,
+            'region' => $request->region,
         ]);
 
         return redirect()->back()->with("message", "affiliation added successfully!");

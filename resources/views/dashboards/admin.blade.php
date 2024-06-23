@@ -73,7 +73,7 @@ $data = json_encode($entries);
               <div class="p-2 text-gray-700 text-center">
                 <h3 class="text-md font-bold tracking-wider hover:underline mb-1"><a href="{{route('affiliation.show', $affiliation->id)}}"> {{$affiliation->affiliation_title}}</a> <button data-popover-target="popover-{{$affiliation->id}}" data-popover-placement="bottom" type="button"><span class="sr-only">Show information</span><i class="fa-solid fa-circle-question"></i></button></h3>
                 <div class="bg-white  rounded-lg text-gray-700">
-                  <p class=" p-2 "> <b>Total Profiles: </b> {{$user_count }} 
+                  <p class=" p-2 "> <b>Total Profiles: </b> {{$user_count }} {{$affiliation->region}}
                   <a href="<?php echo url('/show/members?destrict='.$affiliation->id.'') ?>"><i class="fa-solid fa-eye mx-2"></i></a> </p>
                 </div>
 

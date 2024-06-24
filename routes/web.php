@@ -36,8 +36,11 @@ Route::get('/member/dashboard', function () {
 })->name('member.dashboard');
 // ->middleware([\Spatie\Permission\Middleware\RoleMiddleware::using(['member'])])
 Route::get('/admin/dashboard', function () {
-    $affiliations = Affiliation::latest()->get();
 
+    $affiliations = Affiliation::orderByRaw("FIELD(region, 'ajk', 'gb', 'pk')")
+        ->get()
+        ->groupBy('region');
+    
     $entries = array();
     $records = DB::table('users')
         ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
@@ -126,14 +129,14 @@ Route::get('/stats', function () {
     return view("stats");
 })->name('jiajk.stats');
 
-Route::get('/destrict/show/{id}', [AffiliationController::class,"show"])
-->name('affiliation.show');
+Route::get('/destrict/show/{id}', [AffiliationController::class, "show"])
+    ->name('affiliation.show');
 
-Route::get('/constituency/show/{id}', [ConstituencyController::class,"show"])
-->name('constituency.show');
+Route::get('/constituency/show/{id}', [ConstituencyController::class, "show"])
+    ->name('constituency.show');
 
-Route::get('/unioncouncil/show/{id}', [UnionCouncilController::class,"show"])
-->name('unioncouncil.show');
+Route::get('/unioncouncil/show/{id}', [UnionCouncilController::class, "show"])
+    ->name('unioncouncil.show');
 
 require __DIR__ . '/member.php';
 require __DIR__ . '/region.php';

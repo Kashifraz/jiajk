@@ -266,6 +266,9 @@ class MembersController extends Controller
          'records' => $records,
          'level' => $level,
          'destrict' => $destrict,
+         'constituency' => $constituency,
+         'unioncouncil' => $unioncouncil,
+         'ward' => $ward,
          'affiliations' => $affiliations
       ]);
    }
@@ -363,8 +366,11 @@ class MembersController extends Controller
       }
       $search = request('search');
       $destrict = request('destrict');
+      $constituency = request('constituency');
+      $unioncouncil = request('unioncouncil');
+      $ward = request('ward');
 
-      return Excel::download(new UsersExport($destrict, $search), 'users.xlsx');
+      return Excel::download(new UsersExport($destrict, $search, $constituency, $unioncouncil, $ward ), 'users.xlsx');
    }
 
    public function uploadImage(Request $request)

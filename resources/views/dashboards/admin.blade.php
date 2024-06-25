@@ -122,9 +122,7 @@ $data = json_encode($entries);
                       @if ($is_present == false)
                       <li>No data available</li>
                       @endif ()
-
                     </ul>
-
                   </div>
                   <div data-popper-arrow></div>
                 </div>
@@ -137,12 +135,12 @@ $data = json_encode($entries);
             @endforeach
             <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
         </div>
-        <div class="p-6 text-gray-900">
+        <!-- <div class="p-6 text-gray-900">
           <h2 class="text-lg font-medium text-gray-900">
             {{ __('Data Entry Calender') }}
           </h2>
           <div id='calendar'></div>
-        </div>
+        </div> -->
     
     </div>
   </div>

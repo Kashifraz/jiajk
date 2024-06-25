@@ -71,7 +71,9 @@ use App\Models\Affiliation;
                                     <i class="fa-solid fa-eraser"></i>
                                     <span class="sr-only">clear</span>
                                 </a>
-                                <a href="/member/export/excel/{{$destrict}}/{{$search}}" class="p-2.5 ms-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300">
+                                
+                                <a href="<?php echo url('/member/export/excel?destrict='.$destrict.'&constituency='.$constituency.'&unioncouncil='.$unioncouncil.'&ward='.$ward.'') ?>"
+                                class="p-2.5 ms-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300">
                                     <i class="fa-solid fa-file-excel"></i>
                                     <span class="sr-only">clear</span>
                                 </a>

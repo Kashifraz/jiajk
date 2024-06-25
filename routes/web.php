@@ -35,8 +35,9 @@ Route::get('/member/dashboard', function () {
     return view('dashboards.member');
 })->name('member.dashboard');
 // ->middleware([\Spatie\Permission\Middleware\RoleMiddleware::using(['member'])])
-Route::get('/admin/dashboard', function () {
 
+
+Route::get('/admin/dashboard', function () {
     $affiliations = Affiliation::orderByRaw("FIELD(region, 'ajk', 'gb', 'pk')")
         ->get()
         ->groupBy('region');
@@ -60,6 +61,32 @@ Route::get('/admin/dashboard', function () {
         "entries" => $entries
     ]);
 })->name('admin.dashboard');
+
+
+Route::get('/admin/calender', function () {
+
+    $affiliations = Affiliation::orderByRaw("FIELD(region, 'ajk', 'gb', 'pk')")
+        ->get()
+        ->groupBy('region');
+    
+    $entries = array();
+    $records = DB::table('users')
+        ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
+        ->groupBy('date')
+        ->get();
+    foreach ($records as $record) {
+        $entries[] = array(
+            "title" => $record->count . " members added",
+            "start" => $record->date,
+            "backgroundColor" => 'green',
+            "borderColor" => 'green'
+        );
+    }
+
+    return view('dashboards.calender', [
+        "entries" => $entries
+    ]);
+})->name('admin.calender');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])

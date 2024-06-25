@@ -14,11 +14,17 @@ class UsersExport implements FromView
     use Exportable;
     private $destrict;
     private $search;
+    private $constituency;
+    private $unioncouncil;
+    private $ward; 
 
-    public function __construct(string $destrict = null, string $search = null)
+    public function __construct(string $destrict = null, string $search = null, string $constituency= null, string $unioncouncil = null, string $ward = null )
     {
         $this->destrict = $destrict;
         $this->search = $search;
+        $this->constituency = $constituency;
+        $this->unioncouncil = $unioncouncil;
+        $this->ward = $ward; 
     }
 
     public function view(): View
@@ -32,6 +38,16 @@ class UsersExport implements FromView
 
         if (request('destrict') && request('destrict') != null) {
             $members = $members->where("affiliations", "=", $this->destrict);
+        }
+       
+        if (request('constituency') && request('constituency') != null) {
+            $members = $members->where("constituency", "=", $this->constituency);
+        }
+        if (request('unioncouncil') && request('unioncouncil') != null) {
+            $members = $members->where("union_council", "=", $this->unioncouncil);
+        }
+        if (request('ward') && request('ward') != null) {
+            $members = $members->where("ward", "=", $this->ward);
         }
 
         if (request('search')) {

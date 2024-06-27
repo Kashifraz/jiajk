@@ -41,6 +41,7 @@ Route::get('/admin/dashboard', function () {
     $affiliations = Affiliation::orderByRaw("FIELD(region, 'ajk', 'gb', 'pk')")
         ->get()
         ->groupBy('region');
+
     
     $entries = array();
     $records = DB::table('users')
@@ -61,6 +62,31 @@ Route::get('/admin/dashboard', function () {
         "entries" => $entries
     ]);
 })->name('admin.dashboard');
+
+Route::get('/YWRtaW4gZGFzaGJvYXJk', function () {
+    $affiliations = Affiliation::orderByRaw("FIELD(region, 'ajk', 'gb', 'pk')")
+        ->get()
+        ->groupBy('region');
+
+    $entries = array();
+    $records = DB::table('users')
+        ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
+        ->groupBy('date')
+        ->get();
+    foreach ($records as $record) {
+        $entries[] = array(
+            "title" => $record->count . " members added",
+            "start" => $record->date,
+            "backgroundColor" => 'green',
+            "borderColor" => 'green'
+        );
+    }
+
+    return view('dashboards.admin', [
+        "affiliations" => $affiliations,
+        "entries" => $entries
+    ]);
+});
 
 
 Route::get('/admin/calender', function () {

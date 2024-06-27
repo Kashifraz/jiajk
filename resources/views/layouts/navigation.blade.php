@@ -65,6 +65,12 @@
                     </x-nav-link>
                 </div>
 
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('admin.calender')" :active="request()->routeIs('admin.calender')">
+                    <i class="fa-regular fa-calendar mr-2"></i> {{ __('Calender') }}
+                    </x-nav-link>
+                </div>
+
                 <!-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('designation.create')" :active="request()->routeIs('designation.create')">
                         <i class="fa-solid fa-ranking-star mr-2"></i> {{ __('Designations') }}

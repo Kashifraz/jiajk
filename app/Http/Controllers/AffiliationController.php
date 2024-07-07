@@ -102,4 +102,9 @@ class AffiliationController extends Controller
         $affiliation->delete();
         return redirect()->back()->with('message', 'Affiliation deleted successfully!');
     }
+
+    //api for react native app
+    public function getDistricts(){
+        return response()->json(Affiliation::all());
+    }
 }

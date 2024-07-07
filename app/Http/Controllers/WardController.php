@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UnionCouncil;
 use App\Models\Ward;
 use Illuminate\Http\Request;
 
@@ -42,5 +43,12 @@ class WardController extends Controller
             "population" => $request->population
         ]);
         return redirect()->back()->with("message", "Population added successfully!");
+    }
+
+
+    //api for react native app
+    public function getWards(UnionCouncil $unioncouncil)
+    {
+        return response()->json($unioncouncil->ward);
     }
 }

@@ -10,10 +10,11 @@ use App\Models\Question;
 use App\Models\UnionCouncil;
 use App\Models\User;
 use App\Models\Ward;
-use Faker\Core\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
 class MembersController extends Controller
@@ -396,5 +397,84 @@ class MembersController extends Controller
       }
 
       return back()->with('message', 'profile photo uploaded successfully');
+   }
+
+
+   public function createMemberAPI(Request $request)
+   {
+   
+
+      $affiliation_val = $request->constituency_status != 0 ? ['required', "not_in:0"] : [];
+      $constituency_val = $request->union_status != 0 ? ['required', "not_in:0"] : [];
+      $union_val = $request->ward_status != 0 ? ['required', "not_in:0"] : [];
+
+      $email = rand() . '@gmail.com';
+      $password = rand();
+
+      $validator = Validator::make($request->all(), [
+         'username' => ['string', 'max:255'],
+         'email' => ['nullable', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+         'password' => ['confirmed'],
+         'name' => ['required', 'string', 'max:255'],
+         'father_name' => ['required', 'string', 'max:255'],
+         'cnic' => ['nullable', "digits:13", "numeric"],
+         'dob' => ['nullable', 'string'],
+         'gender' => ['nullable', 'integer'],
+         'social_media' => ['nullable', 'string', 'max:255'],
+         'referer' => ['nullable', 'string', 'max:255'],
+         'membership_date' => ['required', 'string'],
+         'affiliations' => ['required', "not_in:0"],
+         'constituency' => $affiliation_val,
+         'union_council' => $constituency_val,
+         'ward' => $union_val,
+         'geographical_address' => ['nullable', 'string', 'max:255'],
+         'local_jamat' => ['nullable', 'string', 'max:255'],
+         'city' => ['nullable', 'string', 'max:255'],
+         'village' => ['nullable', 'string', 'max:255'],
+         'mailing_address' => ['nullable', 'string', 'max:255'],
+         'occupation' => ['nullable', 'string', 'max:255'],
+         'education' => ['nullable', 'string', 'max:255'],
+         'home_phone' => ['nullable', "digits_between:10,11", "numeric"],
+         'office_phone' => ['nullable', "digits_between:10,11", "numeric"],
+         'mobile_phone' => ['required', "digits_between:10,11", "numeric"],
+      ]);
+
+     if ($validator->fails()) {
+         return response()->json($validator->errors(), 422);
+     }
+
+     $validated = $validator->validated();
+     $user = User::create([
+         'username' => $validated['username'],
+         'email' => $validated['email'] == null ? $email : $validated['email'],
+         'password' =>  $validated['password'] == null ? Hash::make($password) : Hash::make($validated['password']),
+         'name' => $validated['name'],
+         'father_name' => $validated['father_name'],
+         'cnic' => $validated['cnic'],
+         'dob' => $validated['dob'],
+         'gender' => $validated['gender'],
+         'social_media' => $validated['social_media'],
+         'referer' => $validated['referer'],
+         'membership_date' => $validated['membership_date'],
+         'affiliations' => $validated['affiliations'],
+         'constituency' => $validated['constituency'],
+         'union_council' => $validated['union_council'],
+         'ward' => $validated['ward'],
+         'geographical_address' => $validated['geographical_address'],
+         'local_jamat' => $validated['local_jamat'],
+         'city' => $validated['city'],
+         'village' => $validated['village'],
+         'mailing_address' => $validated['mailing_address'],
+         'occupation' => $validated['occupation'],
+         'education' => $validated['education'],
+         'home_phone' => $validated['home_phone'],
+         'office_phone' => $validated['office_phone'],
+         'mobile_phone' => $validated['mobile_phone'],
+         'type' => 1,
+     ]);
+
+     $user->assignRole('member');
+
+     return response()->json($user, 201);
    }
 }

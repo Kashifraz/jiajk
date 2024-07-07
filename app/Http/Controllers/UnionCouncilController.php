@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Constituency;
 use App\Models\UnionCouncil;
 use Illuminate\Http\Request;
 
@@ -48,5 +49,10 @@ class UnionCouncilController extends Controller
         return view('region.unioncouncil', [
             "UnionCouncil" => $UnionCouncil,
         ]);
+    }
+
+    //api for react native app
+    public function getUnionCouncils(Constituency $constituency){
+        return response()->json($constituency->unioncouncil);
     }
 }

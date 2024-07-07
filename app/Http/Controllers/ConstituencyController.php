@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Affiliation;
 use App\Models\Constituency;
 use Illuminate\Http\Request;
 
@@ -52,5 +53,11 @@ class ConstituencyController extends Controller
         return view('region.constituency', [
             "constituency" => $constituency,
         ]);
+    }
+
+    //api for react native app
+    public function getConstituencies(Affiliation $affiliation)
+    {
+        return response()->json($affiliation->constituency);
     }
 }

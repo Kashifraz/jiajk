@@ -402,12 +402,10 @@ class MembersController extends Controller
 
    public function createMemberAPI(Request $request)
    {
-   
-
       $affiliation_val = $request->constituency_status != 0 ? ['required', "not_in:0"] : [];
       $constituency_val = $request->union_status != 0 ? ['required', "not_in:0"] : [];
       $union_val = $request->ward_status != 0 ? ['required', "not_in:0"] : [];
-
+     
       $email = rand() . '@gmail.com';
       $password = rand();
 
@@ -420,13 +418,11 @@ class MembersController extends Controller
          'cnic' => ['nullable', "digits:13", "numeric"],
          'dob' => ['nullable', 'string'],
          'gender' => ['nullable', 'integer'],
-         'social_media' => ['nullable', 'string', 'max:255'],
-         'referer' => ['nullable', 'string', 'max:255'],
          'membership_date' => ['required', 'string'],
          'affiliations' => ['required', "not_in:0"],
-         'constituency' => $affiliation_val,
-         'union_council' => $constituency_val,
-         'ward' => $union_val,
+         'constituency' =>  $affiliation_val,
+         'union_council' =>  $constituency_val,
+         'ward' =>  $union_val,
          'geographical_address' => ['nullable', 'string', 'max:255'],
          'local_jamat' => ['nullable', 'string', 'max:255'],
          'city' => ['nullable', 'string', 'max:255'],
@@ -453,8 +449,6 @@ class MembersController extends Controller
          'cnic' => $validated['cnic'],
          'dob' => $validated['dob'],
          'gender' => $validated['gender'],
-         'social_media' => $validated['social_media'],
-         'referer' => $validated['referer'],
          'membership_date' => $validated['membership_date'],
          'affiliations' => $validated['affiliations'],
          'constituency' => $validated['constituency'],

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AffiliationController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ConstituencyController;
 use App\Http\Controllers\MembersController;
 use App\Http\Controllers\UnionCouncilController;
@@ -28,3 +29,4 @@ Route::get('/district/{affiliation}/constituencies', [ConstituencyController::cl
 Route::get('/constituency/{constituency}/unioncouncils', [UnionCouncilController::class, 'getUnionCouncils']);
 Route::get('/unioncouncil/{unioncouncil}/wards', [WardController::class, 'getWards']);
 Route::post('/member/store', [MembersController::class, 'createMemberAPI']);
+Route::post('/login/app', [AuthenticatedSessionController::class, 'loginThroughApp']);

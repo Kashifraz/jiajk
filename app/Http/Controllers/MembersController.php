@@ -10,12 +10,15 @@ use App\Models\Question;
 use App\Models\UnionCouncil;
 use App\Models\User;
 use App\Models\Ward;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 
 class MembersController extends Controller
 {
@@ -254,11 +257,11 @@ class MembersController extends Controller
       }
 
       if (request('search')) {
-            $members->where(function ($q) use ($search) {
-               $q->where('name', 'LIKE', '%' . $search . '%')
-                 ->orWhere('father_name', 'LIKE', '%' . $search . '%')
-                 ->orWhere('city', 'LIKE', '%' . $search . '%');
-           });
+         $members->where(function ($q) use ($search) {
+            $q->where('name', 'LIKE', '%' . $search . '%')
+               ->orWhere('father_name', 'LIKE', '%' . $search . '%')
+               ->orWhere('city', 'LIKE', '%' . $search . '%');
+         });
       }
 
       return view('member.list', [
@@ -371,7 +374,7 @@ class MembersController extends Controller
       $unioncouncil = request('unioncouncil');
       $ward = request('ward');
 
-      return Excel::download(new UsersExport($destrict, $search, $constituency, $unioncouncil, $ward ), 'users.xlsx');
+      return Excel::download(new UsersExport($destrict, $search, $constituency, $unioncouncil, $ward), 'users.xlsx');
    }
 
    public function uploadImage(Request $request)
@@ -405,7 +408,7 @@ class MembersController extends Controller
       $affiliation_val = $request->constituency_status != 0 ? ['required', "not_in:0"] : [];
       $constituency_val = $request->union_status != 0 ? ['required', "not_in:0"] : [];
       $union_val = $request->ward_status != 0 ? ['required', "not_in:0"] : [];
-     
+
       $email = rand() . '@gmail.com';
       $password = rand();
 
@@ -435,12 +438,12 @@ class MembersController extends Controller
          'mobile_phone' => ['required', "digits_between:10,11", "numeric"],
       ]);
 
-     if ($validator->fails()) {
+      if ($validator->fails()) {
          return response()->json($validator->errors(), 422);
-     }
+      }
 
-     $validated = $validator->validated();
-     $user = User::create([
+      $validated = $validator->validated();
+      $user = User::create([
          'username' => $validated['username'],
          'email' => $validated['email'] == null ? $email : $validated['email'],
          'password' =>  $validated['password'] == null ? Hash::make($password) : Hash::make($validated['password']),
@@ -465,10 +468,26 @@ class MembersController extends Controller
          'office_phone' => $validated['office_phone'],
          'mobile_phone' => $validated['mobile_phone'],
          'type' => 1,
-     ]);
+      ]);
 
-     $user->assignRole('member');
+      $user->assignRole('member');
 
-     return response()->json($user, 201);
+      return response()->json($user, 201);
+   }
+
+   //generate PDF certificate API
+   public function generateCertificate(Request $request)
+   {
+
+      $user = User::find($request->user_id);
+
+      $data['date'] = now()->toFormattedDateString();
+
+      $pdf = FacadePdf::loadView('certificate', [
+         "name" => $user->name,
+         "membership_date" => $user->membership_date
+      ])->setPaper('a4', 'landscape');
+
+      return $pdf->download('certificate.pdf');
    }
 }

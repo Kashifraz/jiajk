@@ -29,6 +29,7 @@ $old_ward = Ward::where('union_council_id',old('union_council'))->get();
                 <span class="sr-only">Info</span>
                 <div>
                     <span class="font-medium">Success alert!</span> {{ Session::get('message') }}
+                    <p>Click here to <b><a href="{{route('login')}}">Login In</a></b></p>
                 </div>
             </div>
         </div>

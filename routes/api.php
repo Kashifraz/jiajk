@@ -4,6 +4,7 @@ use App\Http\Controllers\AffiliationController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ConstituencyController;
 use App\Http\Controllers\MembersController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UnionCouncilController;
 use App\Http\Controllers\WardController;
 use Illuminate\Http\Request;
@@ -24,9 +25,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/districts', [AffiliationController::class, 'getDistricts']);
-Route::get('/district/{affiliation}/constituencies', [ConstituencyController::class, 'getConstituencies']);
-Route::get('/constituency/{constituency}/unioncouncils', [UnionCouncilController::class, 'getUnionCouncils']);
-Route::get('/unioncouncil/{unioncouncil}/wards', [WardController::class, 'getWards']);
-Route::post('/member/store', [MembersController::class, 'createMemberAPI']);
+
 Route::post('/login/app', [AuthenticatedSessionController::class, 'loginThroughApp']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/profile/update', [ProfileController::class, 'updateProfile']);
+    Route::post('/profile/password', [ProfileController::class, 'updatePassword']);
+});
